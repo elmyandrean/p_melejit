@@ -30,7 +30,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="../../index2.html"><b>Nama </b>Aplikasi</a>
+    <a href="{{url('/')}}"><b>Nama </b>Aplikasi</a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
@@ -59,6 +59,12 @@
         <!-- /.col -->
       </div>
     </form>
+
+    <div class="social-auth-links text-center">
+      <p>- ATAU -</p>
+      <a href="{{route('register')}}" class="btn btn-block btn-default">Daftar Akun</a>
+    </div>
+    <!-- /.social-auth-links -->
   </div>
   <!-- /.login-box-body -->
 </div>

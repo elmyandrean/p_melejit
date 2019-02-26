@@ -107,8 +107,8 @@
         <li class="header">MAIN NAVIGATION</li>
         <li><a href="{{route('dashboard')}}"><i class="fa fa-dashboard"></i><span> Dashboard</span></a></li>
         <li><a href="{{route('funding.index')}}"><span>Funding</span></a></li>
-        <li><a href="#"><span>New Core</span></a></li>
-        <li><a href="#"><span>Transaction</span></a></li>
+        <li><a href="{{route('newcore.index')}}"><span>New Core</span></a></li>
+        <li><a href="{{route('transaction.index')}}"><span>Transaction</span></a></li>
         <li><a href="#"><span>Fee Based</span></a></li>
         <li><a href="#"><span>Service</span></a></li>
       </ul>
