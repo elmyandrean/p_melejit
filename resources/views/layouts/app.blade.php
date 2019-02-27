@@ -109,7 +109,7 @@
         <li><a href="{{route('funding.index')}}"><span>Funding</span></a></li>
         <li><a href="{{route('newcore.index')}}"><span>New Core</span></a></li>
         <li><a href="{{route('transaction.index')}}"><span>Transaction</span></a></li>
-        <li><a href="#"><span>Fee Based</span></a></li>
+        <li><a href="{{route('feebased.index')}}"><span>Fee Based</span></a></li>
         <li><a href="#"><span>Service</span></a></li>
       </ul>
     </section>

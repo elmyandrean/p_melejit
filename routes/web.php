@@ -21,3 +21,4 @@ Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 Route::resource('/funding', 'FundingController');
 Route::resource('/newcore', 'NewcoreController');
 Route::resource('/transaction', 'TransactionController');
+Route::resource('/feebased', 'FeebasedController');
