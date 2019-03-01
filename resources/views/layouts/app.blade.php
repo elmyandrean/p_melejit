@@ -110,7 +110,8 @@
         <li><a href="{{route('newcore.index')}}"><span>New Core</span></a></li>
         <li><a href="{{route('transaction.index')}}"><span>Transaction</span></a></li>
         <li><a href="{{route('feebased.index')}}"><span>Fee Based</span></a></li>
-        <li><a href="#"><span>Service</span></a></li>
+        <li><a href="{{route('service.index')}}"><span>Service</span></a></li>
+        <li><a href="#"><span>Report</span></a></li>
       </ul>
     </section>
     <!-- /.sidebar -->
