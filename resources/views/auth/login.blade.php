@@ -30,11 +30,11 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="{{url('/')}}"><b>Nama </b>Aplikasi</a>
+    <img src="{{asset("image/logo.png")}}" alt="logo" width="30%"><br>
+    <a href="{{url('/')}}"><b>MAJELIS </b> <br> Monitoring Referal E-Jitu</a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
-    <h2 class="text-center login-box-msg">Halaman Login</h2>
     <form action="{{ route('login') }}" method="POST">
       @csrf
       @if ($errors->has('username') || $errors->has('password'))
@@ -59,11 +59,6 @@
         <!-- /.col -->
       </div>
     </form>
-
-    <div class="social-auth-links text-center">
-      <p>- ATAU -</p>
-      <a href="{{route('register')}}" class="btn btn-block btn-default">Daftar Akun</a>
-    </div>
     <!-- /.social-auth-links -->
   </div>
   <!-- /.login-box-body -->
