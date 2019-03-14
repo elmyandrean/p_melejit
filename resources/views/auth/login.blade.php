@@ -16,6 +16,17 @@
   <link rel="stylesheet" href="{{asset('dist/css/AdminLTE.min.css')}}">
   <!-- iCheck -->
   <link rel="stylesheet" href="{{asset('plugins/iCheck/square/blue.css')}}">
+  <style>
+    .footer {
+      position: absolute;
+      right: 0;
+      bottom: 0;
+      left: 0;
+      padding: 1rem;
+      background-color: #efefef;
+      text-align: center;
+    }
+  </style>
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -27,24 +38,24 @@
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body class="hold-transition login-page">
+<body class="hold-transition login-page" style="height: auto;">
 <div class="login-box">
   <div class="login-logo">
-    <img src="{{asset("image/logo.png")}}" alt="logo" width="30%"><br>
-    <a href="{{url('/')}}"><b>MAJELIS </b> <br> Monitoring Referal E-Jitu</a>
+    <img src="{{asset("image/logo_mandiri.png")}}" alt="logo" width="55%"><br>
+    <a href="{{url('/')}}"><b>MELEJIT </b> <br> Monitoring Referal E-Jitu</a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
     <form action="{{ route('login') }}" method="POST">
       @csrf
-      @if ($errors->has('username') || $errors->has('password'))
+      @if ($errors->has('nip') || $errors->has('password'))
       <div class="alert alert-danger alert-dismissible">
         <h4><i class="icon fa fa-ban"></i> Login Gagal!</h4>
         Username / Password yang anda masukkan tidak ditemukan. Tolong dicek kembali.
       </div>
       @endif
       <div class="form-group has-feedback">
-        <input type="text" class="form-control" placeholder="Username" name="username">
+        <input type="text" class="form-control" placeholder="NIP" name="nip">
         <span class="glyphicon glyphicon-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
@@ -64,6 +75,11 @@
   <!-- /.login-box-body -->
 </div>
 <!-- /.login-box -->
+
+<div class="footer">
+  <img src="{{asset('image/logo.png')}}" alt="logo" width="2%"><b>&nbsp;&nbsp;&nbsp;Version</b> 2.4.0 <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
+    reserved.
+</div>
 
 <!-- jQuery 3 -->
 <script src="{{asset('bower_components/jquery/dist/jquery.min.js')}}"></script>
