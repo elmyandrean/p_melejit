@@ -22,4 +22,3 @@ Route::resource('/funding', 'FundingController');
 Route::resource('/newcore', 'NewcoreController');
 Route::resource('/transaction', 'TransactionController');
 Route::resource('/feebased', 'FeebasedController');
-Route::resource('/service', 'ServiceController');

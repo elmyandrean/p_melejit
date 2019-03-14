@@ -42,10 +42,11 @@
 <div class="login-box">
   <div class="login-logo">
     <img src="{{asset("image/logo_mandiri.png")}}" alt="logo" width="55%"><br>
-    <a href="{{url('/')}}"><b>MELEJIT </b> <br> Monitoring Referal E-Jitu</a>
+    <a href="{{url('/')}}"></a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
+    <h3 class="login-box-msg"><b>MELEJIT </b> <br> Monitoring Referal E-Jitu</h3>
     <form action="{{ route('login') }}" method="POST">
       @csrf
       @if ($errors->has('nip') || $errors->has('password'))

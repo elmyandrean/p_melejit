@@ -41,7 +41,7 @@
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><img src="{{asset("image/logo.png")}}" width="50%" alt=""></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><img src="{{asset("image/logo.png")}}" width="10%" alt=""><b> MAJELIS</b></span>
+      <span class="logo-lg"><img src="{{asset("image/logo.png")}}" width="10%" alt="">&nbsp;&nbsp;<b>MELE</b>JIT</span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -118,7 +118,6 @@
         <li><a href="{{route('newcore.index')}}"><span>New Core</span></a></li>
         <li><a href="{{route('transaction.index')}}"><span>Transaction</span></a></li>
         <li><a href="{{route('feebased.index')}}"><span>Fee Based</span></a></li>
-        <li><a href="{{route('service.index')}}"><span>Service</span></a></li>
         <li><a href="#"><span>Report</span></a></li>
       </ul>
     </section>
