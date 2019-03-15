@@ -4,13 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class FeebasedController extends Controller
+class UserController extends Controller
 {
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    
     /**
      * Display a listing of the resource.
      *
@@ -18,7 +13,7 @@ class FeebasedController extends Controller
      */
     public function index()
     {
-        return view('feebased.index');
+        return view("users.index");
     }
 
     /**
@@ -28,7 +23,7 @@ class FeebasedController extends Controller
      */
     public function create()
     {
-        return view('feebased.create');
+        //
     }
 
     /**

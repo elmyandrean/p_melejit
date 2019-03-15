@@ -9,7 +9,7 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Newcore Page
+      Fee Based Page
       <small>it all starts here</small>
     </h1>
     <ol class="breadcrumb">
@@ -24,10 +24,10 @@
     <!-- Default box -->
     <div class="box">
       <div class="box-header with-border">
-        <h3 class="box-title" style="padding-top:5px;">Data Newcore</h3>
+        <h3 class="box-title" style="padding-top:5px;">Data Fee Based</h3>
 
         <div class="box-tools pull-right">
-          <a href="{{route('newcore.create')}}" class="btn btn-primary"><i class="fa fa-plus"></i> New Data</a>
+          <a href="{{route('kkb.create')}}" class="btn btn-primary"><i class="fa fa-plus"></i> New Data</a>
         </div>
       </div>
       <div class="box-body">
@@ -39,10 +39,8 @@
               <th>Konten Produk</th>
               <th>Nama Nasabah</th>
               <th>Source Customer</th>
-              <th>Nominal Referal</th>
-              <th>Limit Penjualan</th>
-              <th>Limit KSM</th>
-              <th>Jenis Product Holding</th>
+              <th>Limit CC</th>
+              <th>Nominal APE</th>
               <th>Nama FL</th>
               <th>Status</th>
               <th>Opsi</th>
@@ -55,10 +53,8 @@
               <td>Konten Produk</td>
               <td>Nama Nasabah</td>
               <td>Source Customer</td>
-              <td>Nominal Referal</td>
-              <td>Limit Penjualan</td>
-              <td>Limit KSM</td>
-              <td>Jenis Product Holding</td>
+              <td>Limit CC</td>
+              <td>Nominal APE</td>
               <td>Nama FL</td>
               <td>Status</td>
               <td>Opsi</td>
@@ -69,10 +65,8 @@
               <td>Konten Produk</td>
               <td>Nama Nasabah</td>
               <td>Source Customer</td>
-              <td>Nominal Referal</td>
-              <td>Limit Penjualan</td>
-              <td>Limit KSM</td>
-              <td>Jenis Product Holding</td>
+              <td>Limit CC</td>
+              <td>Nominal APE</td>
               <td>Nama FL</td>
               <td>Status</td>
               <td>Opsi</td>
@@ -83,10 +77,8 @@
               <td>Konten Produk</td>
               <td>Nama Nasabah</td>
               <td>Source Customer</td>
-              <td>Nominal Referal</td>
-              <td>Limit Penjualan</td>
-              <td>Limit KSM</td>
-              <td>Jenis Product Holding</td>
+              <td>Limit CC</td>
+              <td>Nominal APE</td>
               <td>Nama FL</td>
               <td>Status</td>
               <td>Opsi</td>

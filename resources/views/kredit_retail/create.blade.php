@@ -7,7 +7,7 @@
       Create New Core
     </h1>
     <ol class="breadcrumb">
-      <li><a href="{{route('newcore.index')}}"><i class="fa fa-dashboard"></i> Newcore</a></li>
+      <li><a href="{{route('kredit_retail.index')}}"><i class="fa fa-dashboard"></i> Newcore</a></li>
       <li class="active">Create</li>
     </ol>
   </section>
@@ -20,7 +20,7 @@
         <h3 class="box-title">New Data Core</h3>
       </div>
       <div class="box-body">
-        <form action="{{route('newcore.store')}}" method="POST" class="form-horizontal">
+        <form action="{{route('kredit_retail.store')}}" method="POST" class="form-horizontal">
           @csrf
           <div class="form-group">
             <label for="product_holding" class="control-label col-md-2">Product Holding</label>
@@ -133,7 +133,7 @@
           <div class="form-group">
             <div class="col-md-offset-2 col-md-6">
               <button class="btn btn-primary">Simpan</button>
-              <a href="{{route('newcore.index')}}" class="btn btn-warning">Batal</a>
+              <a href="{{route('kredit_retail.index')}}" class="btn btn-warning">Batal</a>
             </div>
           </div>
         </form>

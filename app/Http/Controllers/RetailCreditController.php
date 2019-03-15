@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class NewcoreController extends Controller
+class RetailCreditController extends Controller
 {
     public function __construct()
     {
@@ -18,7 +18,7 @@ class NewcoreController extends Controller
      */
     public function index()
     {
-        return view('newcore.index');
+        return view('kredit_retail.index');
     }
 
     /**
@@ -28,7 +28,7 @@ class NewcoreController extends Controller
      */
     public function create()
     {
-        return view('newcore.create');
+        return view('kredit_retail.create');
     }
 
     /**

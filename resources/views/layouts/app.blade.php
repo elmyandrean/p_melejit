@@ -41,7 +41,7 @@
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><img src="{{asset("image/logo.png")}}" width="50%" alt=""></span>
       <!-- logo for regular state and mobile devices -->
-      <span class="logo-lg"><img src="{{asset("image/logo.png")}}" width="10%" alt="">&nbsp;&nbsp;<b>MELE</b>JIT</span>
+      <span class="logo-lg"><img src="{{asset("image/logo_mandiri.png")}}" width="40%" alt="" style="margin-top: -15px;"></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
@@ -114,10 +114,16 @@
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
         <li><a href="{{route('dashboard')}}"><i class="fa fa-dashboard"></i><span> Dashboard</span></a></li>
+        <li class="header">MASTER MENU</li>
+        <li><a href="{{route('user.index')}}"><i class="fa fa-user"></i><span> User</span></a></li>
+        <li><a href="#"><i class="fa fa-cube"></i><span> Product Holding</span></a></li>
+        <li><a href="#"><i class="fa fa-tag"></i><span> Product Content</span></a></li>
+        <li class="header">TRANSACTION MENU</li>
         <li><a href="{{route('funding.index')}}"><span>Funding</span></a></li>
-        <li><a href="{{route('newcore.index')}}"><span>New Core</span></a></li>
+        <li><a href="{{route('kredit_retail.index')}}"><span>Kredit Retail</span></a></li>
         <li><a href="{{route('transaction.index')}}"><span>Transaction</span></a></li>
-        <li><a href="{{route('feebased.index')}}"><span>Fee Based</span></a></li>
+        <li><a href="{{route('kkb.index')}}"><span>KKB</span></a></li>
+        <li class="header">TRANSACTION MENU</li>
         <li><a href="#"><span>Report</span></a></li>
       </ul>
     </section>

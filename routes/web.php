@@ -18,7 +18,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
+Route::resource('/user', 'UserController');
 Route::resource('/funding', 'FundingController');
-Route::resource('/newcore', 'NewcoreController');
+Route::resource('/kredit_retail', 'RetailCreditController');
 Route::resource('/transaction', 'TransactionController');
-Route::resource('/feebased', 'FeebasedController');
+Route::resource('/kkb', 'VehicleLoanController');
