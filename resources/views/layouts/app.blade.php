@@ -116,7 +116,7 @@
         <li><a href="{{route('dashboard')}}"><i class="fa fa-dashboard"></i><span> Dashboard</span></a></li>
         <li class="header">MASTER MENU</li>
         <li><a href="{{route('user.index')}}"><i class="fa fa-user"></i><span> User</span></a></li>
-        <li><a href="#"><i class="fa fa-cube"></i><span> Product Holding</span></a></li>
+        <li><a href="{{route('data.get_user')}}"><i class="fa fa-cube"></i><span> Product Holding</span></a></li>
         <li><a href="#"><i class="fa fa-tag"></i><span> Product Content</span></a></li>
         <li class="header">TRANSACTION MENU</li>
         <li><a href="{{route('funding.index')}}"><span>Funding</span></a></li>
@@ -137,6 +137,17 @@
     @yield('content')
   </div>
   <!-- /.content-wrapper -->
+
+  <div class="modal fade bs-modal-lg" id="modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content" id="modal-content">
+        
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
 
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
@@ -168,6 +179,10 @@
   $(document).ready(function () {
     $('.sidebar-menu').tree()
   })
+
+  var base_url = '{{url('/')}}';
+
+  var loadingHtml = "<span class=\'alert alert-default\'><i class=\'fa fa-refresh fa-spin\'></i> Loading ...</span>";
 </script>
 @yield('script')
 </body>

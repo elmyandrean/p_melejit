@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 
 class UserController extends Controller
 {
@@ -23,7 +24,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        //
+        return view("users.create");
     }
 
     /**
@@ -34,7 +35,22 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $user = new User;
+        $user->nip = $request->nip;
+        $user->name = $request->nip;
+        $user->email = $request->nip;
+        $user->password = bcrypt('123456');
+        $user->position = $request->position;
+
+        if ($user->save()) {
+            $response["status"] = "success";
+            $response["message"] = "Data berhasil disimpan.";
+        } else {
+            $response["status"] = "error";
+            $response["message"] = "Data gagal tersimpan.";
+        }
+
+        return $response;
     }
 
     /**
@@ -56,7 +72,9 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        //
+        $user = User::find($id);
+
+        return view("users.edit", ['user'=>$user]);
     }
 
     /**
@@ -68,7 +86,21 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        $user->nip = $request->nip;
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->position = $request->position;
+
+        if ($user->save()) {
+            $response["status"] = "success";
+            $response["message"] = "Data berhasil disimpan.";
+        } else {
+            $response["status"] = "error";
+            $response["message"] = "Data gagal tersimpan.";
+        }
+
+        return $response;
     }
 
     /**

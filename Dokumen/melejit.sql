@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.8.4
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 12, 2019 at 11:38 AM
--- Server version: 10.1.36-MariaDB
--- PHP Version: 7.2.11
+-- Generation Time: Mar 18, 2019 at 10:02 AM
+-- Server version: 10.1.37-MariaDB
+-- PHP Version: 7.2.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -19,228 +19,394 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `melejit`
+-- Database: `project_melejit`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `cabang`
+-- Table structure for table `branches`
 --
 
-CREATE TABLE `cabang` (
-  `id_cabang` int(30) NOT NULL,
-  `id_user` int(30) NOT NULL,
-  `nama_cabang` varchar(25) NOT NULL,
-  `alamat` varchar(50) NOT NULL,
-  `telp` varchar(15) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `branches` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `funding`
+-- Table structure for table `fundings`
 --
 
-CREATE TABLE `funding` (
-  `id_funding` int(30) NOT NULL,
-  `id_user` int(30) NOT NULL,
-  `nama_funding` varchar(50) NOT NULL,
-  `nasabah_funding` varchar(50) NOT NULL,
-  `rekening_funding` int(20) NOT NULL,
-  `nominal_funding` int(100) NOT NULL,
-  `setoran_funding` int(100) NOT NULL,
-  `tgl_funding` datetime NOT NULL,
-  `bobot_funding` varchar(5) NOT NULL,
-  `status_funding` varchar(15) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `fundings` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `product_content_id` int(10) UNSIGNED NOT NULL,
+  `branch_id` int(10) UNSIGNED NOT NULL,
+  `source_customer` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `position` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `customer_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `account_number` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `initial_deposit` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pks_payroll` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `permanent_employee` int(11) NOT NULL,
+  `limit_payroll` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `kkb`
+-- Table structure for table `migrations`
 --
 
-CREATE TABLE `kkb` (
-  `id_kkb` int(30) NOT NULL,
-  `id_user` int(30) NOT NULL,
-  `nama_kkb` varchar(50) NOT NULL,
-  `nasabah_kkb` varchar(50) NOT NULL,
-  `rekening_kkb` int(20) NOT NULL,
-  `nominal_kkb` int(100) NOT NULL,
-  `unit_kkb` varchar(15) NOT NULL,
-  `tgl_kkb` datetime NOT NULL,
-  `bobot_kkb` varchar(5) NOT NULL,
-  `status_kkb` varchar(15) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `migrations` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `migration` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `migrations`
+--
+
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+(17, '2014_10_12_000000_create_users_table', 1),
+(18, '2014_10_12_100000_create_password_resets_table', 1),
+(19, '2019_03_13_064402_create_product_holdings_table', 1),
+(20, '2019_03_13_064447_create_product_contents_table', 1),
+(21, '2019_03_13_064828_create_branches_table', 1),
+(22, '2019_03_13_070406_create_fundings_table', 1),
+(23, '2019_03_13_102554_create_transactionals_table', 1),
+(24, '2019_03_13_103034_create_retail_credits_table', 1),
+(25, '2019_03_13_103730_create_vehicle_loans_table', 1);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `kredit_retail`
+-- Table structure for table `password_resets`
 --
 
-CREATE TABLE `kredit_retail` (
-  `id_kr` int(30) NOT NULL,
-  `id_user` int(30) NOT NULL,
-  `nama_kr` varchar(50) NOT NULL,
-  `nasabah_kr` int(50) NOT NULL,
-  `rekening_kr` int(20) NOT NULL,
-  `nominal_kr` int(100) NOT NULL,
-  `pic_kr` varchar(20) NOT NULL,
-  `tgl_kr` datetime NOT NULL,
-  `bobot_kr` varchar(5) NOT NULL,
-  `status_kr` varchar(15) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `password_resets` (
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `transactional`
+-- Table structure for table `product_contents`
 --
 
-CREATE TABLE `transactional` (
-  `id_ts` int(30) NOT NULL,
-  `id_user` int(30) NOT NULL,
-  `nama_ts` varchar(50) NOT NULL,
-  `nasabah_ts` varchar(50) NOT NULL,
-  `rekening_ts` int(20) NOT NULL,
-  `tgl_ts` datetime NOT NULL,
-  `bobot_ts` varchar(5) NOT NULL,
-  `status_ts` varchar(15) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `product_contents` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `product_holding_id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `user`
+-- Table structure for table `product_holdings`
 --
 
-CREATE TABLE `user` (
-  `id_user` int(30) NOT NULL,
-  `nama_user` varchar(50) NOT NULL,
-  `nip` int(10) NOT NULL,
-  `jabatan` varchar(20) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE `product_holdings` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `retail_credits`
+--
+
+CREATE TABLE `retail_credits` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `product_content_id` int(10) UNSIGNED NOT NULL,
+  `branch_id` int(10) UNSIGNED NOT NULL,
+  `source_customer` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `position` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `customer_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `account_number` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nominal_credit` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `follow_up_by` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `transactionals`
+--
+
+CREATE TABLE `transactionals` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `product_content_id` int(10) UNSIGNED NOT NULL,
+  `branch_id` int(10) UNSIGNED NOT NULL,
+  `source_customer` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `position` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `customer_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sales_limit` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `transportation_type` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ksm_limit` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `follow_up_by` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `nip` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `position` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `nip`, `email`, `name`, `password`, `position`, `remember_token`, `created_at`, `updated_at`) VALUES
+(2, '123456789', 'asfasfasf', 'asfasf', '$2y$10$zOOoe8p2rq5MHvdPDYTjne6e9SebnnDXfYWtjI.D4OjXwTIKx/C8y', 'admin', 'taJjor4rUZGtMjVJd9Ffb0hJ9xeCCIS3CmlM9c3lOlVB16hX2sTeOGhYq0Ka', NULL, '2019-03-18 01:38:30'),
+(4, 'axvzxa', 'dgadasd', 'asgqwsdasd', '$2y$10$McjMI3hwsYhJsuRgYvpZvuzhOpYXRBWAV/5s0FLNoFf8/lVytsvo2', '2222', NULL, '2019-03-18 00:50:36', '2019-03-18 01:38:42'),
+(5, 'test', 'test', 'test', '$2y$10$uxsqfv5jIEvSazBxMrmH8OnThCYr4U5hGO/N86oJ.RtDk8KDkwO0W', 'test', NULL, '2019-03-18 00:52:23', '2019-03-18 00:52:23'),
+(7, 'test1', 'test1', 'test1', '$2y$10$Ew9gVvDzLKSe32FXljReCu8BBn2JyJF7VJoquhhQWtqLvGTcom7ci', 'test1', NULL, '2019-03-18 00:53:32', '2019-03-18 00:53:32'),
+(8, 'asd', 'asd', 'asd', '$2y$10$h3LM4ekw0OvquA1B/C/zOu8pFrBzIbZ77Ol76Yl9YujgahCWo4Z5a', 'asd', NULL, '2019-03-18 00:53:54', '2019-03-18 00:53:54'),
+(9, 'qweqw', 'qweqw', 'qweqw', '$2y$10$QA9kUGgqEFCbFQ77rGrT7eCPgOK3ZwsBlbcsmyHja0Xa9q.wt1JCK', 'sfqfq', NULL, '2019-03-18 00:54:47', '2019-03-18 00:54:47'),
+(10, 'zxczxc', 'zxczxc', 'zxczxc', '$2y$10$OmuVTZpMRNwq2boklyybwep1dGMWAslFE3ryDU3qTR5u81EQsCR5C', 'zxczxc', NULL, '2019-03-18 00:55:47', '2019-03-18 00:55:47'),
+(11, 'qwe', 'qwe', 'qwe', '$2y$10$f8xSG7auKdofVQyf6D/Mh.9NOliaY276n8uPYPKBbNkhZJuTrwGLO', 'sfsad', NULL, '2019-03-18 00:57:22', '2019-03-18 00:57:22'),
+(12, 'fasfasd', 'fasfasd', 'fasfasd', '$2y$10$S2tbqX16IS1nLqAQyokAtuKG5Kdcl13/YSLhgjFK8MtUWk3.qElXO', 'asgsg', NULL, '2019-03-18 00:58:22', '2019-03-18 00:58:22'),
+(14, 'zxczxc3123', 'zxczxc3123', 'zxczxc3123', '$2y$10$BezndqDoEkpUEePUJLGQvOoX0GK4B.0.WHs1th1oJhwdjZMhceBLi', 'xxvxcxc', NULL, '2019-03-18 00:59:24', '2019-03-18 00:59:24'),
+(15, 'sdgsdfs', 'sdgsdfs', 'sdgsdfs', '$2y$10$MP4lIWDvZA/rcC4s0uEBd.KuR6HLV66RWIUconXh14mS1ldPfbB7a', 'sdgsdg', NULL, '2019-03-18 00:59:57', '2019-03-18 00:59:57'),
+(16, 'asasgdsg', 'asasgdsg', 'asasgdsg', '$2y$10$XSap4lQepTRzJqNIL49SY.rLS5vGDQR1GWXuKj2ycP432oinITwzS', 'hfhfhf', NULL, '2019-03-18 01:00:20', '2019-03-18 01:00:20'),
+(17, 'hdfhdfh', 'hdfhdfh', 'hdfhdfh', '$2y$10$4ZyFnYg4KbUeX06ZkSlqeO7QiPmY8OeU0ty0N.cbepr/oo8.2.c2q', 'fhfh', NULL, '2019-03-18 01:01:46', '2019-03-18 01:01:46');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vehicle_loans`
+--
+
+CREATE TABLE `vehicle_loans` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `user_id` int(10) UNSIGNED NOT NULL,
+  `product_content_id` int(10) UNSIGNED NOT NULL,
+  `branch_id` int(10) UNSIGNED NOT NULL,
+  `source_customer` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `position` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `customer_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `account_number` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nominal_credit` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `follow_up_by` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `cabang`
+-- Indexes for table `branches`
 --
-ALTER TABLE `cabang`
-  ADD PRIMARY KEY (`id_cabang`),
-  ADD KEY `id_user` (`id_user`);
+ALTER TABLE `branches`
+  ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `funding`
+-- Indexes for table `fundings`
 --
-ALTER TABLE `funding`
-  ADD PRIMARY KEY (`id_funding`),
-  ADD KEY `id_user` (`id_user`);
+ALTER TABLE `fundings`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fundings_user_id_foreign` (`user_id`),
+  ADD KEY `fundings_product_content_id_foreign` (`product_content_id`),
+  ADD KEY `fundings_branch_id_foreign` (`branch_id`);
 
 --
--- Indexes for table `kkb`
+-- Indexes for table `migrations`
 --
-ALTER TABLE `kkb`
-  ADD PRIMARY KEY (`id_kkb`),
-  ADD KEY `id_user` (`id_user`);
+ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `kredit_retail`
+-- Indexes for table `password_resets`
 --
-ALTER TABLE `kredit_retail`
-  ADD PRIMARY KEY (`id_kr`),
-  ADD KEY `id_user` (`id_user`);
+ALTER TABLE `password_resets`
+  ADD KEY `password_resets_email_index` (`email`);
 
 --
--- Indexes for table `transactional`
+-- Indexes for table `product_contents`
 --
-ALTER TABLE `transactional`
-  ADD PRIMARY KEY (`id_ts`),
-  ADD KEY `id_user` (`id_user`);
+ALTER TABLE `product_contents`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `product_contents_product_holding_id_foreign` (`product_holding_id`);
 
 --
--- Indexes for table `user`
+-- Indexes for table `product_holdings`
 --
-ALTER TABLE `user`
-  ADD PRIMARY KEY (`id_user`);
+ALTER TABLE `product_holdings`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `retail_credits`
+--
+ALTER TABLE `retail_credits`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `retail_credits_user_id_foreign` (`user_id`),
+  ADD KEY `retail_credits_product_content_id_foreign` (`product_content_id`),
+  ADD KEY `retail_credits_branch_id_foreign` (`branch_id`);
+
+--
+-- Indexes for table `transactionals`
+--
+ALTER TABLE `transactionals`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `transactionals_user_id_foreign` (`user_id`),
+  ADD KEY `transactionals_product_content_id_foreign` (`product_content_id`),
+  ADD KEY `transactionals_branch_id_foreign` (`branch_id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `users_nip_unique` (`nip`);
+
+--
+-- Indexes for table `vehicle_loans`
+--
+ALTER TABLE `vehicle_loans`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `vehicle_loans_user_id_foreign` (`user_id`),
+  ADD KEY `vehicle_loans_product_content_id_foreign` (`product_content_id`),
+  ADD KEY `vehicle_loans_branch_id_foreign` (`branch_id`);
 
 --
 -- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT for table `cabang`
+-- AUTO_INCREMENT for table `branches`
 --
-ALTER TABLE `cabang`
-  MODIFY `id_cabang` int(30) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `branches`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `funding`
+-- AUTO_INCREMENT for table `fundings`
 --
-ALTER TABLE `funding`
-  MODIFY `id_funding` int(30) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `fundings`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `kkb`
+-- AUTO_INCREMENT for table `migrations`
 --
-ALTER TABLE `kkb`
-  MODIFY `id_kkb` int(30) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `migrations`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 
 --
--- AUTO_INCREMENT for table `kredit_retail`
+-- AUTO_INCREMENT for table `product_contents`
 --
-ALTER TABLE `kredit_retail`
-  MODIFY `id_kr` int(30) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `product_contents`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `transactional`
+-- AUTO_INCREMENT for table `product_holdings`
 --
-ALTER TABLE `transactional`
-  MODIFY `id_ts` int(30) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `product_holdings`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `user`
+-- AUTO_INCREMENT for table `retail_credits`
 --
-ALTER TABLE `user`
-  MODIFY `id_user` int(30) NOT NULL AUTO_INCREMENT;
+ALTER TABLE `retail_credits`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `transactionals`
+--
+ALTER TABLE `transactionals`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT for table `vehicle_loans`
+--
+ALTER TABLE `vehicle_loans`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `cabang`
+-- Constraints for table `fundings`
 --
-ALTER TABLE `cabang`
-  ADD CONSTRAINT `usercab` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE `fundings`
+  ADD CONSTRAINT `fundings_branch_id_foreign` FOREIGN KEY (`branch_id`) REFERENCES `branches` (`id`),
+  ADD CONSTRAINT `fundings_product_content_id_foreign` FOREIGN KEY (`product_content_id`) REFERENCES `product_contents` (`id`),
+  ADD CONSTRAINT `fundings_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
--- Constraints for table `funding`
+-- Constraints for table `product_contents`
 --
-ALTER TABLE `funding`
-  ADD CONSTRAINT `user` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE `product_contents`
+  ADD CONSTRAINT `product_contents_product_holding_id_foreign` FOREIGN KEY (`product_holding_id`) REFERENCES `product_holdings` (`id`);
 
 --
--- Constraints for table `kkb`
+-- Constraints for table `retail_credits`
 --
-ALTER TABLE `kkb`
-  ADD CONSTRAINT `users` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE `retail_credits`
+  ADD CONSTRAINT `retail_credits_branch_id_foreign` FOREIGN KEY (`branch_id`) REFERENCES `branches` (`id`),
+  ADD CONSTRAINT `retail_credits_product_content_id_foreign` FOREIGN KEY (`product_content_id`) REFERENCES `product_contents` (`id`),
+  ADD CONSTRAINT `retail_credits_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
--- Constraints for table `kredit_retail`
+-- Constraints for table `transactionals`
 --
-ALTER TABLE `kredit_retail`
-  ADD CONSTRAINT `kredit_retail_ibfk_1` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`);
+ALTER TABLE `transactionals`
+  ADD CONSTRAINT `transactionals_branch_id_foreign` FOREIGN KEY (`branch_id`) REFERENCES `branches` (`id`),
+  ADD CONSTRAINT `transactionals_product_content_id_foreign` FOREIGN KEY (`product_content_id`) REFERENCES `product_contents` (`id`),
+  ADD CONSTRAINT `transactionals_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 
 --
--- Constraints for table `transactional`
+-- Constraints for table `vehicle_loans`
 --
-ALTER TABLE `transactional`
-  ADD CONSTRAINT `userts` FOREIGN KEY (`id_user`) REFERENCES `user` (`id_user`) ON DELETE NO ACTION ON UPDATE CASCADE;
+ALTER TABLE `vehicle_loans`
+  ADD CONSTRAINT `vehicle_loans_branch_id_foreign` FOREIGN KEY (`branch_id`) REFERENCES `branches` (`id`),
+  ADD CONSTRAINT `vehicle_loans_product_content_id_foreign` FOREIGN KEY (`product_content_id`) REFERENCES `product_contents` (`id`),
+  ADD CONSTRAINT `vehicle_loans_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

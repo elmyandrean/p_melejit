@@ -9,13 +9,11 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Fee Based Page
-      <small>it all starts here</small>
+      User Page
     </h1>
     <ol class="breadcrumb">
       <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li><a href="#">Examples</a></li>
-      <li class="active">Blank page</li>
+      <li class="active">User</li>
     </ol>
   </section>
 
@@ -24,66 +22,23 @@
     <!-- Default box -->
     <div class="box">
       <div class="box-header with-border">
-        <h3 class="box-title" style="padding-top:5px;">Data Fee Based</h3>
+        <h3 class="box-title" style="padding-top:5px;">Data User</h3>
 
         <div class="box-tools pull-right">
-          <a href="{{route('kkb.create')}}" class="btn btn-primary"><i class="fa fa-plus"></i> New Data</a>
+          <a href="#" class="btn btn-primary" onclick="showModal(null, '{{route('user.create')}}');"><i class="fa fa-plus"></i> New Data</a>
         </div>
       </div>
       <div class="box-body">
-        <table class="table table-hover" id="data-funding">
+        <table class="table table-hover" id="data_user">
           <thead>
             <tr>
-              <th>Nama Cabang</th>
-              <th>Tanggal</th>
-              <th>Konten Produk</th>
-              <th>Nama Nasabah</th>
-              <th>Source Customer</th>
-              <th>Limit CC</th>
-              <th>Nominal APE</th>
-              <th>Nama FL</th>
-              <th>Status</th>
-              <th>Opsi</th>
+              <th>NIP</th>
+              <th>Nama</th>
+              <th>Email</th>
+              <th>Position</th>
+              <th>#</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>Nama Cabang</td>
-              <td>Tanggal</td>
-              <td>Konten Produk</td>
-              <td>Nama Nasabah</td>
-              <td>Source Customer</td>
-              <td>Limit CC</td>
-              <td>Nominal APE</td>
-              <td>Nama FL</td>
-              <td>Status</td>
-              <td>Opsi</td>
-            </tr>
-            <tr>
-              <td>Nama Cabang</td>
-              <td>Tanggal</td>
-              <td>Konten Produk</td>
-              <td>Nama Nasabah</td>
-              <td>Source Customer</td>
-              <td>Limit CC</td>
-              <td>Nominal APE</td>
-              <td>Nama FL</td>
-              <td>Status</td>
-              <td>Opsi</td>
-            </tr>
-            <tr>
-              <td>Nama Cabang</td>
-              <td>Tanggal</td>
-              <td>Konten Produk</td>
-              <td>Nama Nasabah</td>
-              <td>Source Customer</td>
-              <td>Limit CC</td>
-              <td>Nominal APE</td>
-              <td>Nama FL</td>
-              <td>Status</td>
-              <td>Opsi</td>
-            </tr>
-          </tbody>
         </table>
       </div>
       <!-- /.box-body -->
@@ -98,12 +53,61 @@
   <!-- DataTables -->
   <script src="{{asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
   <script src="{{asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
+  <!-- Custom JS -->
+  <script src="{{asset('js/custom.js')}}"></script>
 @endsection
 
 @section('script')
 <script>
+  $(document).ready(function(){
+    load_data_user('{{route('data.get_user')}}');
+  });
+
   $(function(){
     $('#data-funding').DataTable();
   })
+
+  function showModal(url)
+  {
+    $("#modal").modal({
+      backdrop: 'static',
+      keyboard: false
+    },
+    "show");
+    $('#modal-content').html(loadingHtml);
+    $('#modal-content').load(url,function(data){
+      if(data!=""){
+        //$('#lampiran_id').html('');
+      }
+      else{
+        //alert(id);
+        //$('#notifInsert').html(failText);
+      }
+    });
+
+    return false;
+  }
+
+  function showModalEditUser(id)
+  {
+    var url = base_url+"/user/"+id+"/edit";
+    $("#modal").modal({
+      backdrop: 'static',
+      keyboard: false
+    },
+    "show");
+    $('#modal-content').html(loadingHtml);
+    $('#modal-content').load(url,function(data){
+      if(data!=""){
+        //$('#lampiran_id').html('');
+      }
+      else{
+        //alert(id);
+        //$('#notifInsert').html(failText);
+      }
+    });
+
+    return false;
+  }
 </script>
 @endsection

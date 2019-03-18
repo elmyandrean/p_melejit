@@ -23,3 +23,4 @@ Route::resource('/funding', 'FundingController');
 Route::resource('/kredit_retail', 'RetailCreditController');
 Route::resource('/transaction', 'TransactionController');
 Route::resource('/kkb', 'VehicleLoanController');
+Route::get('/data/get_user', 'DataController@get_user')->name('data.get_user');
