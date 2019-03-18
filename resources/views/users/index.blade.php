@@ -25,7 +25,7 @@
         <h3 class="box-title" style="padding-top:5px;">Data User</h3>
 
         <div class="box-tools pull-right">
-          <a href="#" class="btn btn-primary" onclick="showModal(null, '{{route('user.create')}}');"><i class="fa fa-plus"></i> New Data</a>
+          <a href="#" class="btn btn-primary" onclick="showModal();"><i class="fa fa-plus"></i> New Data</a>
         </div>
       </div>
       <div class="box-body">
@@ -67,8 +67,10 @@
     $('#data-funding').DataTable();
   })
 
-  function showModal(url)
+  function showModal()
   {
+    var url = '{{route('user.create')}}';
+    
     $("#modal").modal({
       backdrop: 'static',
       keyboard: false
@@ -108,6 +110,11 @@
     });
 
     return false;
+  }
+
+  function deleteUser(id)
+  {
+    var url = base_url+"/user/"+id;
   }
 </script>
 @endsection

@@ -37,8 +37,8 @@ class UserController extends Controller
     {
         $user = new User;
         $user->nip = $request->nip;
-        $user->name = $request->nip;
-        $user->email = $request->nip;
+        $user->name = $request->name;
+        $user->email = $request->email;
         $user->password = bcrypt('123456');
         $user->position = $request->position;
 
