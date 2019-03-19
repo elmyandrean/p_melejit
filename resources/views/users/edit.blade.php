@@ -1,7 +1,7 @@
 <div class="modal-header">
   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
     <span aria-hidden="true">&times;</span></button>
-  <h4 class="modal-title">Create User</h4>
+  <h4 class="modal-title">Edit User [NIP: {{$user->name}}]</h4>
 </div>
 <div class="modal-body">
   <div class="alert alert-danger" style="display:none"></div>
@@ -67,11 +67,12 @@
       dataType: "JSON",
       success: function(data){
         if (data.status == 'errors') {
-          $.each(data.errors, function(key, value){
+          $.each(data.message, function(key, value){
             $('.alert-danger').show();
             $('.alert-danger').append('<p>'+value+'</p>');
           });
-        } else {
+        } else if(data.status == 'success') {
+          document.getElementById('formEdit').reset();
           $("#modal").modal("hide");
           loadData();
         }

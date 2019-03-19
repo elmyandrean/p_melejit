@@ -41,7 +41,7 @@ class UserController extends Controller
             'nip' => 'required',
             'name' => 'required',
             'email' => 'required|email',
-            'phone' => 'required',
+            'phone' => 'required|numeric',
             'position' => 'required',
         ]);
         
@@ -106,7 +106,7 @@ class UserController extends Controller
             'nip' => 'required',
             'name' => 'required',
             'email' => 'required|email',
-            'phone' => 'required',
+            'phone' => 'required|numeric',
             'position' => 'required',
         ]);
         
@@ -128,7 +128,7 @@ class UserController extends Controller
             
             return response()->json([
                 'status'=>'success', 
-                'message'=>'Record is successfully added',
+                'message'=>'Record is successfully edited',
             ]);
         }
     }
@@ -141,6 +141,13 @@ class UserController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $user = User::where('id', '=', $id)->firstOrFail();
+
+        $user->delete();
+
+        return response()->json([
+            'status'=>'success', 
+            'message'=>'Record is successfully deleted',
+        ]);
     }
 }

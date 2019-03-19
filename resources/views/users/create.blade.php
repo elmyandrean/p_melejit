@@ -66,11 +66,13 @@
       dataType: "JSON",
       success: function(data){
         if (data.status == 'errors') {
-          $.each(data.errors, function(key, value){
+          $('.alert-danger').html('');
+          $.each(data.message, function(key, value){
             $('.alert-danger').show();
             $('.alert-danger').append('<p>'+value+'</p>');
           });
-        } else {
+        } else if(data.status == 'success') {
+          document.getElementById('formInsert').reset();
           $("#modal").modal("hide");
           loadData();
         }
