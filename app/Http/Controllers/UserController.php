@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use Validator;
 
 class UserController extends Controller
 {
@@ -14,7 +15,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        return view("users.index");
+        $users = User::all();
+        return view('users.index', ['users'=>$users]);
     }
 
     /**
@@ -24,7 +26,7 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view("users.create");
+        return view('users.create');
     }
 
     /**
@@ -35,22 +37,36 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        $user = new User;
-        $user->nip = $request->nip;
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = bcrypt('123456');
-        $user->position = $request->position;
-
-        if ($user->save()) {
-            $response["status"] = "success";
-            $response["message"] = "Data berhasil disimpan.";
+        $validator = \Validator::make($request->all(), [
+            'nip' => 'required',
+            'name' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required',
+            'position' => 'required',
+        ]);
+        
+        if ($validator->fails())
+        {
+            return response()->json([
+                'status'=>'errors',
+                'message'=>$validator->errors()->all(),
+            ]);
         } else {
-            $response["status"] = "error";
-            $response["message"] = "Data gagal tersimpan.";
-        }
+            $user = new User;
+            $user->nip = $request->nip;
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->phone = $request->phone;
+            $user->password = bcrypt('123456');
+            $user->position = $request->position;
 
-        return $response;
+            $user->save();
+            
+            return response()->json([
+                'status'=>'success', 
+                'message'=>'Record is successfully added',
+            ]);
+        }
     }
 
     /**
@@ -74,7 +90,7 @@ class UserController extends Controller
     {
         $user = User::find($id);
 
-        return view("users.edit", ['user'=>$user]);
+        return view('users.edit', ['user'=>$user]);
     }
 
     /**
@@ -86,21 +102,35 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user = User::find($id);
-        $user->nip = $request->nip;
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->position = $request->position;
-
-        if ($user->save()) {
-            $response["status"] = "success";
-            $response["message"] = "Data berhasil disimpan.";
+        $validator = \Validator::make($request->all(), [
+            'nip' => 'required',
+            'name' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required',
+            'position' => 'required',
+        ]);
+        
+        if ($validator->fails())
+        {
+            return response()->json([
+                'status'=>'errors',
+                'message'=>$validator->errors()->all(),
+            ]);
         } else {
-            $response["status"] = "error";
-            $response["message"] = "Data gagal tersimpan.";
-        }
+            $user = User::find($id);
+            $user->nip = $request->nip;
+            $user->name = $request->name;
+            $user->email = $request->email;
+            $user->phone = $request->phone;
+            $user->position = $request->position;
 
-        return $response;
+            $user->save();
+            
+            return response()->json([
+                'status'=>'success', 
+                'message'=>'Record is successfully added',
+            ]);
+        }
     }
 
     /**

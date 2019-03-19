@@ -1,120 +1,89 @@
 @extends('layouts.app')
 
+@section('title', 'User')
+
 @section('css')
   <!-- DataTables -->
-  <link rel="stylesheet" href="{{asset('bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
+  <link rel="stylesheet" href="{{asset('adminlte/bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css')}}">
 @endsection
 
 @section('content')
-  <!-- Content Header (Page header) -->
-  <section class="content-header">
-    <h1>
-      User Page
-    </h1>
-    <ol class="breadcrumb">
-      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-      <li class="active">User</li>
-    </ol>
-  </section>
-
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
   <!-- Main content -->
   <section class="content">
     <!-- Default box -->
     <div class="box">
       <div class="box-header with-border">
-        <h3 class="box-title" style="padding-top:5px;">Data User</h3>
-
+        <h3 class="box-title" >Data User</h3>
         <div class="box-tools pull-right">
-          <a href="#" class="btn btn-primary" onclick="showModal();"><i class="fa fa-plus"></i> New Data</a>
+          <button type="button" class="btn btn-primary btn-sm pull-right" onclick="modalInsert()">
+            New Data
+          </button>
         </div>
       </div>
-      <div class="box-body">
-        <table class="table table-hover" id="data_user">
-          <thead>
-            <tr>
-              <th>NIP</th>
-              <th>Nama</th>
-              <th>Email</th>
-              <th>Position</th>
-              <th>#</th>
-            </tr>
-          </thead>
-        </table>
+      <div class="box-body" id="data-user">
+        
       </div>
       <!-- /.box-body -->
     </div>
     <!-- /.box -->
-
   </section>
   <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<div class="modal fade" id="modal">
+  <div class="modal-dialog">
+    <div class="modal-content" id="modal-content">
+      
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 @endsection
 
 @section('js')
   <!-- DataTables -->
-  <script src="{{asset('bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
-  <script src="{{asset('bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
-  <!-- Custom JS -->
-  <script src="{{asset('js/custom.js')}}"></script>
+  <script src="{{asset('adminlte/bower_components/datatables.net/js/jquery.dataTables.min.js')}}"></script>
+  <script src="{{asset('adminlte/bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js')}}"></script>
 @endsection
 
 @section('script')
 <script>
-  $(document).ready(function(){
-    load_data_user('{{route('data.get_user')}}');
+  $(document).ready(function() {
+    loadData();
   });
 
-  $(function(){
-    $('#data-funding').DataTable();
-  })
-
-  function showModal()
+  function loadData()
   {
-    var url = '{{route('user.create')}}';
-    
-    $("#modal").modal({
-      backdrop: 'static',
-      keyboard: false
-    },
-    "show");
-    $('#modal-content').html(loadingHtml);
-    $('#modal-content').load(url,function(data){
-      if(data!=""){
-        //$('#lampiran_id').html('');
-      }
-      else{
-        //alert(id);
-        //$('#notifInsert').html(failText);
-      }
-    });
+    var url = '{{route('data.users')}}';
+    $('#data-user').html(loadingHTML);
+    $('#data-user').load(url);
 
     return false;
   }
 
-  function showModalEditUser(id)
+  function modalInsert()
   {
-    var url = base_url+"/user/"+id+"/edit";
-    $("#modal").modal({
-      backdrop: 'static',
-      keyboard: false
-    },
-    "show");
-    $('#modal-content').html(loadingHtml);
-    $('#modal-content').load(url,function(data){
-      if(data!=""){
-        //$('#lampiran_id').html('');
-      }
-      else{
-        //alert(id);
-        //$('#notifInsert').html(failText);
-      }
-    });
+    var url = '{{route('users.create')}}';
+
+    $("#modal").modal("show");
+    $('#modal-content').load(url);
 
     return false;
   }
 
-  function deleteUser(id)
+  function modalEdit(id)
   {
-    var url = base_url+"/user/"+id;
+    var url = baseUrl+'/users/'+id+'/edit';
+
+    $("#modal").modal("show");
+    $('#modal-content').load(url);
+
+    return false;
   }
 </script>
 @endsection

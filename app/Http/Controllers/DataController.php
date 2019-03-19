@@ -7,13 +7,10 @@ use App\User;
 
 class DataController extends Controller
 {
-    public function get_user()
+    public function users()
     {
-    		$users = User::all();
+        $users = User::all();
 
-    		$response["status"] = "success";
-    		$response["data"] = $users;
-
-    		return $response;
+        return view('users.data', ['users'=>$users]);
     }
 }

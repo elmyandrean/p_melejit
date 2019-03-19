@@ -16,9 +16,10 @@ class DatabaseSeeder extends Seeder
         // $this->call(UsersTableSeeder::class);
     		DB::table('users')->insert([
             'nip' => '123456',
-            'email' => 'admin@gmail.com',
             'name' => 'Admin',
-            'password' => bcrypt('admin'),
+            'email' => 'admin@gmail.com',
+            'phone' => 'admin phone',
+            'password' => bcrypt('123456'),
             'position' => 'admin',
         ]);
     }

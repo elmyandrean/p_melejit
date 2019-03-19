@@ -43,8 +43,4 @@ class LoginController extends Controller
     {
         return 'nip';
     }
-
-    protected function loggedOut(Request $request) {
-        return redirect('/login');
-    }
 }

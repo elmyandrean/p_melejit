@@ -12,15 +12,15 @@
 */
 
 Route::get('/', function () {
-    return redirect()->route('login');
+    if (Auth::check()) {
+    	return redirect()->route('dashboard');
+    } else{
+    	return redirect()->route('login');
+    }
 });
 
 Auth::routes();
 
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
-Route::resource('/user', 'UserController');
-Route::resource('/funding', 'FundingController');
-Route::resource('/kredit_retail', 'RetailCreditController');
-Route::resource('/transaction', 'TransactionController');
-Route::resource('/kkb', 'VehicleLoanController');
-Route::get('/data/get_user', 'DataController@get_user')->name('data.get_user');
+Route::resource('/users', 'UserController');
+Route::get('/data/users', 'DataController@users')->name('data.users');
