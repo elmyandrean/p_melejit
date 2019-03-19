@@ -24,7 +24,7 @@
             @method('DELETE')
             <button type="button" class="btn btn-default btn-xs" title="Reset Password"><i class="fa fa-refresh"></i></button>
             <button type="button" class="btn btn-warning btn-xs" title="Edit User" onclick="modalEdit('{{$user->id}}')"><i class="fa fa-edit"></i></button>
-            <button type="submit" class="btn btn-danger btn-xs delete-button" title="Delete User" data-userid="{{$user->id}}" onclick="deleteUser()"><i class="fa fa-trash"></i></button>
+            <button type="submit" class="btn btn-danger btn-xs delete-button" title="Delete User" data-userid="{{$user->id}}"><i class="fa fa-trash"></i></button>
           </form>
         </td>
       </tr>
