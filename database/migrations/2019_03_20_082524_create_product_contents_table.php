@@ -15,7 +15,12 @@ class CreateProductContentsTable extends Migration
     {
         Schema::create('product_contents', function (Blueprint $table) {
             $table->increments('id');
+            $table->integer('product_holding_id')->unsigned();
+            $table->string('name');
+            $table->integer('poin');
             $table->timestamps();
+
+            $table->foreign('product_holding_id')->references('id')->on('product_holdings');
         });
     }
 
