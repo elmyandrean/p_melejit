@@ -115,6 +115,7 @@
         <li><a href="{{route('dashboard')}}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
         <li class="header">MASTER MENU</li>
         <li><a href="{{route('users.index')}}"><i class="fa fa-user"></i> <span>User</span></a></li>
+        <li><a href="{{route('product_holdings.index')}}"><i class="fa fa-tag"></i> <span>Product Holding</span></a></li>
         <li class="header">TRANSACTION MENU</li>
         <li><a href="#"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
       </ul>

@@ -77,7 +77,7 @@
   <!-- /.login-box -->
 
   <div class="footer">
-    <img src="{{asset('image/logo.png')}}" alt="logo" width="2%"><b>&nbsp;&nbsp;&nbsp;Version</b> 2.4.0 <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
+    <img src="{{asset('images/logo.png')}}" alt="logo" width="2%"><b>&nbsp;&nbsp;&nbsp;Version</b> 2.4.0 <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
       reserved.
   </div>
 
