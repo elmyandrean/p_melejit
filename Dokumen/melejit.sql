@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 21, 2019 at 05:55 PM
+-- Generation Time: Mar 22, 2019 at 01:10 AM
 -- Server version: 10.1.37-MariaDB
--- PHP Version: 7.2.13
+-- PHP Version: 7.2.12
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -30,14 +30,14 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `fundings` (
   `id` int(10) UNSIGNED NOT NULL,
-  `user_id` int(10) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `product_content_id` int(10) UNSIGNED NOT NULL,
   `branch` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `jabatan` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `customer_name` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `account_number` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `account_number` varchar(191) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `other` text COLLATE utf8mb4_unicode_ci,
   `deposit` decimal(15,2) NOT NULL,
-  `other` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `status` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `status` varchar(191) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'pending',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -63,7 +63,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (8, '2014_10_12_100000_create_password_resets_table', 1),
 (10, '2019_03_20_061604_create_product_holdings_table', 2),
 (12, '2019_03_20_082524_create_product_contents_table', 3),
-(15, '2019_03_21_135743_create_fundings_table', 4);
+(16, '2019_03_21_135743_create_fundings_table', 4);
 
 -- --------------------------------------------------------
 
@@ -200,7 +200,8 @@ INSERT INTO `users` (`id`, `nip`, `name`, `email`, `phone`, `password`, `positio
 -- Indexes for table `fundings`
 --
 ALTER TABLE `fundings`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `fundings_product_content_id_foreign` (`product_content_id`);
 
 --
 -- Indexes for table `migrations`
@@ -242,13 +243,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `fundings`
 --
 ALTER TABLE `fundings`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `product_contents`
@@ -271,6 +272,12 @@ ALTER TABLE `users`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `fundings`
+--
+ALTER TABLE `fundings`
+  ADD CONSTRAINT `fundings_product_content_id_foreign` FOREIGN KEY (`product_content_id`) REFERENCES `product_contents` (`id`);
 
 --
 -- Constraints for table `product_contents`

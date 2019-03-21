@@ -360,19 +360,6 @@
 
   var loadingHTML = '<h3 class="text-center"><i class="fa fa-refresh fa-spin"></i> Sedang Mengambil Data</h3>';
   var baseUrl = '{{url('/')}}';
-
-  function getProductContent(id)
-  {
-    var url_link = baseUrl+"/data/"+id+"/product_content";
-    $("#product_content_id").html('<option selected disabled>Loading...</option>')
-    $.ajax({
-      url: url_link,
-      cache: false,
-      success: function (msg) {
-        $("#product_content_id").html(msg);
-      }
-    });
-  }
 </script>
 @yield('script')
 </body>

@@ -15,15 +15,18 @@ class CreateFundingsTable extends Migration
     {
         Schema::create('fundings', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id')->unsigned();
+            $table->unsignedBigInteger('user_id');
+            $table->integer('product_content_id')->unsigned();
             $table->string('branch');
-            $table->string('jabatan', 20);
             $table->string('customer_name');
-            $table->string('account_number');
+            $table->string('account_number')->nullable();
+            $table->text('other')->nullable();
             $table->decimal('deposit', 15, 2);
-            $table->text('other');
-            $table->string('status');
+            $table->string('status')->default('pending');
             $table->timestamps();
+
+            // $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('product_content_id')->references('id')->on('product_contents');
         });
     }
 

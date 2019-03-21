@@ -33,7 +33,7 @@ class DataController extends Controller
 
     public function product_content($id)
     {
-        $product_contents = ProductContent::where('product_holding_id', $id)->get();
+        $product_contents = ProductContent::where(['product_holding_id'=> $id, 'status'=>'active'])->get();
         $result = "";
         foreach ($product_contents as $product_content) {
             $result = $result."<option value='".$product_content->id."'>".$product_content->name."</option>";

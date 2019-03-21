@@ -15,8 +15,8 @@
       @foreach($fundings as $funding)
       <tr>
         <td>{{$funding->branch}}</td>
-        <td>{{$funding->created_at}}</td>
-        <td>{{$funding->product_content_id}}</td>
+        <td>{{$funding->created_at->diffForHumans()}}</td>
+        <td>{{$funding->product_content->product_holding->name}}</td>
         <td>{{$funding->customer_name}}</td>
         <td>{{$funding->user_id}}</td>
         <td>{{$funding->status}}</td>
@@ -24,8 +24,7 @@
           <form action="{{route('fundings.destroy', $funding->id)}}" method="POST">
             @csrf
             @method('DELETE')
-            <button type="button" class="btn btn-default btn-xs" title="Reset Password"><i class="fa fa-refresh"></i></button>
-            <button type="button" class="btn btn-warning btn-xs" title="Edit User" onclick="modalEdit('{{$funding->id}}')"><i class="fa fa-edit"></i></button>
+            <button type="button" class="btn btn-warning btn-xs" title="Edit Data" onclick="modalEdit('{{$funding->id}}')"><i class="fa fa-edit"></i></button>
             <button type="submit" class="btn btn-danger btn-xs delete-button" title="Delete User" data-userid="{{$funding->id}}"><i class="fa fa-trash"></i></button>
           </form>
         </td>

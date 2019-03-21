@@ -22,7 +22,7 @@
     <div class="form-group">
       <label class="control-label col-md-3">Product Content</label>
       <div class="col-md-8">
-        <select name="product_content_id" id="product_content_id" class="form-control">
+        <select name="product_content_id" id="product_content_id" class="form-control" onchange="inputFunding()">
           <option selected  disabled>- Product Content -</option>
         </select>
       </div>
@@ -43,16 +43,16 @@
         <input type="text" class="form-control" name="customer_name">
       </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" style="display:none;" id="view-account-number">
       <label class="control-label col-md-3">Nomor Rekening</label>
       <div class="col-md-8">
-        <input type="text" class="form-control" name="account_number">
+        <input type="text" class="form-control" name="account_number" id="account_number">
       </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" style="display:none;" id="view-other">
       <label class="control-label col-md-3">Other</label>
       <div class="col-md-8">
-        <input type="text" class="form-control" name="other">
+        <input type="text" class="form-control" name="other" id="other">
       </div>
     </div>
     <div class="form-group">
@@ -97,4 +97,35 @@
       }
     });
   });
+
+  function getProductContent(id)
+  {
+    var url_link = baseUrl+"/data/"+id+"/product_content";
+    $("#product_content_id").html('<option selected disabled>Loading...</option>')
+    $.ajax({
+      url: url_link,
+      cache: false,
+      success: function (msg) {
+        $("#product_content_id").html(msg);
+
+        inputFunding();
+      }
+    });
+  }
+
+  function inputFunding() {
+    var value = $("#product_holding option:selected").text();
+    
+    if(value == 'New Payroll'){
+      $("#view-other").show();
+      $("#view-account-number").hide();
+
+      $("#account_number").val('');
+    } else {
+      $("#view-other").hide();
+      $("#view-account-number").show();
+
+      $("#other").val('');
+    }
+  }
 </script>
