@@ -17,7 +17,8 @@ class CreateProductContentsTable extends Migration
             $table->increments('id');
             $table->integer('product_holding_id')->unsigned();
             $table->string('name');
-            $table->integer('poin');
+            $table->integer('point');
+            $table->string('status', 10)->default('active');
             $table->timestamps();
 
             $table->foreign('product_holding_id')->references('id')->on('product_holdings');

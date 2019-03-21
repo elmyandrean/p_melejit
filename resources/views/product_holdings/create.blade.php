@@ -44,21 +44,21 @@
               <th class="text-center" width="10%">#</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody id="data-content">
             
           </tbody>
           <tfoot>
             <tr>
               <td style="padding-left: 0px;"><input type="text" class="form-control" placeholder="Nama Product Content" id="pc_name"></td>
               <td><input type="numeric" class="form-control" placeholder="Point" id="pc_point"></td>
-              <td><button class="btn btn-default"><i class="fa fa-plus"></i></button></td>
+              <td><button class="btn btn-default" onclick="addRow()"><i class="fa fa-plus"></i></button></td>
             </tr>
           </tfoot>
         </table>
       </div>
     </div>
     <div class="form-group" id="pc_no" style="display: none">
-      <label class="label-control col-md-3">Point</label>
+      <label class="control-label col-md-3">Point</label>
       <div class="col-md-8">
         <input type="numeric" class="form-control" name="no_point">
         <input type="hidden" name="no_name" value="-">
@@ -110,5 +110,36 @@
       document.getElementById('pc_no').style.display = 'block';
       document.getElementById('pc_yes').style.display = 'none';
     }
+  }
+
+  function addRow(){
+    event.preventDefault();
+
+    var table = document.getElementById("data-content");
+    var row = table.insertRow(-1);
+
+    var jumlah_baris = document.getElementById("data-content").rows.length;
+    jumlah_baris = jumlah_baris-2;
+    jumlah_baris = jumlah_baris.toString();
+
+    var pc_name = $("#pc_name").val();
+    var pc_point = $("#pc_point").val();
+
+    var cell1 = row.insertCell(0);
+    var cell2 = row.insertCell(1);
+    var cell3 = row.insertCell(2);
+    cell1.innerHTML = pc_name+'<input type="hidden" name="yes_name[]" value="'+pc_name+'">';
+    cell2.innerHTML = pc_point+'<input type="hidden" name="yes_point[]" value="'+pc_point+'">';
+    cell3.innerHTML = '<a href="#" onclick="deleteRow(this); return false;"><i class="fa fa-trash"></i></a>';
+
+    $("#pc_name").val('');
+    $("#pc_point").val('');
+
+    return false;
+  }
+
+  function deleteRow(btn) {
+    var row = btn.parentNode.parentNode;
+    row.parentNode.removeChild(row);
   }
 </script>

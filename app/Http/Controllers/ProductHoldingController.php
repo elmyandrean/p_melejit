@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\ProductHolding;
+use App\ProductContent;
+use Illuminate\Database\Eloquent\Builder;
 
 class ProductHoldingController extends Controller
 {
@@ -52,6 +54,27 @@ class ProductHoldingController extends Controller
             $product_holding->menu = $request->menu;
 
             $product_holding->save();
+
+            $i = 0;
+            if ($request->product_content == 'y') {
+                foreach ($request->yes_name as $yes_name) {    
+                    $product_content = new ProductContent;    
+                    $product_content->product_holding_id = $product_holding->id;
+                    $product_content->name = $request->yes_name[$i];
+                    $product_content->point = $request->yes_point[$i];
+
+                    $product_content->save();
+
+                    $i++;
+                }
+            } else {
+                $product_content = new ProductContent;
+                $product_content->product_holding_id = $product_holding->id;
+                $product_content->name = $request->no_name;
+                $product_content->point = $request->no_point;
+
+                $product_content->save();
+            }
             
             return response()->json([
                 'status'=>'success', 
@@ -80,6 +103,7 @@ class ProductHoldingController extends Controller
     public function edit($id)
     {
         $product_holding = ProductHolding::find($id);
+        $product_holding->product_content = ProductContent::where(['product_holding_id' => $product_holding->id, 'status' => 'active'])->get();
 
         return view('product_holdings.edit', ['product_holding'=>$product_holding]);
     }
@@ -110,6 +134,30 @@ class ProductHoldingController extends Controller
             $product_holding->menu = $request->menu;
 
             $product_holding->save();
+
+            $old_product_content = ProductContent::where('product_holding_id', $product_holding->id);
+            $old_product_content->update(['status' => 'deactive']);
+            
+            $i=0;
+            if ($request->product_content == 'y') {
+                foreach ($request->yes_name as $yes_name) {
+                    $product_content = new ProductContent;
+                    $product_content->product_holding_id = $product_holding->id;
+                    $product_content->name = $request->yes_name[$i];
+                    $product_content->point = $request->yes_point[$i];
+
+                    $product_content->save();
+
+                    $i++;
+                }
+            } else {
+                $product_content = new ProductContent;
+                $product_content->product_holding_id = $product_holding->id;
+                $product_content->name = '-';
+                $product_content->point = $request->no_point;
+
+                $product_content->save();
+            }
             
             return response()->json([
                 'status'=>'success', 
@@ -126,9 +174,11 @@ class ProductHoldingController extends Controller
      */
     public function destroy($id)
     {
-        $product_holding = ProductHolding::where('id', '=', $id)->firstOrFail();
+        $product_holding = ProductHolding::where('id', '=', $id);
+        $product_holding->update(['status'=>'deactive']);
 
-        $product_holding->delete();
+        $product_content = ProductContent::where('product_holding_id', $id);
+        $product_content->update(['status'=>'deactive']);
 
         return response()->json([
             'status'=>'success', 

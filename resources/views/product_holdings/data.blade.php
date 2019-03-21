@@ -1,5 +1,5 @@
 <div class="table-responsive">
-  <table class="table">
+  <table class="table" id="data-productcontent">
     <thead>
       <tr>
         <th class="text-center">Menu</th>
@@ -27,15 +27,13 @@
 </div>
 
 <script>
-  $(".table").dataTable();
+  $("#data-productcontent").dataTable();
 
   $(".delete-button").click(function(e){
     e.preventDefault();
     
     var data =  $(this).closest("form").serialize();
     var url =  $(this).closest("form").attr('action');
-
-    alert(url)
 
     $.ajax({
       type: "POST",
