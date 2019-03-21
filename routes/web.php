@@ -24,6 +24,9 @@ Auth::routes();
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 Route::resource('/users', 'UserController');
 Route::resource('/product_holdings', 'ProductHoldingController');
+Route::resource('/fundings', 'FundingController');
 Route::get('/data/users', 'DataController@users')->name('data.users');
 Route::get('/data/product_holdings', 'DataController@product_holdings')->name('data.product_holdings');
+Route::get('/data/fundings', 'DataController@fundings')->name('data.fundings');
+Route::get('/data/{id}/product_content', 'DataController@product_content')->name('data.product_content');
 

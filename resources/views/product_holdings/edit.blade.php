@@ -13,10 +13,10 @@
       <label class="control-label col-md-3">Menu</label>
       <div class="col-md-8">
         <select name="menu" class="form-control">
-          <option value="funding" {{$product_holding->menu == 'funding' ? 'selected' : ''}}>Funding</option>
-          <option value="kkb" {{$product_holding->menu == 'kkb' ? 'selected' : ''}}>KKB</option>
-          <option value="kredit_retail" {{$product_holding->menu == 'kredit_retail' ? 'selected' : ''}}>Kredit Retail</option>
-          <option value="transactional" {{$product_holding->menu == 'transactional' ? 'selected' : ''}}>Transactional</option>
+          <option value="Funding" {{$product_holding->menu == 'Funding' ? 'selected' : ''}}>Funding</option>
+          <option value="KKB" {{$product_holding->menu == 'KKB' ? 'selected' : ''}}>KKB</option>
+          <option value="Kredit Retail" {{$product_holding->menu == 'Kredit Retail' ? 'selected' : ''}}>Kredit Retail</option>
+          <option value="Transactional" {{$product_holding->menu == 'Transactional' ? 'selected' : ''}}>Transactional</option>
         </select>
       </div>
     </div>

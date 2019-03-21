@@ -117,6 +117,7 @@
         <li><a href="{{route('users.index')}}"><i class="fa fa-user"></i> <span>User</span></a></li>
         <li><a href="{{route('product_holdings.index')}}"><i class="fa fa-tag"></i> <span>Product Holding</span></a></li>
         <li class="header">TRANSACTION MENU</li>
+        <li><a href="{{route('fundings.index')}}"><i class="fa fa-book"></i> <span>Funding</span></a></li>
         <li><a href="#"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
       </ul>
     </section>
@@ -359,6 +360,19 @@
 
   var loadingHTML = '<h3 class="text-center"><i class="fa fa-refresh fa-spin"></i> Sedang Mengambil Data</h3>';
   var baseUrl = '{{url('/')}}';
+
+  function getProductContent(id)
+  {
+    var url_link = baseUrl+"/data/"+id+"/product_content";
+    $("#product_content_id").html('<option selected disabled>Loading...</option>')
+    $.ajax({
+      url: url_link,
+      cache: false,
+      success: function (msg) {
+        $("#product_content_id").html(msg);
+      }
+    });
+  }
 </script>
 @yield('script')
 </body>

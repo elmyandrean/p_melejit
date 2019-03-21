@@ -12,10 +12,10 @@
       <label class="control-label col-md-3">Menu</label>
       <div class="col-md-8">
         <select name="menu" class="form-control">
-          <option value="funding">Funding</option>
-          <option value="kkb">KKB</option>
-          <option value="kredit_retail">Kredit Retail</option>
-          <option value="transactional">Transactional</option>
+          <option value="Funding">Funding</option>
+          <option value="KKB">KKB</option>
+          <option value="Kredit Retail">Kredit Retail</option>
+          <option value="Transactional">Transactional</option>
         </select>
       </div>
     </div>
