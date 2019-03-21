@@ -42,8 +42,6 @@
     var data =  $(this).closest("form").serialize();
     var url =  $(this).closest("form").attr('action');
 
-    alert(url)
-
     $.ajax({
       type: "POST",
       url: url,

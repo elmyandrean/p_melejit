@@ -127,6 +127,17 @@
 
   @yield('content')
 
+  <div class="modal fade bs-modal-lg" id="modal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content" id="modal-content">
+        
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
       <b>Version</b> 2.4.0
