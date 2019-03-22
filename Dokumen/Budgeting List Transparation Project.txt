@@ -1,0 +1,72 @@
+link : batamlaju.com
+user : 9970038634
+password : 12345
+
+=====================================
+Employee Assessment Program
+=====================================
+========================
+Functional Modul :
+========================
+* Master User (Hak Akses Previllage) 
+* Master Services Karyawan 
+* Master Cabang & nasabah 
+* Master Bobot Penilaian (KR, KKB, FUNDING, TRANSACTIONAL) 
+* Master Kredit Retail 
+* Master KKB 
+* Master Funding 
+* CRUD Transactional 
+
+========================
+Non Functional Modul :
+========================
+* Report by Dayly, Weekly, Monthly [UI Diagram & Export Data]
+* Report by Cabang [UI Diagram & Export Data]
+  (include kredit retail, kkb, funding, dan all transactional)
+
+=========================================================
+Total = 8 Functional Modul     = 8 x 700.000 = 5.600.000
+        2 Non Functional Modul = 2 x 400.000 =   800.000
+	3 Hak Akses 	       = 3 x 100.000 =   300.000
+========================================================= +
+Grand Total                                  = 6.700.000 - Domain Hosting 418.000 = "6.282.000" terima bersih 
+			       DP Turun 40 % = 2.680.000 - Domain Hosting 418.000 = "2.262.000" terima bersih
+
+
+=========================================================
+Fee Transparation on Job Desk -  Cash Payment: 6.282.000
+=========================================================
+Elmy  35% : 2.198.700 
+Hanif 33% : 2.073.000
+Rizal 32% : 2.010.000
+
+========================================================================================
+Fee Transparation on Job Desk -  Down Payment 40%: 2.262.000 (setelah terpotong hosting)
+========================================================================================
+Elmy  35% : 2.198.700 = 791.700 
+Hanif 33% : 2.073.000 = 746.460
+Rizal 32% : 2.010.000 = 723.840
+
+=======================================================================================
+Fee Transparation on Job Desk -  Paid of Payment 60%: 4.020.000
+=======================================================================================
+Elmy  35% : 2.198.700 = 1.407.000 
+Hanif 33% : 2.073.000 = 1.326.600
+Rizal 32% : 2.010.000 = 1.286.400
+========================================================================================
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

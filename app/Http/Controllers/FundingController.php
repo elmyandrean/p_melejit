@@ -142,4 +142,30 @@ class FundingController extends Controller
             'message'=>'Record is successfully deleted',
         ]);
     }
+
+    public function reject($id)
+    {
+        $funding = Funding::find($id);
+
+        $funding->status = 'rejected';
+        $funding->save();
+
+        return response()->json([
+            'status'=>'success', 
+            'message'=>'Record is successfully rejected',
+        ]);
+    }
+
+    public function approve($id)
+    {
+        $funding = Funding::find($id);
+
+        $funding->status = 'approved';
+        $funding->save();
+
+        return response()->json([
+            'status'=>'success', 
+            'message'=>'Record is successfully approved',
+        ]);
+    }
 }

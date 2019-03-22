@@ -25,6 +25,8 @@ Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 Route::resource('/users', 'UserController');
 Route::resource('/product_holdings', 'ProductHoldingController');
 Route::resource('/fundings', 'FundingController');
+Route::put('/fundings/{id}/reject', 'FundingController@reject')->name('funding.reject');
+Route::put('/fundings/{id}/approve', 'FundingController@approve')->name('funding.approve');
 Route::get('/data/users', 'DataController@users')->name('data.users');
 Route::get('/data/product_holdings', 'DataController@product_holdings')->name('data.product_holdings');
 Route::get('/data/fundings', 'DataController@fundings')->name('data.fundings');
