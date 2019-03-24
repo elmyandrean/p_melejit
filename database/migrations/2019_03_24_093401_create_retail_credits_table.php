@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateFundingsTable extends Migration
+class CreateRetailCreditsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,14 @@ class CreateFundingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('fundings', function (Blueprint $table) {
+        Schema::create('retail_credits', function (Blueprint $table) {
             $table->increments('id');
             $table->unsignedBigInteger('user_id');
             $table->integer('product_content_id')->unsigned();
             $table->string('customer_name');
             $table->string('account_number')->nullable();
-            $table->text('other')->nullable();
-            $table->decimal('deposit', 15, 2);
+            $table->decimal('nominal', 15, 2)->nullable();
+            $table->decimal('limit', 15, 2)->nullable();
             $table->string('status')->default('pending');
             $table->timestamps();
 
@@ -36,6 +36,6 @@ class CreateFundingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('fundings');
+        Schema::dropIfExists('retail_credits');
     }
 }

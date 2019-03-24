@@ -6,7 +6,7 @@
 <div class="modal-body">
   <div class="alert alert-danger" style="display:none"></div>
 
-  <form action="{{route('fundings.store')}}" class="form-horizontal" method="POST" id="formInsert">
+  <form action="{{route('kkbs.store')}}" class="form-horizontal" method="POST" id="formInsert">
     @csrf
     <div class="form-group">
       <label class="control-label col-md-3">Product Holding</label>
@@ -33,22 +33,16 @@
         <input type="text" class="form-control" name="customer_name">
       </div>
     </div>
-    <div class="form-group" style="display:none;" id="view-account-number">
-      <label class="control-label col-md-3">Nomor Rekening</label>
+    <div class="form-group" style="display:none;" id="view-unit">
+      <label class="control-label col-md-3">Unit</label>
       <div class="col-md-8">
-        <input type="text" class="form-control" name="account_number" id="account_number">
+        <input type="text" class="form-control" name="unit" id="unit">
       </div>
     </div>
-    <div class="form-group" style="display:none;" id="view-other">
-      <label class="control-label col-md-3">Other</label>
+    <div class="form-group" style="display:none;" id="view-nominal">
+      <label class="control-label col-md-3">Nominal</label>
       <div class="col-md-8">
-        <input type="text" class="form-control" name="other" id="other">
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="control-label col-md-3">Setoran Awal</label>
-      <div class="col-md-8">
-        <input type="text" class="form-control" name="deposit">
+        <input type="text" class="form-control" name="nominal" id="nominal">
       </div>
     </div>
     <div class="form-group">
@@ -106,16 +100,16 @@
   function inputFunding() {
     var value = $("#product_holding option:selected").text();
     
-    if(value == 'New Payroll'){
-      $("#view-other").show();
-      $("#view-account-number").hide();
+    if(value == 'AXA'){
+      $("#view-nominal").show();
+      $("#view-unit").hide();
 
-      $("#account_number").val('');
+      $("#unit").val('');
     } else {
-      $("#view-other").hide();
-      $("#view-account-number").show();
+      $("#view-nominal").hide();
+      $("#view-unit").show();
 
-      $("#other").val('');
+      $("#nominal").val('');
     }
   }
 </script>

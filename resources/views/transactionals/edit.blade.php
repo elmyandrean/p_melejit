@@ -6,7 +6,7 @@
   <div class="modal-body">
     <div class="alert alert-danger" style="display:none"></div>
   
-    <form action="{{route('fundings.update', $funding->id)}}" class="form-horizontal" method="POST" id="formInsert">
+    <form action="{{route('transactionals.update', $transactional->id)}}" class="form-horizontal" method="POST" id="formInsert">
       @csrf
       @method('PUT')
       <div class="form-group">
@@ -15,7 +15,7 @@
           <select name="product_holding" id="product_holding" class="form-control" onchange="getProductContent(this.value)">
             <option selected disabled>- Product Holding -</option>
             @foreach($product_holdings as $product_holding)
-            <option value="{{$product_holding->id}}" {{$funding->product_content->product_holding->id == $product_holding->id ? "selected" : ""}}>{{$product_holding->name}}</option>
+            <option value="{{$product_holding->id}}" {{$transactional->product_content->product_holding->id == $product_holding->id ? "selected" : ""}}>{{$product_holding->name}}</option>
             @endforeach
           </select>
         </div>
@@ -26,35 +26,35 @@
           <select name="product_content_id" id="product_content_id" class="form-control" onchange="inputFunding()">
             <option selected  disabled>- Product Content -</option>
             @foreach($product_contents as $product_content)
-            <option value="{{$product_content->id}}" {{$funding->product_content->id == $product_content->id ? "selected" : ""}}>{{$product_content->name}}</option>
+            <option value="{{$product_content->id}}" {{$transactional->product_content->id == $product_content->id ? "selected" : ""}}>{{$product_content->name}}</option>
             @endforeach
           </select>
         </div>
       </div>
-      <div class="form-group">
+      <div class="form-group" style="display:none;" id="view-customer-name">
         <label class="control-label col-md-3">Nama Nasabah</label>
         <div class="col-md-8">
-          <input type="text" class="form-control" name="customer_name" value="{{$funding->customer_name}}">
+          <input type="text" class="form-control" name="customer_name" value="{{$transactional->customer_name}}">
+        </div>
+      </div>
+      <div class="form-group" style="display:none;" id="view-merchant-name">
+        <label class="control-label col-md-3">Nama Merchant</label>
+        <div class="col-md-8">
+          <input type="text" class="form-control" name="customer_name" value="{{$transactional->merchant_name}}">
         </div>
       </div>
       <div class="form-group" style="display:none;" id="view-account-number">
         <label class="control-label col-md-3">Nomor Rekening</label>
         <div class="col-md-8">
-          <input type="text" class="form-control" name="account_number" id="account_number" value="{{$funding->account_number}}">
+          <input type="text" class="form-control" name="account_number" id="account_number" value="{{$transactional->account_number}}">
         </div>
       </div>
-      <div class="form-group" style="display:none;" id="view-other">
-        <label class="control-label col-md-3">Other</label>
-        <div class="col-md-8">
-          <input type="text" class="form-control" name="other" id="other" value="{{$funding->other}}">
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="control-label col-md-3">Setoran Awal</label>
-        <div class="col-md-8">
-          <input type="text" class="form-control" name="deposit" value="{{$funding->deposit}}">
-        </div>
-      </div>
+	    <div class="form-group" style="display:none;" id="view-nominal">
+	      <label class="control-label col-md-3">Nominal</label>
+	      <div class="col-md-8">
+	        <input type="text" class="form-control" name="nominal" id="nominal"  value="{{$transactional->nominal}}">
+	      </div>
+	    </div>
       <div class="form-group">
         <div class="col-md-offset-3 col-md-8">
           <button class="btn btn-primary">Simpan</button>
@@ -114,16 +114,29 @@
     function inputFunding() {
       var value = $("#product_holding option:selected").text();
       
-      if(value == 'New Payroll'){
-        $("#view-other").show();
+      if(value == 'EDC'){
+        $("#view-customer-name").hide();
+        $("#view-merchant-name").show();
         $("#view-account-number").hide();
-  
+        $("#view-nominal").show();
+
+        $("#customer_name").val('');
         $("#account_number").val('');
-      } else {
-        $("#view-other").hide();
+      } else if(value == 'Branchless Banking'){
+        $("#view-customer-name").show();
+        $("#view-merchant-name").hide();
         $("#view-account-number").show();
-  
-        $("#other").val('');
+        $("#view-nominal").show();
+
+        $("#merchant_name").val('');
+      } else {
+        $("#view-customer-name").show();
+        $("#view-merchant-name").hide();
+        $("#view-account-number").show();
+        $("#view-nominal").hide();
+
+        $("#merchant_name").val('');
+        $("#nominal").val('');
       }
     }
   </script>

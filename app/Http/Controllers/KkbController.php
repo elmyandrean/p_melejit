@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Funding;
+use App\Kkb;
 use App\ProductHolding;
 use App\ProductContent;
 use Auth;
 
-class FundingController extends Controller
+class KkbController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +17,7 @@ class FundingController extends Controller
      */
     public function index()
     {
-        $fundings = Funding::all();
-
-        return view('fundings.index', ['fundings'=>$fundings]);
+        return view('kkbs.index');
     }
 
     /**
@@ -29,9 +27,9 @@ class FundingController extends Controller
      */
     public function create()
     {
-        $product_holdings = ProductHolding::where(['status'=>'active', 'menu'=>'Funding'])->get();
+        $product_holdings = ProductHolding::where(['status'=>'active', 'menu'=>'KKB'])->get();
 
-        return view('fundings.create', ['product_holdings'=>$product_holdings]);
+        return view('kkbs.create', ['product_holdings'=>$product_holdings]);
     }
 
     /**
@@ -45,18 +43,16 @@ class FundingController extends Controller
         $validator = \Validator::make($request->all(), [
             'product_content_id' => 'required',
             'customer_name' => 'required',
-            'deposit' => 'required',
         ]);
 
-        $funding = new Funding;
-        $funding->user_id = Auth::user()->id;
-        $funding->product_content_id = $request->product_content_id;
-        $funding->customer_name = $request->customer_name;
-        $funding->account_number = $request->account_number;
-        $funding->other = $request->other;
-        $funding->deposit = $request->deposit;
+        $kkb = new Kkb;
+        $kkb->user_id = Auth::user()->id;
+        $kkb->product_content_id = $request->product_content_id;
+        $kkb->customer_name = $request->customer_name;
+        $kkb->unit = $request->unit;
+        $kkb->nominal = $request->nominal;
 
-        $funding->save();
+        $kkb->save();
 
         return response()->json([
             'status'=>'success', 
@@ -83,11 +79,11 @@ class FundingController extends Controller
      */
     public function edit($id)
     {
-        $funding = Funding::find($id);
-        $product_holdings = ProductHolding::where(['menu'=>'Funding', 'status'=>'active'])->get();
-        $product_contents = ProductContent::where(['product_holding_id'=>$funding->product_content->product_holding_id, 'status'=>'active'])->get();
+        $kkb = Kkb::find($id);
+        $product_holdings = ProductHolding::where(['menu'=>'KKB', 'status'=>'active'])->get();
+        $product_contents = ProductContent::where(['product_holding_id'=>$kkb->product_content->product_holding_id, 'status'=>'active'])->get();
 
-        return view('fundings.edit', ['funding'=>$funding, 'product_holdings'=>$product_holdings, 'product_contents'=>$product_contents]);
+        return view('kkbs.edit', ['kkb'=>$kkb, 'product_holdings'=>$product_holdings, 'product_contents'=>$product_contents]);
     }
 
     /**
@@ -102,18 +98,16 @@ class FundingController extends Controller
         $validator = \Validator::make($request->all(), [
             'product_content_id' => 'required',
             'customer_name' => 'required',
-            'deposit' => 'required',
         ]);
 
-        $funding = Funding::find($id);
-        $funding->user_id = Auth::user()->id;
-        $funding->product_content_id = $request->product_content_id;
-        $funding->customer_name = $request->customer_name;
-        $funding->account_number = $request->account_number;
-        $funding->other = $request->other;
-        $funding->deposit = $request->deposit;
+        $kkb = Kkb::find($id);
+        $kkb->user_id = Auth::user()->id;
+        $kkb->product_content_id = $request->product_content_id;
+        $kkb->customer_name = $request->customer_name;
+        $kkb->unit = $request->unit;
+        $kkb->nominal = $request->nominal;
 
-        $funding->save();
+        $kkb->save();
 
         return response()->json([
             'status'=>'success', 
@@ -129,9 +123,9 @@ class FundingController extends Controller
      */
     public function destroy($id)
     {
-        $funding = Funding::find($id);
+        $kkb = Kkb::find($id);
 
-        $funding->delete();
+        $kkb->delete();
 
         return response()->json([
             'status'=>'success', 
@@ -141,10 +135,10 @@ class FundingController extends Controller
 
     public function approve($id)
     {
-        $funding = Funding::find($id);
+        $kkb = Kkb::find($id);
 
-        $funding->status = 'approved';
-        $funding->save();
+        $kkb->status = 'approved';
+        $kkb->save();
 
         return response()->json([
             'status'=>'success', 

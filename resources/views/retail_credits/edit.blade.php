@@ -1,12 +1,12 @@
 <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
       <span aria-hidden="true">&times;</span></button>
-    <h4 class="modal-title">Create Funding</h4>
+    <h4 class="modal-title">Edit Kredit Retail</h4>
   </div>
   <div class="modal-body">
     <div class="alert alert-danger" style="display:none"></div>
   
-    <form action="{{route('fundings.update', $funding->id)}}" class="form-horizontal" method="POST" id="formInsert">
+    <form action="{{route('retail_credits.update', $retail_credit->id)}}" class="form-horizontal" method="POST" id="formInsert">
       @csrf
       @method('PUT')
       <div class="form-group">
@@ -15,7 +15,7 @@
           <select name="product_holding" id="product_holding" class="form-control" onchange="getProductContent(this.value)">
             <option selected disabled>- Product Holding -</option>
             @foreach($product_holdings as $product_holding)
-            <option value="{{$product_holding->id}}" {{$funding->product_content->product_holding->id == $product_holding->id ? "selected" : ""}}>{{$product_holding->name}}</option>
+            <option value="{{$product_holding->id}}" {{$retail_credit->product_content->product_holding->id == $product_holding->id ? "selected" : ""}}>{{$product_holding->name}}</option>
             @endforeach
           </select>
         </div>
@@ -26,7 +26,7 @@
           <select name="product_content_id" id="product_content_id" class="form-control" onchange="inputFunding()">
             <option selected  disabled>- Product Content -</option>
             @foreach($product_contents as $product_content)
-            <option value="{{$product_content->id}}" {{$funding->product_content->id == $product_content->id ? "selected" : ""}}>{{$product_content->name}}</option>
+            <option value="{{$product_content->id}}" {{$retail_credit->product_content->id == $product_content->id ? "selected" : ""}}>{{$product_content->name}}</option>
             @endforeach
           </select>
         </div>
@@ -34,25 +34,25 @@
       <div class="form-group">
         <label class="control-label col-md-3">Nama Nasabah</label>
         <div class="col-md-8">
-          <input type="text" class="form-control" name="customer_name" value="{{$funding->customer_name}}">
+          <input type="text" class="form-control" name="customer_name" value="{{$retail_credit->customer_name}}">
         </div>
       </div>
       <div class="form-group" style="display:none;" id="view-account-number">
-        <label class="control-label col-md-3">Nomor Rekening</label>
+        <label class="control-label col-md-3">No. Rekening Gaji</label>
         <div class="col-md-8">
-          <input type="text" class="form-control" name="account_number" id="account_number" value="{{$funding->account_number}}">
+          <input type="text" class="form-control" name="account_number" id="account_number" value="{{$retail_credit->account_number}}">
         </div>
       </div>
-      <div class="form-group" style="display:none;" id="view-other">
-        <label class="control-label col-md-3">Other</label>
+      <div class="form-group" style="display:none;" id="view-nominal">
+        <label class="control-label col-md-3">Nominal</label>
         <div class="col-md-8">
-          <input type="text" class="form-control" name="other" id="other" value="{{$funding->other}}">
+          <input type="text" class="form-control" name="nominal" id="nominal" value="{{$retail_credit->nominal}}">
         </div>
       </div>
-      <div class="form-group">
-        <label class="control-label col-md-3">Setoran Awal</label>
+      <div class="form-group" style="display:none;" id="view-limit">
+        <label class="control-label col-md-3">Limit CC</label>
         <div class="col-md-8">
-          <input type="text" class="form-control" name="deposit" value="{{$funding->deposit}}">
+          <input type="text" class="form-control" name="limit" id="limit" value="{{$retail_credit->limit}}">
         </div>
       </div>
       <div class="form-group">
@@ -114,16 +114,26 @@
     function inputFunding() {
       var value = $("#product_holding option:selected").text();
       
-      if(value == 'New Payroll'){
-        $("#view-other").show();
-        $("#view-account-number").hide();
-  
-        $("#account_number").val('');
-      } else {
-        $("#view-other").hide();
+      if(value == 'KSM'){
         $("#view-account-number").show();
-  
-        $("#other").val('');
+        $("#view-nominal").show();
+        $("#view-limit").hide();
+
+        $("#limit").val('');
+      } else if(value == 'CC'){
+        $("#view-account-number").hide();
+        $("#view-nominal").hide();
+        $("#view-limit").show();
+
+        $("#account_number").val('');
+        $("#nominal").val('');
+      } else {
+        $("#view-account-number").hide();
+        $("#view-nominal").show();
+        $("#view-limit").hide();
+
+        $("#account_number").val('');
+        $("#limit").val('');
       }
     }
   </script>

@@ -7,6 +7,9 @@ use App\User;
 use App\ProductHolding;
 use App\ProductContent;
 use App\Funding;
+use App\Kkb;
+use App\RetailCredit;
+use App\Transactional;
 
 class DataController extends Controller
 {
@@ -29,6 +32,27 @@ class DataController extends Controller
         $fundings = Funding::all();
 
         return view('fundings.data', ['fundings'=>$fundings]);
+    }
+
+    public function kkbs()
+    {
+        $kkbs = Kkb::all();
+
+        return view('kkbs.data', ['kkbs'=>$kkbs]);
+    }
+
+    public function retail_credits()
+    {
+        $retail_credits = RetailCredit::all();
+
+        return view('retail_credits.data', ['retail_credits'=>$retail_credits]);
+    }
+
+    public function transactionals()
+    {
+        $transactionals = Transactional::all();
+
+        return view('transactionals.data', ['transactionals'=>$transactionals]);
     }
 
     public function product_content($id)

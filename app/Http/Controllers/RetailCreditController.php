@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Funding;
+use App\RetailCredit;
 use App\ProductHolding;
 use App\ProductContent;
 use Auth;
 
-class FundingController extends Controller
+class RetailCreditController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +17,7 @@ class FundingController extends Controller
      */
     public function index()
     {
-        $fundings = Funding::all();
-
-        return view('fundings.index', ['fundings'=>$fundings]);
+        return view('retail_credits.index');
     }
 
     /**
@@ -29,9 +27,9 @@ class FundingController extends Controller
      */
     public function create()
     {
-        $product_holdings = ProductHolding::where(['status'=>'active', 'menu'=>'Funding'])->get();
+        $product_holdings = ProductHolding::where(['status'=>'active', 'menu'=>'Kredit Retail'])->get();
 
-        return view('fundings.create', ['product_holdings'=>$product_holdings]);
+        return view('retail_credits.create', ['product_holdings'=>$product_holdings]);
     }
 
     /**
@@ -48,15 +46,15 @@ class FundingController extends Controller
             'deposit' => 'required',
         ]);
 
-        $funding = new Funding;
-        $funding->user_id = Auth::user()->id;
-        $funding->product_content_id = $request->product_content_id;
-        $funding->customer_name = $request->customer_name;
-        $funding->account_number = $request->account_number;
-        $funding->other = $request->other;
-        $funding->deposit = $request->deposit;
+        $retail_credit = new RetailCredit;
+        $retail_credit->user_id = Auth::user()->id;
+        $retail_credit->product_content_id = $request->product_content_id;
+        $retail_credit->customer_name = $request->customer_name;
+        $retail_credit->account_number = $request->account_number;
+        $retail_credit->limit = $request->limit;
+        $retail_credit->nominal = $request->nominal;
 
-        $funding->save();
+        $retail_credit->save();
 
         return response()->json([
             'status'=>'success', 
@@ -83,11 +81,11 @@ class FundingController extends Controller
      */
     public function edit($id)
     {
-        $funding = Funding::find($id);
-        $product_holdings = ProductHolding::where(['menu'=>'Funding', 'status'=>'active'])->get();
-        $product_contents = ProductContent::where(['product_holding_id'=>$funding->product_content->product_holding_id, 'status'=>'active'])->get();
+        $retail_credit = RetailCredit::find($id);
+        $product_holdings = ProductHolding::where(['menu'=>'Kredit Retail', 'status'=>'active'])->get();
+        $product_contents = ProductContent::where(['product_holding_id'=>$retail_credit->product_content->product_holding_id, 'status'=>'active'])->get();
 
-        return view('fundings.edit', ['funding'=>$funding, 'product_holdings'=>$product_holdings, 'product_contents'=>$product_contents]);
+        return view('retail_credits.edit', ['retail_credit'=>$retail_credit, 'product_holdings'=>$product_holdings, 'product_contents'=>$product_contents]);
     }
 
     /**
@@ -105,15 +103,15 @@ class FundingController extends Controller
             'deposit' => 'required',
         ]);
 
-        $funding = Funding::find($id);
-        $funding->user_id = Auth::user()->id;
-        $funding->product_content_id = $request->product_content_id;
-        $funding->customer_name = $request->customer_name;
-        $funding->account_number = $request->account_number;
-        $funding->other = $request->other;
-        $funding->deposit = $request->deposit;
+        $retail_credit = RetailCredit::find($id);
+        $retail_credit->user_id = Auth::user()->id;
+        $retail_credit->product_content_id = $request->product_content_id;
+        $retail_credit->customer_name = $request->customer_name;
+        $retail_credit->account_number = $request->account_number;
+        $retail_credit->limit = $request->limit;
+        $retail_credit->nominal = $request->nominal;
 
-        $funding->save();
+        $retail_credit->save();
 
         return response()->json([
             'status'=>'success', 
@@ -129,9 +127,9 @@ class FundingController extends Controller
      */
     public function destroy($id)
     {
-        $funding = Funding::find($id);
+        $retail_credit = RetailCredit::find($id);
 
-        $funding->delete();
+        $retail_credit->delete();
 
         return response()->json([
             'status'=>'success', 
@@ -141,10 +139,10 @@ class FundingController extends Controller
 
     public function approve($id)
     {
-        $funding = Funding::find($id);
+        $retail_credit = RetailCredit::find($id);
 
-        $funding->status = 'approved';
-        $funding->save();
+        $retail_credit->status = 'approved';
+        $retail_credit->save();
 
         return response()->json([
             'status'=>'success', 

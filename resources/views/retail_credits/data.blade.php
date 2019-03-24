@@ -2,7 +2,6 @@
   <table class="table">
     <thead>
       <tr>
-        <th class="text-center">Cabang</th>
         <th class="text-center">Tanggal</th>
         <th class="text-center">Product Content</th>
         <th class="text-center">Nama Nasabah</th>
@@ -12,22 +11,21 @@
       </tr>
     </thead>
     <tbody>
-      @foreach($fundings as $funding)
+      @foreach($retail_credits as $retail_credit)
       <tr>
-        <td>{{$funding->branch}}</td>
-        <td>{{$funding->created_at->diffForHumans()}}</td>
-        <td>{{$funding->product_content->product_holding->name}}</td>
-        <td>{{$funding->customer_name}}</td>
-        <td>{{$funding->user_id}}</td>
-        <td>{{$funding->status}}</td>
+        <td>{{$retail_credit->created_at->diffForHumans()}}</td>
+        <td>{{$retail_credit->product_content->product_holding->name}}</td>
+        <td>{{$retail_credit->customer_name}}</td>
+        <td>{{$retail_credit->user_id}}</td>
+        <td>{{$retail_credit->status}}</td>
         <td class="text-center">
-          <form action="{{route('fundings.destroy', $funding->id)}}" method="POST">
+          <form action="{{route('retail_credits.destroy', $retail_credit->id)}}" method="POST">
             @csrf
             @method('DELETE')
-            <button type="button" class="btn btn-warning btn-xs" title="Edit Data" onclick="modalEdit('{{$funding->id}}')"><i class="fa fa-edit"></i></button>
-            <button type="submit" class="btn btn-danger btn-xs delete-button" title="Delete User" data-userid="{{$funding->id}}"><i class="fa fa-trash"></i></button>
-            <button type="button" class="btn btn-xs btn-danger delete-button" data-id="{{$funding->id}}" title="Reject Data"><i class="fa fa-times"></i></button>
-            <button type="button" class="btn btn-xs btn-success approve-button" title="Approve Data" data-id="{{$funding->id}}"><i class="fa fa-check"></i></button>
+            <button type="button" class="btn btn-warning btn-xs" title="Edit Data" onclick="modalEdit('{{$retail_credit->id}}')"><i class="fa fa-edit"></i></button>
+            <button type="submit" class="btn btn-danger btn-xs delete-button" title="Delete User" data-userid="{{$retail_credit->id}}"><i class="fa fa-trash"></i></button>
+            <button type="button" class="btn btn-xs btn-danger delete-button" data-id="{{$retail_credit->id}}" title="Reject Data"><i class="fa fa-times"></i></button>
+            <button type="button" class="btn btn-xs btn-success approve-button" title="Approve Data" data-id="{{$retail_credit->id}}"><i class="fa fa-check"></i></button>
           </form>
         </td>
       </tr>
@@ -64,7 +62,7 @@
     var id = $(this).data('id');
     
     var data =  $(this).closest("form").serialize();
-    var url =  baseUrl+'/fundings/'+id+'/approve';
+    var url =  baseUrl+'/retail_credits/'+id+'/approve';
 
     $.ajax({
       type: "POST",

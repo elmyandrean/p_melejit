@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Funding;
+use App\Transactional;
 use App\ProductHolding;
 use App\ProductContent;
 use Auth;
 
-class FundingController extends Controller
+class TransactionalController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,9 +17,7 @@ class FundingController extends Controller
      */
     public function index()
     {
-        $fundings = Funding::all();
-
-        return view('fundings.index', ['fundings'=>$fundings]);
+        return view('transactionals.index');
     }
 
     /**
@@ -29,9 +27,9 @@ class FundingController extends Controller
      */
     public function create()
     {
-        $product_holdings = ProductHolding::where(['status'=>'active', 'menu'=>'Funding'])->get();
+        $product_holdings = ProductHolding::where(['status'=>'active', 'menu'=>'Transactional'])->get();
 
-        return view('fundings.create', ['product_holdings'=>$product_holdings]);
+        return view('transactionals.create', ['product_holdings'=>$product_holdings]);
     }
 
     /**
@@ -45,18 +43,17 @@ class FundingController extends Controller
         $validator = \Validator::make($request->all(), [
             'product_content_id' => 'required',
             'customer_name' => 'required',
-            'deposit' => 'required',
         ]);
 
-        $funding = new Funding;
-        $funding->user_id = Auth::user()->id;
-        $funding->product_content_id = $request->product_content_id;
-        $funding->customer_name = $request->customer_name;
-        $funding->account_number = $request->account_number;
-        $funding->other = $request->other;
-        $funding->deposit = $request->deposit;
+        $transactional = new Transactional;
+        $transactional->user_id = Auth::user()->id;
+        $transactional->product_content_id = $request->product_content_id;
+        $transactional->customer_name = $request->customer_name;
+        $transactional->merchant_name = $request->merchant_name;
+        $transactional->account_number = $request->account_number;
+        $transactional->nominal = $request->nominal;
 
-        $funding->save();
+        $transactional->save();
 
         return response()->json([
             'status'=>'success', 
@@ -83,11 +80,11 @@ class FundingController extends Controller
      */
     public function edit($id)
     {
-        $funding = Funding::find($id);
-        $product_holdings = ProductHolding::where(['menu'=>'Funding', 'status'=>'active'])->get();
-        $product_contents = ProductContent::where(['product_holding_id'=>$funding->product_content->product_holding_id, 'status'=>'active'])->get();
+        $transactional = Transactional::find($id);
+        $product_holdings = ProductHolding::where(['menu'=>'Transactional', 'status'=>'active'])->get();
+        $product_contents = ProductContent::where(['product_holding_id'=>$transactional->product_content->product_holding_id, 'status'=>'active'])->get();
 
-        return view('fundings.edit', ['funding'=>$funding, 'product_holdings'=>$product_holdings, 'product_contents'=>$product_contents]);
+        return view('transactionals.edit', ['transactional'=>$transactional, 'product_holdings'=>$product_holdings, 'product_contents'=>$product_contents]);
     }
 
     /**
@@ -102,18 +99,16 @@ class FundingController extends Controller
         $validator = \Validator::make($request->all(), [
             'product_content_id' => 'required',
             'customer_name' => 'required',
-            'deposit' => 'required',
         ]);
 
-        $funding = Funding::find($id);
-        $funding->user_id = Auth::user()->id;
-        $funding->product_content_id = $request->product_content_id;
-        $funding->customer_name = $request->customer_name;
-        $funding->account_number = $request->account_number;
-        $funding->other = $request->other;
-        $funding->deposit = $request->deposit;
+        $transactional = Transactional::find($id);
+        $transactional->user_id = Auth::user()->id;
+        $transactional->product_content_id = $request->product_content_id;
+        $transactional->customer_name = $request->customer_name;
+        $transactional->merchant_name = $request->merchant_name;
+        $transactional->account_number = $request->account_number;
 
-        $funding->save();
+        $transactional->save();
 
         return response()->json([
             'status'=>'success', 
@@ -129,9 +124,9 @@ class FundingController extends Controller
      */
     public function destroy($id)
     {
-        $funding = Funding::find($id);
+        $transactional = Transactional::find($id);
 
-        $funding->delete();
+        $transactional->delete();
 
         return response()->json([
             'status'=>'success', 
@@ -141,10 +136,10 @@ class FundingController extends Controller
 
     public function approve($id)
     {
-        $funding = Funding::find($id);
+        $transactional = Transactional::find($id);
 
-        $funding->status = 'approved';
-        $funding->save();
+        $transactional->status = 'approved';
+        $transactional->save();
 
         return response()->json([
             'status'=>'success', 

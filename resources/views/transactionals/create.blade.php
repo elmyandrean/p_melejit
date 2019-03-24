@@ -6,7 +6,7 @@
 <div class="modal-body">
   <div class="alert alert-danger" style="display:none"></div>
 
-  <form action="{{route('fundings.store')}}" class="form-horizontal" method="POST" id="formInsert">
+  <form action="{{route('transactionals.store')}}" class="form-horizontal" method="POST" id="formInsert">
     @csrf
     <div class="form-group">
       <label class="control-label col-md-3">Product Holding</label>
@@ -27,10 +27,16 @@
         </select>
       </div>
     </div>
-    <div class="form-group">
+    <div class="form-group" style="display:none;" id="view-customer-name">
       <label class="control-label col-md-3">Nama Nasabah</label>
       <div class="col-md-8">
-        <input type="text" class="form-control" name="customer_name">
+        <input type="text" class="form-control" name="customer_name" id="customer_name">
+      </div>
+    </div>
+    <div class="form-group" style="display:none;" id="view-merchant-name">
+      <label class="control-label col-md-3">Nama Merchant</label>
+      <div class="col-md-8">
+        <input type="text" class="form-control" name="merchant_name" id="merchant_name">
       </div>
     </div>
     <div class="form-group" style="display:none;" id="view-account-number">
@@ -39,16 +45,10 @@
         <input type="text" class="form-control" name="account_number" id="account_number">
       </div>
     </div>
-    <div class="form-group" style="display:none;" id="view-other">
-      <label class="control-label col-md-3">Other</label>
+    <div class="form-group" style="display:none;" id="view-nominal">
+      <label class="control-label col-md-3">Nominal</label>
       <div class="col-md-8">
-        <input type="text" class="form-control" name="other" id="other">
-      </div>
-    </div>
-    <div class="form-group">
-      <label class="control-label col-md-3">Setoran Awal</label>
-      <div class="col-md-8">
-        <input type="text" class="form-control" name="deposit">
+        <input type="text" class="form-control" name="nominal" id="nominal">
       </div>
     </div>
     <div class="form-group">
@@ -106,16 +106,29 @@
   function inputFunding() {
     var value = $("#product_holding option:selected").text();
     
-    if(value == 'New Payroll'){
-      $("#view-other").show();
+    if(value == 'EDC'){
+      $("#view-customer-name").hide();
+      $("#view-merchant-name").show();
       $("#view-account-number").hide();
+      $("#view-nominal").show();
 
+      $("#customer_name").val('');
       $("#account_number").val('');
-    } else {
-      $("#view-other").hide();
+    } else if(value == 'Branchless Banking'){
+      $("#view-customer-name").show();
+      $("#view-merchant-name").hide();
       $("#view-account-number").show();
+      $("#view-nominal").show();
 
-      $("#other").val('');
+      $("#merchant_name").val('');
+    } else {
+      $("#view-customer-name").show();
+      $("#view-merchant-name").hide();
+      $("#view-account-number").show();
+      $("#view-nominal").hide();
+
+      $("#merchant_name").val('');
+      $("#nominal").val('');
     }
   }
 </script>
