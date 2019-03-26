@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="{{asset('adminlte/plugins/iCheck/square/blue.css')}}">
   <style>
     .footer {
-      position: absolute;
+      position: fixed;
       right: 0;
       bottom: 0;
       left: 0;
@@ -38,7 +38,7 @@
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body class="hold-transition login-page" style="height: auto;">
+<body class="hold-transition login-page" style="height: auto; background: #6698fc;">
   <div class="login-box">
     <div class="login-logo">
       <a href="{{url('/')}}"><img src="{{asset("images/logo_mandiri.png")}}" alt="logo" width="55%"><br></a>
@@ -70,6 +70,11 @@
           </div>
           <!-- /.col -->
         </div>
+        <div class="social-auth-links text-center">
+          <p>- OR -</p>
+          <a href="{{route('register')}}" class="btn btn-block btn-default btn-flat">
+            Register</a>
+        </div>
       </form>
     </div>
     <!-- /.login-box-body -->
@@ -77,7 +82,7 @@
   <!-- /.login-box -->
 
   <div class="footer">
-    <img src="{{asset('images/logo.png')}}" alt="logo" width="2%"><b>&nbsp;&nbsp;&nbsp;Version</b> 2.4.0 <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
+    <img src="{{asset('images/logo.png')}}" alt="logo" width="2%"><b>&nbsp;&nbsp;&nbsp;Version</b> 1.0 <strong>Copyright &copy; 2019-2020 <a href="https://argrmelejit.com">ARGRMandiri</a>.</strong> All rights
       reserved.
   </div>
 

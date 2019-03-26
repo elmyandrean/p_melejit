@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
+use DB;
+
 class RegisterController extends Controller
 {
     /*
@@ -28,7 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/dashboard';
 
     /**
      * Create a new controller instance.
@@ -40,6 +42,13 @@ class RegisterController extends Controller
         $this->middleware('guest');
     }
 
+    public function showRegistrationForm()
+    {
+        $branches = DB::table('branches')->get();
+        // dd($branches);
+        return view('auth.register', ['branches'=>$branches]);
+    }
+
     /**
      * Get a validator for an incoming registration request.
      *
@@ -49,9 +58,13 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
+            'nip' => ['required', 'unique:users'],
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'phone' => ['required', 'max:20', 'unique:users'],
+            'branch_id' => ['required'],
+            'position' => ['required'],
         ]);
     }
 
@@ -64,8 +77,13 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
+            'branch_id' => $data['branch_id'],
+            'nip' => $data['nip'],
             'name' => $data['name'],
             'email' => $data['email'],
+            'phone' => $data['phone'],
+            'type' => '1',
+            'position' => $data['position'],
             'password' => Hash::make($data['password']),
         ]);
     }
