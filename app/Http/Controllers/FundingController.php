@@ -46,6 +46,7 @@ class FundingController extends Controller
             'product_content_id' => 'required',
             'customer_name' => 'required',
             'deposit' => 'required',
+            'date_serve' => 'required',
         ]);
 
         $funding = new Funding;
@@ -55,6 +56,7 @@ class FundingController extends Controller
         $funding->account_number = $request->account_number;
         $funding->other = $request->other;
         $funding->deposit = $request->deposit;
+        $funding->date_serve = date('Y-m-d', strtotime($request->date_serve));
 
         $funding->save();
 
@@ -103,6 +105,7 @@ class FundingController extends Controller
             'product_content_id' => 'required',
             'customer_name' => 'required',
             'deposit' => 'required',
+            'date_serve' => 'required',
         ]);
 
         $funding = Funding::find($id);
@@ -112,6 +115,7 @@ class FundingController extends Controller
         $funding->account_number = $request->account_number;
         $funding->other = $request->other;
         $funding->deposit = $request->deposit;
+        $funding->date_serve = date('Y-m-d', strtotime($request->date_serve));
 
         $funding->save();
 

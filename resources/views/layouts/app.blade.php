@@ -113,12 +113,14 @@
       <ul class="sidebar-menu" data-widget="tree">
         <li class="header">MAIN NAVIGATION</li>
         <li><a href="{{route('dashboard')}}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
+        @if(Auth::user()->type == 3)
         <li class="header">MASTER MENU</li>
         <li><a href="{{route('users.index')}}"><i class="fa fa-user"></i> <span>User</span></a></li>
         <li><a href="{{route('product_holdings.index')}}"><i class="fa fa-tag"></i> <span>Product Holding</span></a></li>
+        @endif
         <li class="header">TRANSACTION MENU</li>
         <li><a href="{{route('fundings.index')}}"><i class="fa fa-book"></i> <span>Funding</span></a></li>
-        <li><a href="{{route('kkbs.index')}}"><i class="fa fa-book"></i> <span>KKB</span></a></li>
+        <li><a href="{{route('kkbs.index')}}"><i class="fa fa-book"></i> <span>Alliance</span></a></li>
         <li><a href="{{route('retail_credits.index')}}"><i class="fa fa-book"></i> <span>Kredit Retail</span></a></li>
         <li><a href="{{route('transactionals.index')}}"><i class="fa fa-book"></i> <span>Transactional</span></a></li>
       </ul>
@@ -143,9 +145,9 @@
 
   <footer class="main-footer">
     <div class="pull-right hidden-xs">
-      <b>Version</b> 2.4.0
+      <b>Version</b> 1.0
     </div>
-    <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
+    <strong>Copyright &copy; 2019-2020 <a href="https://argrmelejit.com">ARGRMandiri</a>.</strong> All rights
     reserved.
   </footer>
 

@@ -53,6 +53,7 @@ class RetailCreditController extends Controller
         $retail_credit->account_number = $request->account_number;
         $retail_credit->limit = $request->limit;
         $retail_credit->nominal = $request->nominal;
+        $retail_credit->date_serve = date('Y-m-d', strtotime($request->date_serve));
 
         $retail_credit->save();
 
@@ -110,6 +111,7 @@ class RetailCreditController extends Controller
         $retail_credit->account_number = $request->account_number;
         $retail_credit->limit = $request->limit;
         $retail_credit->nominal = $request->nominal;
+        $retail_credit->date_serve = date('Y-m-d', strtotime($request->date_serve));
 
         $retail_credit->save();
 

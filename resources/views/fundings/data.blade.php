@@ -2,11 +2,11 @@
   <table class="table">
     <thead>
       <tr>
-        <th class="text-center">Cabang</th>
         <th class="text-center">Tanggal</th>
         <th class="text-center">Product Content</th>
         <th class="text-center">Nama Nasabah</th>
         <th class="text-center">Nama FL</th>
+        <th class="text-center">Cabang</th>
         <th class="text-center">Status</th>
         <th class="text-center">Action</th>
       </tr>
@@ -14,20 +14,23 @@
     <tbody>
       @foreach($fundings as $funding)
       <tr>
-        <td>{{$funding->branch}}</td>
-        <td>{{$funding->created_at->diffForHumans()}}</td>
+        <td class="text-center">{{date('d-m-Y', strtotime($funding->date_serve))}}</td>
         <td>{{$funding->product_content->product_holding->name}}</td>
         <td>{{$funding->customer_name}}</td>
-        <td>{{$funding->user_id}}</td>
+        <td>{{$funding->user->name}}</td>
+        <td>{{$funding->user->branch->name}}</td>
         <td>{{$funding->status}}</td>
         <td class="text-center">
           <form action="{{route('fundings.destroy', $funding->id)}}" method="POST">
             @csrf
             @method('DELETE')
-            <button type="button" class="btn btn-warning btn-xs" title="Edit Data" onclick="modalEdit('{{$funding->id}}')"><i class="fa fa-edit"></i></button>
-            <button type="submit" class="btn btn-danger btn-xs delete-button" title="Delete User" data-userid="{{$funding->id}}"><i class="fa fa-trash"></i></button>
-            <button type="button" class="btn btn-xs btn-danger delete-button" data-id="{{$funding->id}}" title="Reject Data"><i class="fa fa-times"></i></button>
-            <button type="button" class="btn btn-xs btn-success approve-button" title="Approve Data" data-id="{{$funding->id}}"><i class="fa fa-check"></i></button>
+            @if(Auth::user()->type = 1)
+              <button type="button" class="btn btn-warning btn-xs" title="Edit Data" onclick="modalEdit('{{$funding->id}}')"><i class="fa fa-edit"></i></button>
+              <button type="submit" class="btn btn-danger btn-xs delete-button" title="Delete User" data-userid="{{$funding->id}}"><i class="fa fa-trash"></i></button>
+            @elseif(Auth::user()->type = 2)
+              <button type="button" class="btn btn-xs btn-danger delete-button" data-id="{{$funding->id}}" title="Reject Data"><i class="fa fa-times"></i></button>
+              <button type="button" class="btn btn-xs btn-success approve-button" title="Approve Data" data-id="{{$funding->id}}"><i class="fa fa-check"></i></button>
+            @endif
           </form>
         </td>
       </tr>

@@ -15,7 +15,7 @@
     <!-- Default box -->
     <div class="box">
       <div class="box-header with-border">
-        <h3 class="box-title" >Data KKB</h3>
+        <h3 class="box-title" >Data Alliance</h3>
         <div class="box-tools pull-right">
           <button type="button" class="btn btn-primary btn-sm pull-right" onclick="modalInsert()">
             New Data
@@ -60,6 +60,7 @@
     var url = '{{route('kkbs.create')}}';
 
     $("#modal").modal("show");
+    $('#modal-content').html(loadingHTML);
     $('#modal-content').load(url);
 
     return false;
@@ -70,6 +71,7 @@
     var url = baseUrl+'/kkbs/'+id+'/edit';
 
     $("#modal").modal("show");
+    $('#modal-content').html(loadingHTML);
     $('#modal-content').load(url);
 
     return false;

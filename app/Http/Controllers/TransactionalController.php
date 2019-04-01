@@ -52,6 +52,7 @@ class TransactionalController extends Controller
         $transactional->merchant_name = $request->merchant_name;
         $transactional->account_number = $request->account_number;
         $transactional->nominal = $request->nominal;
+        $transactional->date_serve = date('Y-m-d', strtotime($request->date_serve));
 
         $transactional->save();
 
@@ -107,6 +108,8 @@ class TransactionalController extends Controller
         $transactional->customer_name = $request->customer_name;
         $transactional->merchant_name = $request->merchant_name;
         $transactional->account_number = $request->account_number;
+        $transactional->nominal = $request->nominal;
+        $transactional->date_serve = date('Y-m-d', strtotime($request->date_serve));
 
         $transactional->save();
 

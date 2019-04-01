@@ -60,6 +60,7 @@
     var url = '{{route('retail_credits.create')}}';
 
     $("#modal").modal("show");
+    $('#modal-content').html(loadingHTML);
     $('#modal-content').load(url);
 
     return false;
@@ -70,6 +71,7 @@
     var url = baseUrl+'/retail_credits/'+id+'/edit';
 
     $("#modal").modal("show");
+    $('#modal-content').html(loadingHTML);
     $('#modal-content').load(url);
 
     return false;

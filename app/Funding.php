@@ -10,4 +10,9 @@ class Funding extends Model
     {
         return $this->belongsTo('App\ProductContent');
     }
+
+    public function user()
+    {
+    		return $this->belongsTo('App\User');
+    }
 }

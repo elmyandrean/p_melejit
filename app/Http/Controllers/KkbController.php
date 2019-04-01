@@ -51,6 +51,7 @@ class KkbController extends Controller
         $kkb->customer_name = $request->customer_name;
         $kkb->unit = $request->unit;
         $kkb->nominal = $request->nominal;
+        $kkb->date_serve = date('Y-m-d', strtotime($request->date_serve));
 
         $kkb->save();
 
@@ -106,6 +107,7 @@ class KkbController extends Controller
         $kkb->customer_name = $request->customer_name;
         $kkb->unit = $request->unit;
         $kkb->nominal = $request->nominal;
+        $kkb->date_serve = date('Y-m-d', strtotime($request->date_serve));
 
         $kkb->save();
 

@@ -1,7 +1,10 @@
+<!-- bootstrap datepicker -->
+<link rel="stylesheet" href="{{asset('adminlte/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css')}}">
+
 <div class="modal-header">
   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
     <span aria-hidden="true">&times;</span></button>
-  <h4 class="modal-title">Create Funding</h4>
+  <h4 class="modal-title">Create Alliance</h4>
 </div>
 <div class="modal-body">
   <div class="alert alert-danger" style="display:none"></div>
@@ -46,6 +49,12 @@
       </div>
     </div>
     <div class="form-group">
+      <label class="control-label col-md-3">Tanggal Pelayanan</label>
+      <div class="col-md-8">
+        <input type="text" class="form-control" name="date_serve" id="datepicker">
+      </div>
+    </div>
+    <div class="form-group">
       <div class="col-md-offset-3 col-md-8">
         <button class="btn btn-primary">Simpan</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -53,6 +62,9 @@
     </div>
   </form>
 </div>
+
+<!-- bootstrap datepicker -->
+<script src="{{asset('adminlte/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js')}}"></script>
 
 <script>
   $("#formInsert").submit(function(e){
@@ -112,4 +124,9 @@
       $("#nominal").val('');
     }
   }
+
+  $('#datepicker').datepicker({
+      autoclose: true,
+      format: 'dd-mm-yyyy'
+  })
 </script>

@@ -60,6 +60,7 @@
     var url = '{{route('transactionals.create')}}';
 
     $("#modal").modal("show");
+    $('#modal-content').html(loadingHTML);
     $('#modal-content').load(url);
 
     return false;
@@ -70,6 +71,7 @@
     var url = baseUrl+'/transactionals/'+id+'/edit';
 
     $("#modal").modal("show");
+    $('#modal-content').html(loadingHTML);
     $('#modal-content').load(url);
 
     return false;
