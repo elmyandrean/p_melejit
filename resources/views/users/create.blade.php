@@ -33,13 +33,15 @@
       </div>
     </div>
     <div class="form-group">
-      <label class="control-label col-md-3">Position</label>
+      <label class="control-label col-md-3">Jabatan</label>
       <div class="col-md-8">
         <select name="position" class="form-control" required="">
-          <option>- Pilih Posisi -</option>
-          <option value="User 1">User 1</option>
-          <option value="User 2">User 2</option>
-          <option value="User 3">User 3</option>
+          <option selected disabled>-Pilih Jabatan-</option>
+          <option value="CSR">CSR</option>
+          <option value="MKA/BO/SPV/OFFICER">MKA/BO/SPV/OFFICER</option>
+          <option value="Security">Security</option>
+          <option value="Teller">Teller</option>
+          <option value="Kepala Cabang">Kepala Cabang</option>
         </select>
       </div>
     </div>

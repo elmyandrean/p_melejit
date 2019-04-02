@@ -24,12 +24,12 @@
           <form action="{{route('fundings.destroy', $funding->id)}}" method="POST">
             @csrf
             @method('DELETE')
-            @if(Auth::user()->type = 1)
+            @if(Auth::user()->type == 1)
               <button type="button" class="btn btn-warning btn-xs" title="Edit Data" onclick="modalEdit('{{$funding->id}}')"><i class="fa fa-edit"></i></button>
               <button type="submit" class="btn btn-danger btn-xs delete-button" title="Delete User" data-userid="{{$funding->id}}"><i class="fa fa-trash"></i></button>
-            @elseif(Auth::user()->type = 2)
-              <button type="button" class="btn btn-xs btn-danger delete-button" data-id="{{$funding->id}}" title="Reject Data"><i class="fa fa-times"></i></button>
+            @elseif(Auth::user()->type == 2)
               <button type="button" class="btn btn-xs btn-success approve-button" title="Approve Data" data-id="{{$funding->id}}"><i class="fa fa-check"></i></button>
+              <button type="button" class="btn btn-xs btn-danger delete-button" data-id="{{$funding->id}}" title="Reject Data"><i class="fa fa-times"></i></button>
             @endif
           </form>
         </td>

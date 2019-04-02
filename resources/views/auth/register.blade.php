@@ -17,6 +17,16 @@
     <!-- iCheck -->
     <link rel="stylesheet" href="{{asset('adminlte/plugins/iCheck/square/blue.css')}}">
     <style>
+      .register-box {
+        width: 800px;
+        padding-bottom: 50px;
+      }
+      @media (max-width: 768px) {
+        .register-box {
+          width: 90%;
+          margin-top: 20px;
+        }
+      }
       .footer {
         position: fixed; 
         right: 0;
@@ -39,7 +49,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   </head>
   <body class="hold-transition register-page" style="height: auto; background: #6698fc;">
-    <div class="register-box" style="width: 800px;">
+    <div class="register-box">
       <div class="login-logo">
         <a href="{{url('/')}}"><img src="{{asset("images/logo_mandiri.png")}}" alt="logo" width="25%"><br></a>
       </div>
@@ -94,6 +104,7 @@
                   <option value="MKA/BO/SPV/OFFICER">MKA/BO/SPV/OFFICER</option>
                   <option value="Security">Security</option>
                   <option value="Teller">Teller</option>
+                  <option value="Kepala Cabang">Kepala Cabang</option>
                 </select>
                 <span class="glyphicon glyphicon-asterisk form-control-feedback"></span>
               </div>

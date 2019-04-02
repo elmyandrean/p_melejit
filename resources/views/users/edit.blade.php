@@ -37,10 +37,12 @@
       <label class="control-label col-md-3">Position</label>
       <div class="col-md-8">
         <select name="position" class="form-control" required="">
-          <option>- Pilih Posisi -</option>
-          <option value="User 1" {{ $user->position == 'User 1' ? 'selected' : ''}}>User 1</option>
-          <option value="User 2" {{ $user->position == 'User 2' ? 'selected' : ''}}>User 2</option>
-          <option value="User 3" {{ $user->position == 'User 3' ? 'selected' : ''}}>User 3</option>
+          <option selected disabled>-Pilih Jabatan-</option>
+          <option value="CSR" {{ $user->position == 'CSR' ? 'selected' : ''}}>CSR</option>
+          <option value="MKA/BO/SPV/OFFICER" {{ $user->position == 'MKA/BO/SPV/OFFICER' ? 'selected' : ''}}>MKA/BO/SPV/OFFICER</option>
+          <option value="Security" {{ $user->position == 'Security' ? 'selected' : ''}}>Security</option>
+          <option value="Teller" {{ $user->position == 'Teller' ? 'selected' : ''}}>Teller</option>
+          <option value="Kepala Cabang" {{ $user->position == 'Kepala Cabang' ? 'selected' : ''}}>Kepala Cabang</option>
         </select>
       </div>
     </div>

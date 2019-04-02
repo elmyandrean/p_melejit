@@ -10,6 +10,7 @@ use App\Funding;
 use App\Kkb;
 use App\RetailCredit;
 use App\Transactional;
+use Auth;
 
 class DataController extends Controller
 {
@@ -29,28 +30,44 @@ class DataController extends Controller
 
     public function fundings()
     {
-        $fundings = Funding::all();
+        if (Auth::user()->type == 1) {
+            $fundings = Funding::where('user_id', Auth::user()->id)->get();
+        } elseif(Auth::user()->type == 2) {
+            $fundings = Funding::join('users', 'users.id', '=', 'fundings.user_id')->where('branch_id', Auth::user()->branch_id)->get();
+        }
 
         return view('fundings.data', ['fundings'=>$fundings]);
     }
 
     public function kkbs()
     {
-        $kkbs = Kkb::all();
+        if(Auth::user()->type == 1){
+            $kkbs = Kkb::where('user_id', Auth::user()->id)->get();
+        } elseif(Auth::user()->type == 2) {
+            $kkbs = Kkb::join('users', 'users.id', '=', 'kkbs.user_id')->where('branch_id', Auth::user()->branch_id)->get();
+        }
 
         return view('kkbs.data', ['kkbs'=>$kkbs]);
     }
 
     public function retail_credits()
     {
-        $retail_credits = RetailCredit::all();
+        if(Auth::user()->type == 1){
+            $retail_credits = RetailCredit::where('user_id', Auth::user()->id)->get();
+        } elseif(Auth::user()->type == 2) {
+            $retail_credits = RetailCredit::join('users', 'users.id', '=', 'retail_credits.user_id')->where('branch_id', Auth::user()->branch_id)->get();
+        }
 
         return view('retail_credits.data', ['retail_credits'=>$retail_credits]);
     }
 
     public function transactionals()
     {
-        $transactionals = Transactional::all();
+        if(Auth::user()->type == 1){
+            $transactionals = Transactional::where('user_id', Auth::user()->id)->get();
+        } elseif(Auth::user()->type == 2) {
+            $transactionals = Transactional::join('users', 'users.id', '=', 'transactionals.user_id')->where('branch_id', Auth::user()->branch_id)->get();
+        }
 
         return view('transactionals.data', ['transactionals'=>$transactionals]);
     }
