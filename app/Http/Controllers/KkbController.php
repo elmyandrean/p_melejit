@@ -43,6 +43,7 @@ class KkbController extends Controller
         $validator = \Validator::make($request->all(), [
             'product_content_id' => 'required',
             'customer_name' => 'required',
+            'condition' => 'required',
         ]);
 
         $kkb = new Kkb;
@@ -52,6 +53,7 @@ class KkbController extends Controller
         $kkb->unit = $request->unit;
         $kkb->nominal = $request->nominal;
         $kkb->date_serve = date('Y-m-d', strtotime($request->date_serve));
+        $kkb->condition = $request->condition;
 
         $kkb->save();
 
@@ -99,6 +101,7 @@ class KkbController extends Controller
         $validator = \Validator::make($request->all(), [
             'product_content_id' => 'required',
             'customer_name' => 'required',
+            'condition' => 'required',
         ]);
 
         $kkb = Kkb::find($id);
@@ -108,6 +111,7 @@ class KkbController extends Controller
         $kkb->unit = $request->unit;
         $kkb->nominal = $request->nominal;
         $kkb->date_serve = date('Y-m-d', strtotime($request->date_serve));
+        $kkb->condition = $request->condition;
 
         $kkb->save();
 
@@ -139,7 +143,7 @@ class KkbController extends Controller
     {
         $kkb = Kkb::find($id);
 
-        $kkb->status = 'approved';
+        $kkb->status = 'Approved';
         $kkb->save();
 
         return response()->json([

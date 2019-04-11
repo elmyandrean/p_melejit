@@ -104,10 +104,22 @@ class DataController extends Controller
         $end_date = date('Y-m-d', strtotime($end_date));
 
         DB::enableQueryLog();
-        $data_fundings = Funding::join('users', 'users.id', '=', 'fundings.user_id')->where([['branch_id', $branch_id], ['status', 'approved']])->whereBetween('date_serve', [$start_date, $end_date])->get();
-        $data_kkbs = Kkb::join('users', 'users.id', '=', 'kkbs.user_id')->where([['branch_id', $branch_id], ['status', 'approved']])->whereBetween('date_serve', [$start_date, $end_date])->get();
-        $data_retail_credits = RetailCredit::join('users', 'users.id', '=', 'retail_credits.user_id')->where([['branch_id', $branch_id], ['status', 'approved']])->whereBetween('date_serve', [$start_date, $end_date])->get();
-        $data_transactionals = Transactional::join('users', 'users.id', '=', 'transactionals.user_id')->where([['branch_id', $branch_id], ['status', 'approved']])->whereBetween('date_serve', [$start_date, $end_date])->get();
+        $data_fundings = Funding::join('users', 'users.id', '=', 'fundings.user_id')->where('status', 'approved')->whereBetween('date_serve', [$start_date, $end_date]);
+        $data_kkbs = Kkb::join('users', 'users.id', '=', 'kkbs.user_id')->where('status', 'approved')->whereBetween('date_serve', [$start_date, $end_date]);
+        $data_retail_credits = RetailCredit::join('users', 'users.id', '=', 'retail_credits.user_id')->where('status', 'approved')->whereBetween('date_serve', [$start_date, $end_date]);
+        $data_transactionals = Transactional::join('users', 'users.id', '=', 'transactionals.user_id')->where('status', 'approved')->whereBetween('date_serve', [$start_date, $end_date]);
+
+        if ($branch_id == 'all') {
+            $data_fundings = $data_fundings->get();
+            $data_kkbs = $data_kkbs->get();
+            $data_retail_credits = $data_retail_credits->get();
+            $data_transactionals = $data_transactionals->get();
+        } else {
+            $data_fundings = $data_fundings->where('branch_id', $branch_id)->get();
+            $data_kkbs = $data_kkbs->where('branch_id', $branch_id)->get();
+            $data_retail_credits = $data_retail_credits->where('branch_id', $branch_id)->get();
+            $data_transactionals = $data_transactionals->where('branch_id', $branch_id)->get();
+        }
         // print_r(DB::getQueryLog());
 
         return view('reports.data', ['data_fundings' => $data_fundings, 'data_kkbs'=>$data_kkbs, 'data_retail_credits'=>$data_retail_credits, 'data_transactionals'=>$data_transactionals]);

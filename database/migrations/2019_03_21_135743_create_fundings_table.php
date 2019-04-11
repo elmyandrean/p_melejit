@@ -21,7 +21,7 @@ class CreateFundingsTable extends Migration
             $table->string('account_number')->nullable();
             $table->text('other')->nullable();
             $table->decimal('deposit', 15, 2);
-            $table->string('status')->default('pending');
+            $table->string('status')->default('Pending');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

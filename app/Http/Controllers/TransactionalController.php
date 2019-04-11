@@ -43,6 +43,7 @@ class TransactionalController extends Controller
         $validator = \Validator::make($request->all(), [
             'product_content_id' => 'required',
             'customer_name' => 'required',
+            'condition' => 'required',
         ]);
 
         $transactional = new Transactional;
@@ -53,6 +54,7 @@ class TransactionalController extends Controller
         $transactional->account_number = $request->account_number;
         $transactional->nominal = $request->nominal;
         $transactional->date_serve = date('Y-m-d', strtotime($request->date_serve));
+        $transactional->condition = $request->condition;
 
         $transactional->save();
 
@@ -100,6 +102,7 @@ class TransactionalController extends Controller
         $validator = \Validator::make($request->all(), [
             'product_content_id' => 'required',
             'customer_name' => 'required',
+            'condition' => 'required',
         ]);
 
         $transactional = Transactional::find($id);
@@ -110,6 +113,7 @@ class TransactionalController extends Controller
         $transactional->account_number = $request->account_number;
         $transactional->nominal = $request->nominal;
         $transactional->date_serve = date('Y-m-d', strtotime($request->date_serve));
+        $transactional->condition = $request->condition;
 
         $transactional->save();
 
@@ -141,7 +145,7 @@ class TransactionalController extends Controller
     {
         $transactional = Transactional::find($id);
 
-        $transactional->status = 'approved';
+        $transactional->status = 'Approved';
         $transactional->save();
 
         return response()->json([

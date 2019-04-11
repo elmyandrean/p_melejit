@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
             'phone' => 'admin phone',
             'password' => bcrypt('123456'),
             'position' => 'admin',
+            'type' => '3',
         ]);
     }
 }

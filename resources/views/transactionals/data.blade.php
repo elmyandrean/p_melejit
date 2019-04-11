@@ -7,6 +7,7 @@
         <th class="text-center">Nama Nasabah/Merchant</th>
         <th class="text-center">Nama FL</th>
         <th class="text-center">Branch</th>
+        <th class="text-center">Kondisi</th>
         <th class="text-center">Status</th>
         <th class="text-center">Action</th>
       </tr>
@@ -19,20 +20,21 @@
         <td>{{$transactional->customer_name == "" ? $transactional->merchant_name : $transactional->customer_name}}</td>
         <td>{{$transactional->user->name}}</td>
         <td>{{$transactional->user->branch->name}}</td>
+        <td>{{$transactional->condition}}</td>
         <td>{{$transactional->status}}</td>
         <td class="text-center">
           <form action="{{route('transactionals.destroy', $transactional->id)}}" method="POST">
             @csrf
             @method('DELETE')
             @if(Auth::user()->type == 1)
-              @if($transactional->status == 'pending')
+              @if($transactional->status == 'Pending')
               <button type="button" class="btn btn-warning btn-xs" title="Edit Data" onclick="modalEdit('{{$transactional->id}}')"><i class="fa fa-edit"></i></button>
               <button type="submit" class="btn btn-danger btn-xs delete-button" title="Delete User" data-userid="{{$transactional->id}}"><i class="fa fa-trash"></i></button>
               @else
               -
               @endif
             @elseif(Auth::user()->type == 2)
-              @if($transactional->status != 'approved')
+              @if($transactional->status != 'Approved')
               <button type="button" class="btn btn-xs btn-success approve-button" title="Approve Data" data-id="{{$transactional->id}}"><i class="fa fa-check"></i></button>
               <button type="button" class="btn btn-xs btn-danger delete-button" data-id="{{$transactional->id}}" title="Reject Data"><i class="fa fa-times"></i></button>
               @else
@@ -70,7 +72,7 @@
   $(".approve-button").click(function(e){
     e.preventDefault();
 
-    document.getElementsByName('_method')[0].value = "PUT";
+    $(this).closest("[_method]").value = 'PUT';
 
     var id = $(this).data('id');
     
@@ -78,7 +80,7 @@
     var url =  baseUrl+'/transactionals/'+id+'/approve';
 
     $.ajax({
-      type: "POST",
+      type: "PUT",
       url: url,
       data: data,
       dataType: "JSON",

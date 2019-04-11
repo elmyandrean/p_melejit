@@ -20,7 +20,7 @@ class CreateKkbsTable extends Migration
             $table->string('customer_name');
             $table->string('unit')->nullable();
             $table->decimal('nominal', 15, 2)->nullable();
-            $table->string('status')->default('pending');
+            $table->string('status')->default('Pending');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

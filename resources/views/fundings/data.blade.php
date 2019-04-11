@@ -7,6 +7,7 @@
         <th class="text-center">Nama Nasabah</th>
         <th class="text-center">Nama FL</th>
         <th class="text-center">Cabang</th>
+        <th class="text-center">Kondisi</th>
         <th class="text-center">Status</th>
         <th class="text-center">Action</th>
       </tr>
@@ -15,24 +16,26 @@
       @foreach($fundings as $funding)
       <tr>
         <td class="text-center">{{date('d-m-Y', strtotime($funding->date_serve))}}</td>
-        <td>{{$funding->product_content->product_holding->name}}</td>
+        <td class="text-center">{{$funding->product_content->product_holding->name}}</td>
         <td>{{$funding->customer_name}}</td>
         <td>{{$funding->user->name}}</td>
-        <td>{{$funding->user->branch->name}}</td>
-        <td>{{$funding->status}}</td>
+        <td class="text-center">{{$funding->user->branch->name}}</td>
+        <td class="text-center">{{$funding->condition}}</td>
+        <td class="text-center">{{$funding->status}}</td>
         <td class="text-center">
           <form action="{{route('fundings.destroy', $funding->id)}}" method="POST">
             @csrf
-            @method('DELETE')
+            {{-- @method('DELETE') --}}
+            <input type="hidden" name="_method" value="DELETE">
             @if(Auth::user()->type == 1)
-              @if($funding->status == 'pending')
+              @if($funding->status == 'Pending')
               <button type="button" class="btn btn-warning btn-xs" title="Edit Data" onclick="modalEdit('{{$funding->id}}')"><i class="fa fa-edit"></i></button>
               <button type="submit" class="btn btn-danger btn-xs delete-button" title="Delete User" data-userid="{{$funding->id}}"><i class="fa fa-trash"></i></button>
               @else
               -
               @endif
             @elseif(Auth::user()->type == 2)
-              @if($funding->status != 'approved')
+              @if($funding->status != 'Approved')
               <button type="button" class="btn btn-xs btn-success approve-button" title="Approve Data" data-id="{{$funding->id}}"><i class="fa fa-check"></i></button>
               <button type="button" class="btn btn-xs btn-danger delete-button" data-id="{{$funding->id}}" title="Reject Data"><i class="fa fa-times"></i></button>
               @else
@@ -70,7 +73,9 @@
   $(".approve-button").click(function(e){
     e.preventDefault();
 
-    document.getElementsByName('_method')[0].value = "PUT";
+    $(this).closest("[_method]").value = 'PUT';
+
+    // document.getElementsByName('_method')[1].value = "PUT";
 
     var id = $(this).data('id');
     
@@ -78,7 +83,7 @@
     var url =  baseUrl+'/fundings/'+id+'/approve';
 
     $.ajax({
-      type: "POST",
+      type: "PUT",
       url: url,
       data: data,
       dataType: "JSON",

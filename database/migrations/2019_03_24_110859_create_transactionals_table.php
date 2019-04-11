@@ -21,7 +21,7 @@ class CreateTransactionalsTable extends Migration
             $table->string('merchant_name')->nullable();
             $table->string('account_number')->nullable();
             $table->decimal('nominal', 15, 2)->nullable();
-            $table->string('status')->default('pending');
+            $table->string('status')->default('Pending');
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users');

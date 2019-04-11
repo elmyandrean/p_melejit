@@ -8,6 +8,7 @@
         <th class="text-center">Nama FL</th>
         <th class="text-center">Branch</th>
         <th class="text-center">Status</th>
+        <th class="text-center">Kondisi</th>
         <th class="text-center">Action</th>
       </tr>
     </thead>
@@ -15,24 +16,26 @@
       @foreach($kkbs as $kkb)
       <tr>
         <td class="text-center">{{date('d-m-Y', strtotime($kkb->date_serve))}}</td>
-        <td>{{$kkb->product_content->product_holding->name}}</td>
+        <td class="text-center">{{$kkb->product_content->product_holding->name}}</td>
         <td>{{$kkb->customer_name}}</td>
         <td>{{$kkb->user->name}}</td>
-        <td>{{$kkb->user->branch->name}}</td>
-        <td>{{$kkb->status}}</td>
+        <td class="text-center">{{$kkb->user->branch->name}}</td>
+        <td class="text-center">{{$kkb->condition}}</td>
+        <td class="text-center">{{$kkb->status}}</td>
         <td class="text-center">
           <form action="{{route('kkbs.destroy', $kkb->id)}}" method="POST">
             @csrf
-            @method('DELETE')
+            {{-- @method('DELETE') --}}
+            <input type="hidden" name="_method" value="DELETE">
             @if(Auth::user()->type == 1)
-              @if($kkb->status == 'pending')
+              @if($kkb->status == 'Pending')
               <button type="button" class="btn btn-warning btn-xs" title="Edit Data" onclick="modalEdit('{{$kkb->id}}')"><i class="fa fa-edit"></i></button>
               <button type="submit" class="btn btn-danger btn-xs delete-button" title="Delete User" data-userid="{{$kkb->id}}"><i class="fa fa-trash"></i></button>
               @else
               -
               @endif
             @elseif(Auth::user()->type == 2)
-              @if($kkb->status != 'approved')
+              @if($kkb->status != 'Approved')
               <button type="button" class="btn btn-xs btn-success approve-button" title="Approve Data" data-id="{{$kkb->id}}"><i class="fa fa-check"></i></button>
               <button type="button" class="btn btn-xs btn-danger delete-button" data-id="{{$kkb->id}}" title="Reject Data"><i class="fa fa-times"></i></button>
               @else
@@ -70,7 +73,7 @@
   $(".approve-button").click(function(e){
     e.preventDefault();
 
-    document.getElementsByName('_method')[0].value = "PUT";
+    $(this).closest("[_method]").value = 'PUT';
 
     var id = $(this).data('id');
     
@@ -78,7 +81,7 @@
     var url =  baseUrl+'/kkbs/'+id+'/approve';
 
     $.ajax({
-      type: "POST",
+      type: "PUT",
       url: url,
       data: data,
       dataType: "JSON",

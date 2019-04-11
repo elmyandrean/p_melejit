@@ -65,6 +65,16 @@
       </div>
     </div>
     <div class="form-group">
+      <label class="control-label col-md-3">Kondisi</label>
+      <div class="col-md-8">
+        <select name="condition" class="form-control">
+          <option selected disabled>- Pilih Kondisi -</option>
+          <option value="Pipeline" {{$kkb->condition == 'Pipeline' ? "selected" : ""}}>Pipeline</option>
+          <option value="Closing" {{$kkb->condition == 'Closing' ? "selected" : ""}}>Closing</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
       <div class="col-md-offset-3 col-md-8">
         <button class="btn btn-primary">Simpan</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

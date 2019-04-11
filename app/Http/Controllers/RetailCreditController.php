@@ -44,6 +44,7 @@ class RetailCreditController extends Controller
             'product_content_id' => 'required',
             'customer_name' => 'required',
             'deposit' => 'required',
+            'condition' => 'required',
         ]);
 
         $retail_credit = new RetailCredit;
@@ -54,6 +55,7 @@ class RetailCreditController extends Controller
         $retail_credit->limit = $request->limit;
         $retail_credit->nominal = $request->nominal;
         $retail_credit->date_serve = date('Y-m-d', strtotime($request->date_serve));
+        $retail_credit->condition = $request->condition;
 
         $retail_credit->save();
 
@@ -102,6 +104,7 @@ class RetailCreditController extends Controller
             'product_content_id' => 'required',
             'customer_name' => 'required',
             'deposit' => 'required',
+            'condition' => 'required',
         ]);
 
         $retail_credit = RetailCredit::find($id);
@@ -112,6 +115,7 @@ class RetailCreditController extends Controller
         $retail_credit->limit = $request->limit;
         $retail_credit->nominal = $request->nominal;
         $retail_credit->date_serve = date('Y-m-d', strtotime($request->date_serve));
+        $retail_credit->condition = $request->condition;
 
         $retail_credit->save();
 
@@ -143,7 +147,7 @@ class RetailCreditController extends Controller
     {
         $retail_credit = RetailCredit::find($id);
 
-        $retail_credit->status = 'approved';
+        $retail_credit->status = 'Approved';
         $retail_credit->save();
 
         return response()->json([
