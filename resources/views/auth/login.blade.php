@@ -26,6 +26,14 @@
       background-color: #efefef;
       text-align: center;
     }
+    .login-page {
+      height: auto;
+      background: url(../images/website-design-background.png) no-repeat center center fixed;
+      -webkit-background-size: cover;
+      -moz-background-size: cover;
+      -o-background-size: cover;
+      background-size: cover;
+    }
   </style>
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -38,7 +46,7 @@
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body class="hold-transition login-page" style="height: auto; background: #6698fc;">
+<body class="hold-transition login-page">
   <div class="login-box">
     <div class="login-logo">
       <a href="{{url('/')}}"><img src="{{asset("images/logo_mandiri.png")}}" alt="logo" width="55%"><br></a>

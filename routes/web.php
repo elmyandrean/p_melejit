@@ -39,4 +39,6 @@ Route::get('/data/kkbs', 'DataController@kkbs')->name('data.kkbs');
 Route::get('/data/retail_credits', 'DataController@retail_credits')->name('data.retail_credits');
 Route::get('/data/transactionals', 'DataController@transactionals')->name('data.transactionals');
 Route::get('/data/{id}/product_content', 'DataController@product_content')->name('data.product_content');
+Route::get('/data/report', 'DataController@reports')->name('data.reports');
+Route::get('/report', 'ReportController@index')->name('report.index');
 

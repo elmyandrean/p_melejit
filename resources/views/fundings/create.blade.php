@@ -80,7 +80,7 @@
     var url = $("#formInsert").attr('action');
 
     $.ajax({
-      type: "POST",
+      type: "GET",
       url: url,
       data: data,
       dataType: "JSON",

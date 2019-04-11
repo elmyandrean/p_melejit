@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="{{asset('adminlte/dist/css/AdminLTE.min.css')}}">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
-  <link rel="stylesheet" href="{{asset('adminlte/dist/css/skins/_all-skins.min.css')}}">
+  <link rel="stylesheet" href="{{asset('adminlte/dist/css/skins/skin-yellow-light.min.css')}}">
 
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -30,7 +30,7 @@
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body class="hold-transition skin-blue sidebar-mini">
+<body class="hold-transition skin-yellow-light sidebar-mini">
 <!-- Site wrapper -->
 <div class="wrapper">
 
@@ -124,6 +124,8 @@
         <li><a href="{{route('retail_credits.index')}}"><i class="fa fa-book"></i> <span>Kredit Retail</span></a></li>
         <li><a href="{{route('transactionals.index')}}"><i class="fa fa-book"></i> <span>Transactional</span></a></li>
         @endif
+        <li class="header">REPORT MENU</li>
+        <li><a href="{{route('report.index')}}"><i class="fa fa-book"></i> <span>Report</span></a></li>
       </ul>
     </section>
     <!-- /.sidebar -->

@@ -133,7 +133,7 @@ class FundingController extends Controller
      */
     public function destroy($id)
     {
-        $funding = Funding::find($id);
+        $funding = Funding::findOrFail($id);
 
         $funding->delete();
 
@@ -145,8 +145,8 @@ class FundingController extends Controller
 
     public function approve($id)
     {
-        $funding = Funding::find($id);
-
+        $funding = Funding::findOrFail($id);
+        
         $funding->status = 'approved';
         $funding->save();
 
