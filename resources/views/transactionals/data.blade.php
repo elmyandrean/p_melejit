@@ -17,7 +17,17 @@
       <tr>
         <td class="text-center">{{date('d-m-Y', strtotime($transactional->date_serve))}}</td>
         <td>{{$transactional->product_content->product_holding->name}}</td>
-        <td>{{$transactional->customer_name == "" ? $transactional->merchant_name : $transactional->customer_name}}</td>
+        <td>
+          @if($transactional->customer_name != "" && $transactional->merchant_name == "")
+            {{$transactional->customer_name}}
+          @elseif($transactional->customer_name == "" && $transactional->merchant_name != "")
+            {{$transactional->merchant_name}}
+          @elseif($transactional->customer_name != "" && $transactional->merchant_name != "")
+            {{$transactional->customer_name." / ".$transactional->merchant_name}}
+          @else
+            - 
+          @endif
+        </td>
         <td>{{$transactional->user->name}}</td>
         <td>{{$transactional->user->branch->name}}</td>
         <td>{{$transactional->condition}}</td>
@@ -87,21 +97,33 @@
   $(".approve-button").click(function(e){
     e.preventDefault();
 
-    $(this).closest("[_method]").value = 'PUT';
+    swal({
+      title: "Are you sure?",
+      text: "to Approve this Transactional!",
+      icon: "warning",
+      buttons: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        var id = $(this).data('id');
+        
+        var data =  $(this).closest("form").serialize();
+        var url =  baseUrl+'/transactionals/'+id+'/approve';
 
-    var id = $(this).data('id');
-    
-    var data =  $(this).closest("form").serialize();
-    var url =  baseUrl+'/transactionals/'+id+'/approve';
-
-    $.ajax({
-      type: "PUT",
-      url: url,
-      data: data,
-      dataType: "JSON",
-      success: function(data){
-        loadData();
+        $.ajax({
+          type: "PUT",
+          url: url,
+          data: data,
+          dataType: "JSON",
+          success: function(data){
+            swal("Success", "Transactional has ben approved!")
+            loadData();
+          }
+        });
       }
     });
+
+    // $(this).closest("[_method]").value = 'PUT';
+
   });
 </script>

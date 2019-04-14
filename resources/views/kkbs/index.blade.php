@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'KKB')
+@section('title', 'Alliance')
 
 @section('css')
   <!-- DataTables -->

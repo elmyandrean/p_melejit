@@ -88,21 +88,33 @@
   $(".approve-button").click(function(e){
     e.preventDefault();
 
-    $(this).closest("[_method]").value = 'PUT';
+    swal({
+      title: "Are you sure?",
+      text: "to Approve this Alliance!",
+      icon: "warning",
+      buttons: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        var id = $(this).data('id');
+        
+        var data =  $(this).closest("form").serialize();
+        var url =  baseUrl+'/kkbs/'+id+'/approve';
 
-    var id = $(this).data('id');
-    
-    var data =  $(this).closest("form").serialize();
-    var url =  baseUrl+'/kkbs/'+id+'/approve';
-
-    $.ajax({
-      type: "PUT",
-      url: url,
-      data: data,
-      dataType: "JSON",
-      success: function(data){
-        loadData();
+        $.ajax({
+          type: "PUT",
+          url: url,
+          data: data,
+          dataType: "JSON",
+          success: function(data){
+            swal("Success", "Alliance has ben approved!")
+            loadData();
+          }
+        });
       }
     });
+
+    // $(this).closest("[_method]").value = 'PUT';
+
   });
 </script>

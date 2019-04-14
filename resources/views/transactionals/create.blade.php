@@ -30,16 +30,16 @@
         </select>
       </div>
     </div>
-    <div class="form-group" style="display:none;" id="view-customer-name">
-      <label class="control-label col-md-3">Nama Nasabah</label>
-      <div class="col-md-8">
-        <input type="text" class="form-control" name="customer_name" id="customer_name">
-      </div>
-    </div>
     <div class="form-group" style="display:none;" id="view-merchant-name">
       <label class="control-label col-md-3">Nama Merchant</label>
       <div class="col-md-8">
         <input type="text" class="form-control" name="merchant_name" id="merchant_name">
+      </div>
+    </div>
+    <div class="form-group" style="display:none;" id="view-customer-name">
+      <label class="control-label col-md-3">Nama Nasabah</label>
+      <div class="col-md-8">
+        <input type="text" class="form-control" name="customer_name" id="customer_name">
       </div>
     </div>
     <div class="form-group" style="display:none;" id="view-account-number">
@@ -128,21 +128,14 @@
   function inputFunding() {
     var value = $("#product_holding option:selected").text();
     
-    if(value == 'EDC'){
-      $("#view-customer-name").hide();
+    if(value == 'EDC' || value == 'Branchless Banking'){
       $("#view-merchant-name").show();
-      $("#view-account-number").hide();
-      $("#view-nominal").show();
-
-      $("#customer_name").val('');
-      $("#account_number").val('');
-    } else if(value == 'Branchless Banking'){
       $("#view-customer-name").show();
-      $("#view-merchant-name").hide();
-      $("#view-account-number").show();
-      $("#view-nominal").show();
+      $("#view-account-number").hide();
+      $("#view-nominal").hide();
 
-      $("#merchant_name").val('');
+      $("#nominal").val('');
+      $("#account_number").val('');
     } else {
       $("#view-customer-name").show();
       $("#view-merchant-name").hide();
