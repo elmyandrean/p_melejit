@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use App\User;
+Use App\Branch;
 use Validator;
+use Auth;
 
 class UserController extends Controller
 {
@@ -16,7 +19,9 @@ class UserController extends Controller
     public function index()
     {
         $users = User::all();
-        return view('users.index', ['users'=>$users]);
+        $branches = Branch::all();
+
+        return view('users.index', ['users'=>$users, 'branches'=>$branches]);
     }
 
     /**
@@ -26,7 +31,8 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('users.create');
+        $branches = Branch::all();
+        return view('users.create', ['branches'=>$branches]);
     }
 
     /**
@@ -59,6 +65,14 @@ class UserController extends Controller
             $user->phone = $request->phone;
             $user->password = bcrypt('123456');
             $user->position = $request->position;
+            $user->branch_id = $request->branch_id;
+            if ($request->position == 'Kepala Cabang') {
+                $user->type = '2';
+            } elseif($request->position == 'Administrator') {
+                $user->type = '3';
+            } else {
+                $user->type = '1';
+            }
 
             $user->save();
             
@@ -89,8 +103,9 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::find($id);
+        $branches = Branch::all();
 
-        return view('users.edit', ['user'=>$user]);
+        return view('users.edit', ['user'=>$user, 'branches'=>$branches]);
     }
 
     /**
@@ -123,6 +138,14 @@ class UserController extends Controller
             $user->email = $request->email;
             $user->phone = $request->phone;
             $user->position = $request->position;
+            $user->branch_id = $request->branch_id;
+            if ($request->position == 'Kepala Cabang') {
+                $user->type = '2';
+            } elseif($request->position == 'Administrator') {
+                $user->type = '3';
+            } else {
+                $user->type = '1';
+            }
 
             $user->save();
             
@@ -149,5 +172,90 @@ class UserController extends Controller
             'status'=>'success', 
             'message'=>'Record is successfully deleted',
         ]);
+    }
+
+    public function reset_password($id)
+    {
+        $user = User::find($id);
+        $user->password = bcrypt('123456');
+        $user->save();
+
+        return response()->json([
+            'status'=>'success', 
+            'message'=>'Record is successfully deleted',
+        ]);
+    }
+
+    public function edit_profile($id)
+    {
+        $user = User::find($id);
+        $branches = Branch::all();
+        return view('users.edit_profile', ['user'=>$user, 'branches'=>$branches]);
+    }
+
+    public function update_profile(Request $request, $id)
+    {
+        if ($request->change_password) {
+            $validator = \Validator::make($request->all(), [
+                'nip' => 'required|unique:users,nip,'.$id,
+                'name' => 'required',
+                'old_password' => ['required',
+                    function($attribute, $value, $fail){
+                        $user = User::find(Auth::user()->id);
+                        if(Hash::check($value, $user->password)){
+                            
+                        } else {
+                            $fail($attribute.' is invalid.');
+                        }
+                    }
+                ],
+                'new_password' => 'required|min:8|confirmed',
+                'email' => 'required|email',
+                'phone' => 'required|numeric',
+                'position' => 'required',
+                'branch_id' => 'required',
+            ]);
+        } else { 
+            $validator = \Validator::make($request->all(), [
+                'nip' => 'required|unique:users,nip,'.$id,
+                'name' => 'required',
+                'email' => 'required|email',
+                'phone' => 'required|numeric',
+                'position' => 'required',
+                'branch_id' => 'required',
+            ]);
+        }
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status'=>'errors',
+                'message'=>$validator->errors()->all(),
+            ]);
+        } else {
+            $user = User::find($id);
+            $user->nip = $request->nip;
+            $user->name = $request->name;
+            if ($request->change_password) {
+                $user->password = bcrypt($request->new_password);
+            }
+            $user->email = $request->email;
+            $user->phone = $request->phone;
+            $user->position = $request->position;
+            $user->branch_id = $request->branch_id;
+            if ($request->position == 'Kepala Cabang') {
+                $user->type = '2';
+            } elseif($request->position == 'Administrator') {
+                $user->type = '3';
+            } else {
+                $user->type = '1';
+            }
+
+            $user->save();
+            
+            return response()->json([
+                'status'=>'success', 
+                'message'=>'Record is successfully edited',
+            ]);
+        }
     }
 }

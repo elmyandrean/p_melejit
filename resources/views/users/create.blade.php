@@ -42,6 +42,18 @@
           <option value="Security">Security</option>
           <option value="Teller">Teller</option>
           <option value="Kepala Cabang">Kepala Cabang</option>
+          <option value="Administrator">Administrator</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-md-3">Cabang</label>
+      <div class="col-md-8">
+        <select name="branch_id" class="form-control" required="">
+          <option selected disabled>-Pilih Cabang-</option>
+          @foreach($branches as $branch)
+          <option value="{{$branch->id}}">{{$branch->name}}</option>
+          @endforeach
         </select>
       </div>
     </div>

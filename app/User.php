@@ -39,6 +39,6 @@ class User extends Authenticatable
 
     public function branch()
     {
-        return $this->belongsTo('App\Branch');
+        return $this->belongsTo('App\Branch', 'branch_id');
     }
 }

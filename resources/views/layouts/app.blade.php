@@ -72,7 +72,7 @@
               <!-- Menu Body -->
               <li class="user-footer">
                 <div class="pull-left">
-                  <a href="#" class="btn btn-default btn-flat">Ubah Password</a>
+                  <a href="{{route('users.edit_profile', Auth::user()->id)}}" class="btn btn-default btn-flat">Edit Profil</a>
                 </div>
                 <div class="pull-right">
                   <a class="btn btn-default btn-flat" href="{{ route('logout') }}"

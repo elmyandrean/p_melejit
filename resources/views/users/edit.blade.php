@@ -43,6 +43,18 @@
           <option value="Security" {{ $user->position == 'Security' ? 'selected' : ''}}>Security</option>
           <option value="Teller" {{ $user->position == 'Teller' ? 'selected' : ''}}>Teller</option>
           <option value="Kepala Cabang" {{ $user->position == 'Kepala Cabang' ? 'selected' : ''}}>Kepala Cabang</option>
+          <option value="Administrator" {{ $user->position == 'Administrator' ? 'selected' : ''}}>Administrator</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="control-label col-md-3">Cabang</label>
+      <div class="col-md-8">
+        <select name="branch_id" class="form-control" required="">
+          <option selected disabled>-Pilih Cabang-</option>
+          @foreach($branches as $branch)
+          <option value="{{$branch->id}}" {{$user->branch_id == $branch->id ? 'selected' : ''}}>{{$branch->name}}</option>
+          @endforeach
         </select>
       </div>
     </div>
