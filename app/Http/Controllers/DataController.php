@@ -97,17 +97,27 @@ class DataController extends Controller
 
     public function reports(Request $request)
     {
-        $branch_id = $request->branch_id;
-        $start_date = substr($request->report_range, 0, 10);
-        $start_date = date('Y-m-d', strtotime($start_date));
-        $end_date = substr($request->report_range, 13, 10);
-        $end_date = date('Y-m-d', strtotime($end_date));
-
         DB::enableQueryLog();
-        $data_fundings = Funding::join('users', 'users.id', '=', 'fundings.user_id')->where('status', 'approved')->whereBetween('date_serve', [$start_date, $end_date]);
-        $data_kkbs = Kkb::join('users', 'users.id', '=', 'kkbs.user_id')->where('status', 'approved')->whereBetween('date_serve', [$start_date, $end_date]);
-        $data_retail_credits = RetailCredit::join('users', 'users.id', '=', 'retail_credits.user_id')->where('status', 'approved')->whereBetween('date_serve', [$start_date, $end_date]);
-        $data_transactionals = Transactional::join('users', 'users.id', '=', 'transactionals.user_id')->where('status', 'approved')->whereBetween('date_serve', [$start_date, $end_date]);
+        $branch_id = $request->branch_id;
+        if(Auth::user()->type == 3){
+            $start_date = substr($request->report_range, 0, 10);
+            $start_date = date('Y-m-d', strtotime($start_date));
+            $end_date = substr($request->report_range, 13, 10);
+            $end_date = date('Y-m-d', strtotime($end_date));
+
+            $data_fundings = Funding::join('users', 'users.id', '=', 'fundings.user_id')->where('fundings.status', 'approved')->whereBetween('date_serve', [$start_date, $end_date]);
+            $data_kkbs = Kkb::join('users', 'users.id', '=', 'kkbs.user_id')->where('kkbs.status', 'approved')->whereBetween('date_serve', [$start_date, $end_date]);
+            $data_retail_credits = RetailCredit::join('users', 'users.id', '=', 'retail_credits.user_id')->where('retail_credits.status', 'approved')->whereBetween('date_serve', [$start_date, $end_date]);
+            $data_transactionals = Transactional::join('users', 'users.id', '=', 'transactionals.user_id')->where('transactionals.status', 'approved')->whereBetween('date_serve', [$start_date, $end_date]);
+        } elseif(Auth::user()->type == 2){
+            $month = substr($request->report_range, 0, 2);
+            $year = substr($request->report_range, 3, 4);
+
+            $data_fundings = Funding::join('users', 'users.id', '=', 'fundings.user_id')->where('fundings.status', 'approved')->whereMonth('date_serve', $month)->whereYear('date_serve', $year);
+            $data_kkbs = Kkb::join('users', 'users.id', '=', 'kkbs.user_id')->where('kkbs.status', 'approved')->whereMonth('date_serve', $month)->whereYear('date_serve', $year);
+            $data_retail_credits = RetailCredit::join('users', 'users.id', '=', 'retail_credits.user_id')->where('retail_credits.status', 'approved')->whereMonth('date_serve', $month)->whereYear('date_serve', $year);
+            $data_transactionals = Transactional::join('users', 'users.id', '=', 'transactionals.user_id')->where('transactionals.status', 'approved')->whereMonth('date_serve', $month)->whereYear('date_serve', $year);
+        }
 
         if ($branch_id == 'all') {
             $data_fundings = $data_fundings->get();
