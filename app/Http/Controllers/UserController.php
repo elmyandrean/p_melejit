@@ -162,11 +162,12 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    
     public function destroy($id)
     {
-        $user = User::where('id', '=', $id)->firstOrFail();
-
-        $user->delete();
+        $user = User::find($id);
+        $user->status = 'Deactive';
+        $user->save();
 
         return response()->json([
             'status'=>'success', 

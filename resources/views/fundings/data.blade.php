@@ -50,22 +50,37 @@
   </table>
 </div>
 
+<!-- SweetAlert -->
+<script src="{{asset('js/sweetalert.min.js')}}"></script>
+
 <script>
   $(".table").dataTable();
 
   $(".delete-button").click(function(e){
     e.preventDefault();
     
-    var data =  $(this).closest("form").serialize();
-    var url =  $(this).closest("form").attr('action');
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this Funding!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        var data =  $(this).closest("form").serialize();
+        var url =  $(this).closest("form").attr('action');
 
-    $.ajax({
-      type: "POST",
-      url: url,
-      data: data,
-      dataType: "JSON",
-      success: function(data){
-        loadData();
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: data,
+          dataType: "JSON",
+          success: function(data){
+            swal("Success", "Funding has ben deleted!")
+            loadData();
+          }
+        });
       }
     });
   });

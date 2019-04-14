@@ -175,10 +175,10 @@ class ProductHoldingController extends Controller
     public function destroy($id)
     {
         $product_holding = ProductHolding::where('id', '=', $id);
-        $product_holding->update(['status'=>'deactive']);
+        $product_holding->update(['status'=>'Deactive']);
 
         $product_content = ProductContent::where('product_holding_id', $id);
-        $product_content->update(['status'=>'deactive']);
+        $product_content->update(['status'=>'Deactive']);
 
         return response()->json([
             'status'=>'success', 

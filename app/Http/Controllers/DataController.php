@@ -17,14 +17,14 @@ class DataController extends Controller
 {
     public function users()
     {
-        $users = User::all();
+        $users = User::where("status", "Active")->get();
 
         return view('users.data', ['users'=>$users]);
     }
 
     public function product_holdings()
     {
-   		$product_holdings = ProductHolding::where('status', 'active')->get();
+   		$product_holdings = ProductHolding::where('status', 'Active')->get();
 
    		return view('product_holdings.data', ['product_holdings'=>$product_holdings]);
     }

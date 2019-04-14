@@ -35,41 +35,67 @@
   </table>
 </div>
 
+<!-- SweetAlert -->
+<script src="{{asset('js/sweetalert.min.js')}}"></script>
+
 <script>
   $(".table").dataTable();
 
   $(".delete-button").click(function(e){
     e.preventDefault();
-    
-    var data =  $(this).closest("form").serialize();
-    var url =  $(this).closest("form").attr('action');
 
-    $.ajax({
-      type: "POST",
-      url: url,
-      data: data,
-      dataType: "JSON",
-      success: function(data){
-        loadData();
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this User!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        var data =  $(this).closest("form").serialize();
+        var url =  $(this).closest("form").attr('action');
+
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: data,
+          dataType: "JSON",
+          success: function(data){
+            swal("Success", "User has ben deleted!")
+            loadData();
+          }
+        });
       }
     });
+    
   });
 
   $(".reset-password").click(function(e){
     e.preventDefault();
-    
-    var data =  $(this).closest("form").serialize();
-    var url =  $(this).closest("form").attr('action')+'/reset_password';
 
-    alert(url);
+    swal({
+      title: "Are you sure?",
+      text: "One the password is resetted, the password is back to default!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        var data =  $(this).closest("form").serialize();
+        var url =  $(this).closest("form").attr('action')+'/reset_password';
 
-    $.ajax({
-      type: "PUT",
-      url: url,
-      data: data,
-      dataType: "JSON",
-      success: function(data){
-        loadData();
+        $.ajax({
+          type: "PUT",
+          url: url,
+          data: data,
+          dataType: "JSON",
+          success: function(data){
+            swal("Success", "Password has ben resetted!")
+            loadData();
+          }
+        });
       }
     });
   });
