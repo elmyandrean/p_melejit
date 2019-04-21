@@ -8,36 +8,68 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Dashboard 2
+      Data Transaksi
       <small>per {{date('d-m-Y')}}</small>
     </h1>
   </section>
 
   <!-- Main content -->
   <section class="content">
-    <!-- Default box -->
-    <div class="box">
-      <div class="box-header with-border">
-        <h3 class="box-title">Title</h3>
+    <div class="row">
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-aqua"><i class="fa fa-envelope"></i></span>
 
-        <div class="box-tools pull-right">
-          <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip"
-                  title="Collapse">
-            <i class="fa fa-minus"></i></button>
-          <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-            <i class="fa fa-times"></i></button>
+          <div class="info-box-content">
+            <span class="info-box-number">Funding</span>
+            <span class="info-box-text">760 Transaksi</span>
+          </div>
+          <!-- /.info-box-content -->
         </div>
+        <!-- /.info-box -->
       </div>
-      <div class="box-body">
-        Start creating your amazing application!
+      <!-- /.col -->
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-red"><i class="fa fa-handshake-o"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-number">Alliance</span>
+            <span class="info-box-text">760 Transaksi</span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
       </div>
-      <!-- /.box-body -->
-      <div class="box-footer">
-        Footer
+      <!-- /.col -->
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-green"><i class="fa fa-calculator"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-number">Retail Credit</span>
+            <span class="info-box-text">760 Transaksi</span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
       </div>
-      <!-- /.box-footer-->
+      <!-- /.col -->
+      <div class="col-md-3 col-sm-6 col-xs-12">
+        <div class="info-box">
+          <span class="info-box-icon bg-yellow"><i class="fa fa-shopping-cart"></i></span>
+
+          <div class="info-box-content">
+            <span class="info-box-number">Transactional</span>
+            <span class="info-box-text">760 Transaksi</span>
+          </div>
+          <!-- /.info-box-content -->
+        </div>
+        <!-- /.info-box -->
+      </div>
+      <!-- /.col -->
     </div>
-    <!-- /.box -->
+    <!-- Default box -->
   </section>
   <!-- /.content -->
 </div>

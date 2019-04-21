@@ -44,4 +44,5 @@ Route::get('/report', 'ReportController@index')->name('report.index');
 Route::put('/users/{id}/reset_password', 'UserController@reset_password')->name('users.reset_password');
 Route::get('/users/{id}/edit_profile', 'UserController@edit_profile')->name('users.edit_profile');
 Route::put('/users/{id}/update_profile', 'UserController@update_profile')->name('users.update_profile');
+Route::get('/report/download_excel', 'ReportController@download_excel')->name('report.download_excel');
 
