@@ -22,7 +22,7 @@
 
           <div class="info-box-content">
             <span class="info-box-number">Funding</span>
-            <span class="info-box-text">{{$funding->isEmpty() ? '0' : $funding[0]->JUMLAH_DATA}} Transaksi</span>
+            <span class="info-box-text">{{$fundings->this_month}} Transaksi</span>
           </div>
           <!-- /.info-box-content -->
         </div>
@@ -35,7 +35,7 @@
 
           <div class="info-box-content">
             <span class="info-box-number">Alliance</span>
-            <span class="info-box-text">{{$kkb->isEmpty() ? '0' : $kkb[0]->JUMLAH_DATA}} Transaksi</span>
+            <span class="info-box-text">{{$kkbs->this_month}} Transaksi</span>
           </div>
           <!-- /.info-box-content -->
         </div>
@@ -48,7 +48,7 @@
 
           <div class="info-box-content">
             <span class="info-box-number">Retail Credit</span>
-            <span class="info-box-text">{{$retail_credit->isEmpty() ? '0' : $retail_credit[0]->JUMLAH_DATA}} Transaksi</span>
+            <span class="info-box-text">{{$retail_credits->this_month}} Transaksi</span>
           </div>
           <!-- /.info-box-content -->
         </div>
@@ -61,7 +61,7 @@
 
           <div class="info-box-content">
             <span class="info-box-number">Transactional</span>
-            <span class="info-box-text">{{$transactional->isEmpty() ? '0' : $transactional[0]->JUMLAH_DATA}} Transaksi</span>
+            <span class="info-box-text">{{$transactionals->this_month}} Transaksi</span>
           </div>
           <!-- /.info-box-content -->
         </div>
@@ -139,6 +139,9 @@
         title: {
             text: 'Data Semua Transaksi'
         },
+        subtitle: {
+            text: 'Data sampai dengan Bulan {{date('F Y')}}'
+        },
         tooltip: {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
         },
@@ -160,16 +163,16 @@
             colorByPoint: true,
             data: [{
                 name: 'Funding',
-                y: {{$funding->isEmpty() ? '0' : $funding->sum('JUMLAH_DATA')}}
+                y: {{$fundings->all->isEmpty() ? '0' : $fundings->all->count('id')}}
             }, {
                 name: 'Alliance',
-                y: {{$kkb->isEmpty() ? '0' : $kkb->sum('JUMLAH_DATA')}}
+                y: {{$kkbs->all->isEmpty() ? '0' : $kkbs->all->count('id')}}
             }, {
                 name: 'Retail Kredit',
-                y: {{$retail_credit->isEmpty() ? '0' : $retail_credit->sum('JUMLAH_DATA')}}
+                y: {{$retail_credits->all->isEmpty() ? '0' : $retail_credits->all->count('id')}}
             }, {
                 name: 'Transactional',
-                y: {{$transactional->isEmpty() ? '0' : $transactional->sum('JUMLAH_DATA')}}
+                y: {{$transactionals->all->isEmpty() ? '0' : $transactionals->all->count('id')}}
             }]
         }]
     });
@@ -177,249 +180,181 @@
     // Bar Chart Funding
     Highcharts.chart('funding', {
         chart: {
-            type: 'column'
+            type: 'line'
         },
         title: {
-            text: 'World\'s largest cities per 2017'
+            text: 'Data Funding 6 Bulan Terakhir'
         },
         subtitle: {
-            text: 'Source: <a href="http://en.wikipedia.org/wiki/List_of_cities_proper_by_population">Wikipedia</a>'
+            text: 'Data sampai dengan Bulan {{date('F Y')}}'
         },
         xAxis: {
-            type: 'category',
-            labels: {
-                rotation: -45,
-                style: {
-                    fontSize: '13px',
-                    fontFamily: 'Verdana, sans-serif'
-                }
-            }
+            categories: [
+              @foreach($periodes as $periode)
+                '{{ $periode->bulan_text }}',
+              @endforeach
+            ]
         },
         yAxis: {
-            min: 0,
             title: {
-                text: 'Population (millions)'
+                text: 'Jumlah Transaksi'
             }
         },
-        legend: {
-            enabled: false
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: false
+            }
         },
-        tooltip: {
-            pointFormat: 'Population in 2017: <b>{point.y:.1f} millions</b>'
-        },
-        series: [{
-            name: 'Population',
+        series: [
+          @foreach($fundings->product_holdings as $product_holding)
+          {
+            name: '{{$product_holding->product_holding}}',
             data: [
-                ['Tabungan', 24.2],
-                ['New Payroll', 20.8],
-                ['Deposito', 14.9],
-                ['Giro', 13.7],
-            ],
-            dataLabels: {
-                enabled: true,
-                rotation: -90,
-                color: '#FFFFFF',
-                align: 'right',
-                format: '{point.y:.1f}', // one decimal
-                y: 10, // 10 pixels down from the top
-                style: {
-                    fontSize: '13px',
-                    fontFamily: 'Verdana, sans-serif'
-                }
-            }
-        }]
+              @foreach($product_holding->periodes as $periode)
+                  {{$periode->data}},
+              @endforeach
+            ]
+          },
+          @endforeach
+        ]
     });
 
     // Bar Chart KKB
     Highcharts.chart('kkb', {
-      title: {
-          text: 'Solar Employment Growth by Sector, 2010-2016'
-      },
-
-      subtitle: {
-          text: 'Source: thesolarfoundation.com'
-      },
-
-      yAxis: {
-          title: {
-              text: 'Number of Employees'
-          }
-      },
-      legend: {
-          layout: 'vertical',
-          align: 'right',
-          verticalAlign: 'middle'
-      },
-
-      plotOptions: {
-          series: {
-              label: {
-                  connectorAllowed: false
-              },
-              pointStart: 2010
-          }
-      },
-
-      series: [{
-          name: 'Installation',
-          data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
-      }, {
-          name: 'Manufacturing',
-          data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
-      }, {
-          name: 'Sales & Distribution',
-          data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
-      }, {
-          name: 'Project Development',
-          data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]
-      }, {
-          name: 'Other',
-          data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]
-      }],
-
-      responsive: {
-          rules: [{
-              condition: {
-                  maxWidth: 500
-              },
-              chartOptions: {
-                  legend: {
-                      layout: 'horizontal',
-                      align: 'center',
-                      verticalAlign: 'bottom'
-                  }
-              }
-          }]
-      }
-
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: 'Data Alliance 6 Bulan Terakhir'
+        },
+        subtitle: {
+            text: 'Data sampai dengan Bulan {{date('F Y')}}'
+        },
+        xAxis: {
+            categories: [
+              @foreach($periodes as $periode)
+                '{{ $periode->bulan_text }}',
+              @endforeach
+            ]
+        },
+        yAxis: {
+            title: {
+                text: 'Jumlah Transaksi'
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: false
+            }
+        },
+        series: [
+          @foreach($kkbs->product_holdings as $product_holding)
+          {
+            name: '{{$product_holding->product_holding}}',
+            data: [
+              @foreach($product_holding->periodes as $periode)
+                  {{$periode->data}},
+              @endforeach
+            ]
+          },
+          @endforeach
+        ]
     });
 
     // Bar Chart Retail Credit
     Highcharts.chart('retail_credit', {
-      title: {
-          text: 'Solar Employment Growth by Sector, 2010-2016'
-      },
-
-      subtitle: {
-          text: 'Source: thesolarfoundation.com'
-      },
-
-      yAxis: {
-          title: {
-              text: 'Number of Employees'
-          }
-      },
-      legend: {
-          layout: 'vertical',
-          align: 'right',
-          verticalAlign: 'middle'
-      },
-
-      plotOptions: {
-          series: {
-              label: {
-                  connectorAllowed: false
-              },
-              pointStart: 2010
-          }
-      },
-
-      series: [{
-          name: 'Installation',
-          data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
-      }, {
-          name: 'Manufacturing',
-          data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
-      }, {
-          name: 'Sales & Distribution',
-          data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
-      }, {
-          name: 'Project Development',
-          data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]
-      }, {
-          name: 'Other',
-          data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]
-      }],
-
-      responsive: {
-          rules: [{
-              condition: {
-                  maxWidth: 500
-              },
-              chartOptions: {
-                  legend: {
-                      layout: 'horizontal',
-                      align: 'center',
-                      verticalAlign: 'bottom'
-                  }
-              }
-          }]
-      }
-
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: 'Data Retail Kredit 6 Bulan Terakhir'
+        },
+        subtitle: {
+            text: 'Data sampai dengan Bulan {{date('F Y')}}'
+        },
+        xAxis: {
+            categories: [
+              @foreach($periodes as $periode)
+                '{{ $periode->bulan_text }}',
+              @endforeach
+            ]
+        },
+        yAxis: {
+            title: {
+                text: 'Jumlah Transaksi'
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: false
+            }
+        },
+        series: [
+          @foreach($retail_credits->product_holdings as $product_holding)
+          {
+            name: '{{$product_holding->product_holding}}',
+            data: [
+              @foreach($product_holding->periodes as $periode)
+                  {{$periode->data}},
+              @endforeach
+            ]
+          },
+          @endforeach
+        ]
     });
 
     // Bar Chart Transactional
     Highcharts.chart('transactional', {
-      title: {
-          text: 'Solar Employment Growth by Sector, 2010-2016'
-      },
-
-      subtitle: {
-          text: 'Source: thesolarfoundation.com'
-      },
-
-      yAxis: {
-          title: {
-              text: 'Number of Employees'
-          }
-      },
-      legend: {
-          layout: 'vertical',
-          align: 'right',
-          verticalAlign: 'middle'
-      },
-
-      plotOptions: {
-          series: {
-              label: {
-                  connectorAllowed: false
-              },
-              pointStart: 2010
-          }
-      },
-
-      series: [{
-          name: 'Installation',
-          data: [43934, 52503, 57177, 69658, 97031, 119931, 137133, 154175]
-      }, {
-          name: 'Manufacturing',
-          data: [24916, 24064, 29742, 29851, 32490, 30282, 38121, 40434]
-      }, {
-          name: 'Sales & Distribution',
-          data: [11744, 17722, 16005, 19771, 20185, 24377, 32147, 39387]
-      }, {
-          name: 'Project Development',
-          data: [null, null, 7988, 12169, 15112, 22452, 34400, 34227]
-      }, {
-          name: 'Other',
-          data: [12908, 5948, 8105, 11248, 8989, 11816, 18274, 18111]
-      }],
-
-      responsive: {
-          rules: [{
-              condition: {
-                  maxWidth: 500
-              },
-              chartOptions: {
-                  legend: {
-                      layout: 'horizontal',
-                      align: 'center',
-                      verticalAlign: 'bottom'
-                  }
-              }
-          }]
-      }
-
+        chart: {
+            type: 'line'
+        },
+        title: {
+            text: 'Data Transactional 6 Bulan Terakhir'
+        },
+        subtitle: {
+            text: 'Data sampai dengan Bulan {{date('F Y')}}'
+        },
+        xAxis: {
+            categories: [
+              @foreach($periodes as $periode)
+                '{{ $periode->bulan_text }}',
+              @endforeach
+            ],
+        },
+        yAxis: {
+            title: {
+                text: 'Jumlah Transaksi'
+            }
+        },
+        plotOptions: {
+            line: {
+                dataLabels: {
+                    enabled: true
+                },
+                enableMouseTracking: false
+            }
+        },
+        series: [
+          @foreach($transactionals->product_holdings as $product_holding)
+          {
+            name: '{{$product_holding->product_holding}}',
+            data: [
+              @foreach($product_holding->periodes as $periode)
+                  {{$periode->data}},
+              @endforeach
+            ]
+          },
+          @endforeach
+        ]
     });
     </script>
 @endsection

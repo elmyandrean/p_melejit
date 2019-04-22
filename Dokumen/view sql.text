@@ -1,0 +1,55 @@
+// Funding
+SELECT ph.menu AS menu,
+ph.name AS product_holding,
+pc.name AS product_content,
+YEAR(date_serve) AS tahun,
+MONTH(date_serve) AS bulan,
+COUNT(f.id) AS jumlah_data
+FROM fundings f
+JOIN product_contents pc ON f.product_content_id = pc.id
+JOIN product_holdings ph on pc.product_holding_id = ph.id
+JOIN users u ON f.user_id = u.id 
+WHERE f.status = 'Approved'
+GROUP BY product_holding, product_content, tahun, bulan, menu
+
+// KKB
+SELECT ph.menu AS menu,
+ph.name AS product_holding,
+pc.name AS product_content,
+YEAR(date_serve) AS tahun,
+MONTH(date_serve) AS bulan,
+COUNT(k.id) AS jumlah_data
+FROM kkbs k
+JOIN product_contents pc ON k.product_content_id = pc.id
+JOIN product_holdings ph on pc.product_holding_id = ph.id
+JOIN users u ON k.user_id = u.id 
+WHERE k.status = 'Approved'
+GROUP BY product_holding, product_content, tahun, bulan, menu
+
+// Retail Kredit
+SELECT ph.menu AS menu,
+ph.name AS product_holding,
+pc.name AS product_content,
+YEAR(date_serve) AS tahun,
+MONTH(date_serve) AS bulan,
+COUNT(r.id) AS jumlah_data
+FROM retail_credits r
+JOIN product_contents pc ON r.product_content_id = pc.id
+JOIN product_holdings ph on pc.product_holding_id = ph.id
+JOIN users u ON r.user_id = u.id 
+WHERE r.status = 'Approved'
+GROUP BY product_holding, product_content, tahun, bulan, menu
+
+// Transactional
+SELECT ph.menu AS menu,
+ph.name AS product_holding,
+pc.name AS product_content,
+YEAR(date_serve) AS tahun,
+MONTH(date_serve) AS bulan,
+COUNT(t.id) AS jumlah_data
+FROM transactionals t
+JOIN product_contents pc ON t.product_content_id = pc.id
+JOIN product_holdings ph on pc.product_holding_id = ph.id
+JOIN users u ON t.user_id = u.id 
+WHERE t.status = 'Approved'
+GROUP BY product_holding, product_content, tahun, bulan, menu
