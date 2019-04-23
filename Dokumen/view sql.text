@@ -53,3 +53,282 @@ JOIN product_holdings ph on pc.product_holding_id = ph.id
 JOIN users u ON t.user_id = u.id 
 WHERE t.status = 'Approved'
 GROUP BY product_holding, product_content, tahun, bulan, menu
+
+// Rank All Transaction
+SELECT MONTH(f.date_serve) as bulan,
+YEAR(f.date_serve) as tahun,
+ph.menu as menu,
+u.name as user,
+SUM(CASE 
+    WHEN f.condition = 'PipeLine' THEN 1 
+    ELSE pc.point 
+END) AS point
+FROM fundings f
+JOIN users u ON u.id=f.user_id
+JOIN product_contents pc ON pc.id=f.product_content_id
+JOIN product_holdings ph ON ph.id=pc.product_holding_id
+WHERE f.status = 'Approved'
+GROUP BY user, bulan, tahun
+
+UNION
+
+SELECT MONTH(k.date_serve) as bulan,
+YEAR(k.date_serve) as tahun,
+ph.menu as menu,
+u.name as user,
+SUM(CASE 
+    WHEN k.condition = 'PipeLine' THEN 1 
+    ELSE pc.point 
+END) AS point
+FROM kkbs k
+JOIN users u ON u.id=k.user_id
+JOIN product_contents pc ON pc.id=k.product_content_id
+JOIN product_holdings ph ON ph.id=pc.product_holding_id
+WHERE k.status = 'Approved'
+GROUP BY user, bulan, tahun
+
+UNION
+
+SELECT MONTH(r.date_serve) as bulan,
+YEAR(r.date_serve) as tahun,
+ph.menu as menu,
+u.name as user,
+SUM(CASE 
+    WHEN r.condition = 'PipeLine' THEN 1 
+    ELSE pc.point 
+END) AS point
+FROM retail_credits r
+JOIN users u ON u.id=r.user_id
+JOIN product_contents pc ON pc.id=r.product_content_id
+JOIN product_holdings ph ON ph.id=pc.product_holding_id
+WHERE r.status = 'Approved'
+GROUP BY user, tahun, bulan
+
+UNION
+
+SELECT MONTH(t.date_serve) as bulan,
+YEAR(t.date_serve) as tahun,
+ph.menu as menu,
+u.name as user,
+SUM(CASE 
+    WHEN t.condition = 'PipeLine' THEN 1 
+    ELSE pc.point 
+END) AS point
+FROM transactionals t
+JOIN users u ON u.id=t.user_id
+JOIN product_contents pc ON pc.id=t.product_content_id
+JOIN product_holdings ph ON ph.id=pc.product_holding_id
+WHERE t.status = 'Approved'
+GROUP BY user, tahun, bulan
+
+// VIEW RANK
+SELECT user, tahun, bulan, sum(point) as point
+from (
+SELECT MONTH(f.date_serve) as bulan,
+YEAR(f.date_serve) as tahun,
+ph.menu as menu,
+u.name as user,
+SUM(CASE 
+    WHEN f.condition = 'PipeLine' THEN 1 
+    ELSE pc.point 
+END) AS point
+FROM fundings f
+JOIN users u ON u.id=f.user_id
+JOIN product_contents pc ON pc.id=f.product_content_id
+JOIN product_holdings ph ON ph.id=pc.product_holding_id
+WHERE f.status = 'Approved'
+GROUP BY user, bulan, tahun
+
+UNION
+
+SELECT MONTH(k.date_serve) as bulan,
+YEAR(k.date_serve) as tahun,
+ph.menu as menu,
+u.name as user,
+SUM(CASE 
+    WHEN k.condition = 'PipeLine' THEN 1 
+    ELSE pc.point 
+END) AS point
+FROM kkbs k
+JOIN users u ON u.id=k.user_id
+JOIN product_contents pc ON pc.id=k.product_content_id
+JOIN product_holdings ph ON ph.id=pc.product_holding_id
+WHERE k.status = 'Approved'
+GROUP BY user, bulan, tahun
+
+UNION
+
+SELECT MONTH(r.date_serve) as bulan,
+YEAR(r.date_serve) as tahun,
+ph.menu as menu,
+u.name as user,
+SUM(CASE 
+    WHEN r.condition = 'PipeLine' THEN 1 
+    ELSE pc.point 
+END) AS point
+FROM retail_credits r
+JOIN users u ON u.id=r.user_id
+JOIN product_contents pc ON pc.id=r.product_content_id
+JOIN product_holdings ph ON ph.id=pc.product_holding_id
+WHERE r.status = 'Approved'
+GROUP BY user, tahun, bulan
+
+UNION
+
+SELECT MONTH(t.date_serve) as bulan,
+YEAR(t.date_serve) as tahun,
+ph.menu as menu,
+u.name as user,
+SUM(CASE 
+    WHEN t.condition = 'PipeLine' THEN 1 
+    ELSE pc.point 
+END) AS point
+FROM transactionals t
+JOIN users u ON u.id=t.user_id
+JOIN product_contents pc ON pc.id=t.product_content_id
+JOIN product_holdings ph ON ph.id=pc.product_holding_id
+WHERE t.status = 'Approved'
+GROUP BY user, tahun, bulan
+) a
+GROUP BY user, tahun, bulan
+
+=======================================================================================
+
+// Funding NEW
+SELECT 
+YEAR(date_serve) AS tahun,
+MONTH(date_serve) AS bulan,
+menu, 
+ph.name AS ph_name, 
+pc.name AS pc_name,
+u.branch_id AS branch_id,
+b.kode AS branch_kode,
+b.name AS branch_name,
+u.id AS user_id,
+u.name AS user_name,
+SUM(
+CASE 
+    WHEN f.condition = 'Close' THEN pc.point
+    ELSE 1
+END
+) AS point,
+COUNT(f.id) as jumlah_transaksi
+FROM fundings f
+JOIN users u ON u.id = f.user_id
+JOIN branches b ON b.id = u.branch_id
+JOIN product_contents pc ON pc.id = f.product_content_id
+JOIN product_holdings ph ON ph.id = pc.product_holding_id
+GROUP BY tahun, bulan, menu, ph_name, pc_name, branch_id, user_id, user_name, branch_kode, branch_name
+
+// KKB NEW
+SELECT 
+YEAR(date_serve) AS tahun,
+MONTH(date_serve) AS bulan,
+menu, 
+ph.name AS ph_name, 
+pc.name AS pc_name,
+u.branch_id AS branch_id,
+b.kode AS branch_kode,
+b.name AS branch_name,
+u.id AS user_id,
+u.name AS user_name,
+SUM(
+CASE 
+    WHEN k.condition = 'Close' THEN pc.point
+    ELSE 1
+END
+) AS point,
+COUNT(k.id) as jumlah_transaksi
+FROM kkbs k
+JOIN users u ON u.id = k.user_id
+JOIN branches b ON b.id = u.branch_id
+JOIN product_contents pc ON pc.id = k.product_content_id
+JOIN product_holdings ph ON ph.id = pc.product_holding_id
+GROUP BY tahun, bulan, menu, ph_name, pc_name, branch_id, user_id, user_name, branch_kode, branch_name
+
+
+// Retail Kredit NEW
+SELECT 
+YEAR(date_serve) AS tahun,
+MONTH(date_serve) AS bulan,
+menu, 
+ph.name AS ph_name, 
+pc.name AS pc_name,
+u.branch_id AS branch_id,
+b.kode AS branch_kode,
+b.name AS branch_name,
+u.id AS user_id,
+u.name AS user_name,
+SUM(
+CASE 
+    WHEN r.condition = 'Close' THEN pc.point
+    ELSE 1
+END
+) AS point,
+COUNT(r.id) as jumlah_transaksi
+FROM retail_credits r
+JOIN users u ON u.id = r.user_id
+JOIN branches b ON b.id = u.branch_id
+JOIN product_contents pc ON pc.id = r.product_content_id
+JOIN product_holdings ph ON ph.id = pc.product_holding_id
+GROUP BY tahun, bulan, menu, ph_name, pc_name, branch_id, user_id, user_name, branch_kode, branch_name
+
+// Transactional NEW
+SELECT 
+YEAR(date_serve) AS tahun,
+MONTH(date_serve) AS bulan,
+menu, 
+ph.name AS ph_name, 
+pc.name AS pc_name,
+u.branch_id AS branch_id,
+b.kode AS branch_kode,
+b.name AS branch_name,
+u.id AS user_id,
+u.name AS user_name,
+SUM(
+CASE 
+    WHEN t.condition = 'Close' THEN pc.point
+    ELSE 1
+END
+) AS point,
+COUNT(t.id) as jumlah_transaksi
+FROM transactionals t
+JOIN users u ON u.id = t.user_id
+JOIN branches b ON b.id = u.branch_id
+JOIN product_contents pc ON pc.id = t.product_content_id
+JOIN product_holdings ph ON ph.id = pc.product_holding_id
+GROUP BY tahun, bulan, menu, ph_name, pc_name, branch_id, user_name, user_id, branch_kode, branch_name
+
+// RANK ALL TRANSACTION NEW
+SELECT * FROM funding_approved
+UNION SELECT * FROM kkb_approved
+UNION SELECT * FROM retail_credit_approved
+UNION SELECT * FROM transactional_approved
+
+// Periodes
+SELECT tahun, bulan FROM all_approved GROUP BY tahun, bulan
+
+// ranked by month
+SELECT tahun, bulan, user_name, branch_id, branch_kode, branch_name, user_id, sum(point) as point
+FROM all_approved
+GROUP BY tahun, bulan, user_name, branch_id, branch_kode, branch_name, user_id
+
+<table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th width="5%">Ranking</th>
+                    <th>Nama</th>
+                    <th>Poin</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php $i = 1;?>
+                  @foreach($ranks as $rank)
+                  <tr>
+                    <td>{{$i++}}</td>
+                    <td>{{$rank->user_name}}</td>
+                    <td>{{$rank->point}}</td>
+                  </tr>
+                  @endforeach
+                </tbody>
+              </table>

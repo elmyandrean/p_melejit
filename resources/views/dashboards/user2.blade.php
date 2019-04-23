@@ -113,6 +113,37 @@
         <!-- nav-tabs-custom -->
       </div>
       <!-- /.col -->
+      <div class="col-md-6">
+        <div class="box">
+          <div class="box-header with-border">
+            <h3 class="box-title">Rank FL This Month</h3>
+          </div>
+          <div class="box-body">
+            <table class="table table-hover">
+              <thead>
+                <tr>
+                  <th width="5%">Ranking</th>
+                  <th>Nama</th>
+                  <th>Poin</th>
+                </tr>
+              </thead>
+              <tbody>
+                <?php $i = 1;?>
+                @foreach($ranks as $rank)
+                <tr>
+                  <td>{{$i++}}</td>
+                  <td>{{$rank->user_name}}</td>
+                  <td>{{$rank->point}}</td>
+                </tr>
+                @endforeach
+              </tbody>
+            </table>
+          </div>
+          <!-- /.box-body -->
+        </div>
+        <!-- /.box -->
+      </div>
+      <!-- /.col -->
     </div>
   </section>
   <!-- /.content -->
@@ -163,16 +194,16 @@
             colorByPoint: true,
             data: [{
                 name: 'Funding',
-                y: {{$fundings->all->isEmpty() ? '0' : $fundings->all->count('id')}}
+                y: {{$fundings->all}}
             }, {
                 name: 'Alliance',
-                y: {{$kkbs->all->isEmpty() ? '0' : $kkbs->all->count('id')}}
+                y: {{$kkbs->all}}
             }, {
                 name: 'Retail Kredit',
-                y: {{$retail_credits->all->isEmpty() ? '0' : $retail_credits->all->count('id')}}
+                y: {{$retail_credits->all}}
             }, {
                 name: 'Transactional',
-                y: {{$transactionals->all->isEmpty() ? '0' : $transactionals->all->count('id')}}
+                y: {{$transactionals->all}}
             }]
         }]
     });
@@ -211,10 +242,10 @@
         series: [
           @foreach($fundings->product_holdings as $product_holding)
           {
-            name: '{{$product_holding->product_holding}}',
+            name: '{{$product_holding->ph_name}}',
             data: [
               @foreach($product_holding->periodes as $periode)
-                  {{$periode->data}},
+                  {{$periode->jumlah_transaksi}},
               @endforeach
             ]
           },
@@ -256,10 +287,10 @@
         series: [
           @foreach($kkbs->product_holdings as $product_holding)
           {
-            name: '{{$product_holding->product_holding}}',
+            name: '{{$product_holding->ph_name}}',
             data: [
               @foreach($product_holding->periodes as $periode)
-                  {{$periode->data}},
+                  {{$periode->jumlah_transaksi}},
               @endforeach
             ]
           },
@@ -301,10 +332,10 @@
         series: [
           @foreach($retail_credits->product_holdings as $product_holding)
           {
-            name: '{{$product_holding->product_holding}}',
+            name: '{{$product_holding->ph_name}}',
             data: [
               @foreach($product_holding->periodes as $periode)
-                  {{$periode->data}},
+                  {{$periode->jumlah_transaksi}},
               @endforeach
             ]
           },
@@ -346,10 +377,10 @@
         series: [
           @foreach($transactionals->product_holdings as $product_holding)
           {
-            name: '{{$product_holding->product_holding}}',
+            name: '{{$product_holding->ph_name}}',
             data: [
               @foreach($product_holding->periodes as $periode)
-                  {{$periode->data}},
+                  {{$periode->jumlah_transaksi}},
               @endforeach
             ]
           },
