@@ -313,22 +313,16 @@ SELECT tahun, bulan, user_name, branch_id, branch_kode, branch_name, user_id, su
 FROM all_approved
 GROUP BY tahun, bulan, user_name, branch_id, branch_kode, branch_name, user_id
 
-<table class="table table-hover">
-                <thead>
-                  <tr>
-                    <th width="5%">Ranking</th>
-                    <th>Nama</th>
-                    <th>Poin</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php $i = 1;?>
-                  @foreach($ranks as $rank)
-                  <tr>
-                    <td>{{$i++}}</td>
-                    <td>{{$rank->user_name}}</td>
-                    <td>{{$rank->point}}</td>
-                  </tr>
-                  @endforeach
-                </tbody>
-              </table>
+// ranked branch regular
+SELECT tahun, bulan, a.branch_id as branch_id, branch_kode, branch_name, user_id, user_name, position, SUM(point) AS point
+FROM all_approved a
+JOIN users u ON u.id=a.user_id
+WHERE branch_kode <= 17810
+GROUP BY tahun, bulan, branch_id, branch_kode, branch_name, user_id, user_name, position
+
+// ranked branch mikro
+SELECT tahun, bulan, a.branch_id as branch_id, branch_kode, branch_name, user_id, user_name, position, SUM(point) AS point
+FROM all_approved a
+JOIN users u ON u.id=a.user_id
+WHERE branch_kode > 17810
+GROUP BY tahun, bulan, branch_id, branch_kode, branch_name, user_id, user_name, position

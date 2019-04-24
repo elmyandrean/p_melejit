@@ -169,7 +169,35 @@ class DashboardController extends Controller
       // dd($fundings);
 			return view('dashboards.user2', ['fundings'=>$fundings,'kkbs'=>$kkbs,'retail_credits'=>$retail_credits,'transactionals'=>$transactionals, 'periodes'=>$periodes, 'ranks'=>$ranks]);
 		} else if(Auth::user()->type == 3) {
-			return view('dashboards.user3');
+      $fundings->this_month = DB::table('funding_approved')->where([['bulan', date('m')],['branch_id', Auth::user()->branch_id]])->sum('jumlah_transaksi');
+      $kkbs->this_month = DB::table('kkb_approved')->where([['bulan', date('m')],['branch_id', Auth::user()->branch_id]])->sum('jumlah_transaksi');
+      $retail_credits->this_month = DB::table('retail_credit_approved')->where([['bulan', date('m')],['branch_id', Auth::user()->branch_id]])->sum('jumlah_transaksi');
+      $transactionals->this_month = DB::table('transactional_approved')->where([['bulan', date('m')],['branch_id', Auth::user()->branch_id]])->sum('jumlah_transaksi');
+
+      $csr_rank_regulars = DB::table('ranked_branch_regular')->where([['position', 'CSR'],['tahun',date('Y')],['bulan',date('m')]])->limit(6)->get();
+      $officer_rank_regulars = DB::table('ranked_branch_regular')->where([['position', 'MKA/BO/SPV/OFFICER'],['tahun',date('Y')],['bulan',date('m')]])->limit(6)->get(); 
+      $security_rank_regulars = DB::table('ranked_branch_regular')->where([['position', 'Security'],['tahun',date('Y')],['bulan',date('m')]])->limit(6)->get(); 
+      $teller_rank_regulars = DB::table('ranked_branch_regular')->where([['position', 'Teller'],['tahun',date('Y')],['bulan',date('m')]])->limit(6)->get(); 
+
+      $csr_rank_mikros = DB::table('ranked_branch_mikro')->where([['position', 'CSR'],['tahun',date('Y')],['bulan',date('m')]])->limit(6)->get();
+      $officer_rank_mikros = DB::table('ranked_branch_mikro')->where([['position', 'MKA/BO/SPV/OFFICER'],['tahun',date('Y')],['bulan',date('m')]])->limit(6)->get();
+      $security_rank_mikros = DB::table('ranked_branch_mikro')->where([['position', 'Security'],['tahun',date('Y')],['bulan',date('m')]])->limit(6)->get();
+      $teller_rank_mikros = DB::table('ranked_branch_mikro')->where([['position', 'Teller'],['tahun',date('Y')],['bulan',date('m')]])->limit(6)->get();
+
+			return view('dashboards.user3', [
+        'fundings'=>$fundings,
+        'kkbs'=>$kkbs, 
+        'retail_credits'=>$retail_credits, 
+        'transactionals'=>$transactionals, 
+        'csr_rank_regulars'=>$csr_rank_regulars, 
+        'csr_rank_mikros'=>$csr_rank_mikros, 
+        'officer_rank_regulars'=>$officer_rank_regulars,
+        'officer_rank_mikros'=>$officer_rank_mikros,
+        'security_rank_regulars'=>$security_rank_regulars,
+        'security_rank_mikros'=>$security_rank_mikros,
+        'teller_rank_regulars'=>$teller_rank_regulars,
+        'teller_rank_mikros'=>$teller_rank_mikros,
+      ]);
 		}
 	}
 }

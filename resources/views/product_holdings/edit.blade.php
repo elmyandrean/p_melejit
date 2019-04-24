@@ -14,7 +14,7 @@
       <div class="col-md-8">
         <select name="menu" class="form-control">
           <option value="Funding" {{$product_holding->menu == 'Funding' ? 'selected' : ''}}>Funding</option>
-          <option value="KKB" {{$product_holding->menu == 'KKB' ? 'selected' : ''}}>KKB</option>
+          <option value="KKB" {{$product_holding->menu == 'KKB' ? 'selected' : ''}}>Alliance</option>
           <option value="Kredit Retail" {{$product_holding->menu == 'Kredit Retail' ? 'selected' : ''}}>Kredit Retail</option>
           <option value="Transactional" {{$product_holding->menu == 'Transactional' ? 'selected' : ''}}>Transactional</option>
         </select>

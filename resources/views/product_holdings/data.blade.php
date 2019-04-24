@@ -10,7 +10,7 @@
     <tbody>
       @foreach($product_holdings as $ph)
       <tr>
-        <td>{{$ph->menu}}</td>
+        <td>{{$ph->menu == 'KKB' ? 'Alliance' : $ph->menu}}</td>
         <td>{{$ph->name}}</td>
         <td class="text-center">
           <form action="{{route('product_holdings.destroy', $ph->id)}}" method="POST">

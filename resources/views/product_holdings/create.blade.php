@@ -13,7 +13,7 @@
       <div class="col-md-8">
         <select name="menu" class="form-control">
           <option value="Funding">Funding</option>
-          <option value="KKB">KKB</option>
+          <option value="KKB">Alliance</option>
           <option value="Kredit Retail">Kredit Retail</option>
           <option value="Transactional">Transactional</option>
         </select>
