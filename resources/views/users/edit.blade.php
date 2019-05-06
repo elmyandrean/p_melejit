@@ -44,6 +44,7 @@
           <option value="Teller" {{ $user->position == 'Teller' ? 'selected' : ''}}>Teller</option>
           <option value="Kepala Cabang" {{ $user->position == 'Kepala Cabang' ? 'selected' : ''}}>Kepala Cabang</option>
           <option value="Administrator" {{ $user->position == 'Administrator' ? 'selected' : ''}}>Administrator</option>
+          <option value="User Assistant" {{ $user->position == 'User Assistant' ? 'selected' : ''}}>User Assistant</option>
         </select>
       </div>
     </div>

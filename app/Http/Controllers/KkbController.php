@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Kkb;
+use App\User;
 use App\ProductHolding;
 use App\ProductContent;
 use Auth;
@@ -28,8 +29,9 @@ class KkbController extends Controller
     public function create()
     {
         $product_holdings = ProductHolding::where(['status'=>'active', 'menu'=>'KKB'])->get();
+        $users = User::where(['branch_id'=> Auth::user()->branch_id, 'type'=> 1])->get();
 
-        return view('kkbs.create', ['product_holdings'=>$product_holdings]);
+        return view('kkbs.create', ['product_holdings'=>$product_holdings, 'users'=>$users]);
     }
 
     /**
@@ -47,7 +49,11 @@ class KkbController extends Controller
         ]);
 
         $kkb = new Kkb;
-        $kkb->user_id = Auth::user()->id;
+        if (Auth::user()->type == 1) {
+            $kkb->user_id = Auth::user()->id;
+        } elseif (Auth::user()->type == 4) {
+            $kkb->user_id = $request->user_id;
+        }
         $kkb->product_content_id = $request->product_content_id;
         $kkb->customer_name = $request->customer_name;
         $kkb->unit = $request->unit;
@@ -85,8 +91,9 @@ class KkbController extends Controller
         $kkb = Kkb::find($id);
         $product_holdings = ProductHolding::where(['menu'=>'KKB', 'status'=>'active'])->get();
         $product_contents = ProductContent::where(['product_holding_id'=>$kkb->product_content->product_holding_id, 'status'=>'active'])->get();
+        $users = User::where(['branch_id'=> Auth::user()->branch_id, 'type'=> 1])->get();
 
-        return view('kkbs.edit', ['kkb'=>$kkb, 'product_holdings'=>$product_holdings, 'product_contents'=>$product_contents]);
+        return view('kkbs.edit', ['kkb'=>$kkb, 'product_holdings'=>$product_holdings, 'product_contents'=>$product_contents, 'users'=>$users]);
     }
 
     /**
@@ -105,7 +112,11 @@ class KkbController extends Controller
         ]);
 
         $kkb = Kkb::find($id);
-        $kkb->user_id = Auth::user()->id;
+        if (Auth::user()->type == 1) {
+            $kkb->user_id = Auth::user()->id;
+        } elseif (Auth::user()->type == 4) {
+            $kkb->user_id = $request->user_id;
+        }
         $kkb->product_content_id = $request->product_content_id;
         $kkb->customer_name = $request->customer_name;
         $kkb->unit = $request->unit;

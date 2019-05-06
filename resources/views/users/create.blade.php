@@ -43,6 +43,7 @@
           <option value="Teller">Teller</option>
           <option value="Kepala Cabang">Kepala Cabang</option>
           <option value="Administrator">Administrator</option>
+          <option value="User Assistant">User Assistant</option>
         </select>
       </div>
     </div>

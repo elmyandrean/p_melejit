@@ -12,6 +12,19 @@
   <form action="{{route('retail_credits.update', $retail_credit->id)}}" class="form-horizontal" method="POST" id="formInsert">
     @csrf
     @method('PUT')
+    @if(Auth::user()->type == 4)
+    <div class="form-group">
+      <label class="control-label col-md-3">User</label>
+      <div class="col-md-8">
+        <select name="user_id" id="user_id" class="form-control">
+          <option selected disabled>- User -</option>
+          @foreach($users as $user)
+          <option value="{{$user->id}}" {{$user->id == $retail_credit->user_id ? 'selected' : ''}}>{{$user->name}}</option>
+          @endforeach
+        </select>
+      </div>
+    </div>
+    @endif
     <div class="form-group">
       <label class="control-label col-md-3">Product Holding</label>
       <div class="col-md-8">

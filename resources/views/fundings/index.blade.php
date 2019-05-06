@@ -16,7 +16,7 @@
     <div class="box">
       <div class="box-header with-border">
         <h3 class="box-title" >Data Funding</h3>
-        @if(Auth::user()->type == 1)
+        @if(Auth::user()->type == 1 || Auth::user()->type == 4)
         <div class="box-tools pull-right">
           <button type="button" class="btn btn-primary btn-sm pull-right" onclick="modalInsert()">
             New Data

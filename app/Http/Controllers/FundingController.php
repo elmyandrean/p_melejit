@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
 use App\Funding;
 use App\ProductHolding;
 use App\ProductContent;
@@ -30,8 +31,9 @@ class FundingController extends Controller
     public function create()
     {
         $product_holdings = ProductHolding::where(['status'=>'active', 'menu'=>'Funding'])->get();
+        $users = User::where(['branch_id'=> Auth::user()->branch_id, 'type'=> 1])->get();
 
-        return view('fundings.create', ['product_holdings'=>$product_holdings]);
+        return view('fundings.create', ['product_holdings'=>$product_holdings, 'users'=>$users]);
     }
 
     /**
@@ -51,7 +53,11 @@ class FundingController extends Controller
         ]);
 
         $funding = new Funding;
-        $funding->user_id = Auth::user()->id;
+        if (Auth::user()->type == 1) {
+            $funding->user_id = Auth::user()->id;
+        } elseif (Auth::user()->type == 4) {
+            $funding->user_id = $request->user_id;
+        }
         $funding->product_content_id = $request->product_content_id;
         $funding->customer_name = $request->customer_name;
         $funding->account_number = $request->account_number;
@@ -90,8 +96,10 @@ class FundingController extends Controller
         $funding = Funding::find($id);
         $product_holdings = ProductHolding::where(['menu'=>'Funding', 'status'=>'active'])->get();
         $product_contents = ProductContent::where(['product_holding_id'=>$funding->product_content->product_holding_id, 'status'=>'active'])->get();
+        $users = User::where(['branch_id'=> Auth::user()->branch_id, 'type'=> 1])->get();
 
-        return view('fundings.edit', ['funding'=>$funding, 'product_holdings'=>$product_holdings, 'product_contents'=>$product_contents]);
+
+        return view('fundings.edit', ['funding'=>$funding, 'product_holdings'=>$product_holdings, 'product_contents'=>$product_contents, 'users'=>$users]);
     }
 
     /**
@@ -112,7 +120,11 @@ class FundingController extends Controller
         ]);
 
         $funding = Funding::find($id);
-        $funding->user_id = Auth::user()->id;
+        if (Auth::user()->type == 1) {
+            $funding->user_id = Auth::user()->id;
+        } elseif (Auth::user()->type == 4) {
+            $funding->user_id = $request->user_id;
+        }
         $funding->product_content_id = $request->product_content_id;
         $funding->customer_name = $request->customer_name;
         $funding->account_number = $request->account_number;

@@ -27,7 +27,7 @@
             @csrf
             {{-- @method('DELETE') --}}
             <input type="hidden" name="_method" value="DELETE">
-            @if(Auth::user()->type == 1)
+            @if(Auth::user()->type == 1 || Auth::user()->type == 4)
               @if($funding->status == 'Pending')
               <button type="button" class="btn btn-warning btn-xs" title="Edit Data" onclick="modalEdit('{{$funding->id}}')"><i class="fa fa-edit"></i></button>
               <button type="submit" class="btn btn-danger btn-xs delete-button" title="Delete User" data-userid="{{$funding->id}}"><i class="fa fa-trash"></i></button>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Transactional;
+use App\User;
 use App\ProductHolding;
 use App\ProductContent;
 use Auth;
@@ -28,8 +29,9 @@ class TransactionalController extends Controller
     public function create()
     {
         $product_holdings = ProductHolding::where(['status'=>'active', 'menu'=>'Transactional'])->get();
+        $users = User::where(['branch_id'=> Auth::user()->branch_id, 'type'=> 1])->get();
 
-        return view('transactionals.create', ['product_holdings'=>$product_holdings]);
+        return view('transactionals.create', ['product_holdings'=>$product_holdings, 'users'=>$users]);
     }
 
     /**
@@ -47,7 +49,11 @@ class TransactionalController extends Controller
         ]);
 
         $transactional = new Transactional;
-        $transactional->user_id = Auth::user()->id;
+        if (Auth::user()->type == 1) {
+            $transactional->user_id = Auth::user()->id;
+        } elseif (Auth::user()->type == 4) {
+            $transactional->user_id = $request->user_id;
+        }
         $transactional->product_content_id = $request->product_content_id;
         $transactional->customer_name = $request->customer_name;
         $transactional->merchant_name = $request->merchant_name;
@@ -86,8 +92,9 @@ class TransactionalController extends Controller
         $transactional = Transactional::find($id);
         $product_holdings = ProductHolding::where(['menu'=>'Transactional', 'status'=>'active'])->get();
         $product_contents = ProductContent::where(['product_holding_id'=>$transactional->product_content->product_holding_id, 'status'=>'active'])->get();
+        $users = User::where(['branch_id'=> Auth::user()->branch_id, 'type'=> 1])->get();
 
-        return view('transactionals.edit', ['transactional'=>$transactional, 'product_holdings'=>$product_holdings, 'product_contents'=>$product_contents]);
+        return view('transactionals.edit', ['transactional'=>$transactional, 'product_holdings'=>$product_holdings, 'product_contents'=>$product_contents, 'users'=>$users]);
     }
 
     /**
@@ -106,7 +113,11 @@ class TransactionalController extends Controller
         ]);
 
         $transactional = Transactional::find($id);
-        $transactional->user_id = Auth::user()->id;
+        if (Auth::user()->type == 1) {
+            $transactional->user_id = Auth::user()->id;
+        } elseif (Auth::user()->type == 4) {
+            $transactional->user_id = $request->user_id;
+        }
         $transactional->product_content_id = $request->product_content_id;
         $transactional->customer_name = $request->customer_name;
         $transactional->merchant_name = $request->merchant_name;

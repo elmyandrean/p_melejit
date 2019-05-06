@@ -26,7 +26,7 @@
           <form action="{{route('retail_credits.destroy', $retail_credit->id)}}" method="POST">
             @csrf
             @method('DELETE')
-            @if(Auth::user()->type == 1)
+            @if(Auth::user()->type == 1 || Auth::user()->type == 4)
               @if($retail_credit->status == 'Pending')
               <button type="button" class="btn btn-warning btn-xs" title="Edit Data" onclick="modalEdit('{{$retail_credit->id}}')"><i class="fa fa-edit"></i></button>
               <button type="submit" class="btn btn-danger btn-xs delete-button" title="Delete User" data-userid="{{$retail_credit->id}}"><i class="fa fa-trash"></i></button>

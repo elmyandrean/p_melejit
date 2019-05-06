@@ -198,6 +198,70 @@ class DashboardController extends Controller
         'teller_rank_regulars'=>$teller_rank_regulars,
         'teller_rank_mikros'=>$teller_rank_mikros,
       ]);
-		}
+		} else if(Auth::user()->type == 4){
+      $fundings->all = DB::table('funding_approved')->where('branch_id', Auth::user()->branch_id)->sum('jumlah_transaksi');
+      $kkbs->all = DB::table('kkb_approved')->where('branch_id', Auth::user()->branch_id)->sum('jumlah_transaksi');
+      $retail_credits->all = DB::table('retail_credit_approved')->where('branch_id', Auth::user()->branch_id)->sum('jumlah_transaksi');
+      $transactionals->all = DB::table('transactional_approved')->where('branch_id', Auth::user()->branch_id)->sum('jumlah_transaksi');
+
+      // Get Product Holding
+      // $fundings->product_holdings
+      $fundings->product_holdings = DB::table('funding_approved')->select('ph_name')->distinct()->get();
+      foreach ($fundings->product_holdings as $product_holding) {
+        // Get Periode Funding
+        //$fundings->product_holdings->periodes
+        $product_holding->periodes = Periode::orderBy('tahun')->orderBy('bulan')->limit(6)->get();
+
+        foreach ($product_holding->periodes as $periode) {
+          // Get Funding based on Periode
+          //$fundings->product_holdings->periodes->jumlah_transaksi
+          $periode->jumlah_transaksi = DB::table('funding_approved')->where([['bulan', $periode->bulan],['tahun', $periode->tahun], ['ph_name', $product_holding->ph_name], ['branch_id', Auth::user()->branch_id]])->sum('jumlah_transaksi');
+        }
+      }
+      $kkbs->product_holdings = DB::table('kkb_approved')->select('ph_name')->distinct()->get();
+      foreach ($kkbs->product_holdings as $product_holding) {
+        // Get Periode KKB
+        //$kkbs->product_holdings->periodes
+        $product_holding->periodes = Periode::orderBy('tahun')->orderBy('bulan')->limit(6)->get();
+
+        foreach ($product_holding->periodes as $periode) {
+          // Get KKB based on Periode
+          //$kkbs->product_holdings->periodes->jumlah_transaksi
+          $periode->jumlah_transaksi = DB::table('kkb_approved')->where([['bulan', $periode->bulan],['tahun', $periode->tahun], ['ph_name', $product_holding->ph_name], ['branch_id', Auth::user()->branch_id]])->sum('jumlah_transaksi');
+        }
+      }
+      $retail_credits->product_holdings = DB::table('retail_credit_approved')->select('ph_name')->distinct()->get();
+      foreach ($retail_credits->product_holdings as $product_holding) {
+        // Get Periode Retail Credit
+        //$retail_credits->product_holdings->periodes
+        $product_holding->periodes = Periode::orderBy('tahun')->orderBy('bulan')->limit(6)->get();
+
+        foreach ($product_holding->periodes as $periode) {
+          // Get Retail Credit based on Periode
+          //$retail_credits->product_holdings->periodes->jumlah_transaksi
+          $periode->jumlah_transaksi = DB::table('retail_credit_approved')->where([['bulan', $periode->bulan],['tahun', $periode->tahun], ['ph_name', $product_holding->ph_name], ['branch_id', Auth::user()->branch_id]])->sum('jumlah_transaksi');
+        }
+      }
+      $transactionals->product_holdings = DB::table('transactional_approved')->select('ph_name')->distinct()->get();
+      foreach ($transactionals->product_holdings as $product_holding) {
+        // Get Periode Transactional
+        //$transactionals->product_holdings->periodes
+        $product_holding->periodes = Periode::orderBy('tahun')->orderBy('bulan')->limit(6)->get();
+
+        foreach ($product_holding->periodes as $periode) {
+          // Get Transactional based on Periode
+          //$transactionals->product_holdings->periodes->jumlah_transaksi
+          $periode->jumlah_transaksi = DB::table('transactional_approved')->where([['bulan', $periode->bulan],['tahun', $periode->tahun], ['ph_name', $product_holding->ph_name], ['branch_id', Auth::user()->branch_id]])->sum('jumlah_transaksi');
+        }
+      }
+
+      $fundings->this_month = DB::table('funding_approved')->where([['bulan', date('m')],['branch_id', Auth::user()->branch_id]])->sum('jumlah_transaksi');
+      // dd($fundings);
+      $kkbs->this_month = DB::table('kkb_approved')->where([['bulan', date('m')],['branch_id', Auth::user()->branch_id]])->sum('jumlah_transaksi');
+      $retail_credits->this_month = DB::table('retail_credit_approved')->where([['bulan', date('m')],['branch_id', Auth::user()->branch_id]])->sum('jumlah_transaksi');
+      $transactionals->this_month = DB::table('transactional_approved')->where([['bulan', date('m')],['branch_id', Auth::user()->branch_id]])->sum('jumlah_transaksi');
+
+      return view('dashboards.user1', ['fundings'=>$fundings, 'kkbs'=>$kkbs, 'retail_credits'=>$retail_credits, 'transactionals'=>$transactionals, 'periodes'=>$periodes]);
+    }
 	}
 }

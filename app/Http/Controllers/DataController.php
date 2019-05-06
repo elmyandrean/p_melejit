@@ -33,7 +33,7 @@ class DataController extends Controller
     {
         if (Auth::user()->type == 1) {
             $fundings = Funding::where('user_id', Auth::user()->id)->get();
-        } elseif(Auth::user()->type == 2) {
+        } elseif(Auth::user()->type == 2 || Auth::user()->type == 4) {
             $fundings = Funding::join('users', 'users.id', '=', 'fundings.user_id')
                 ->select('fundings.*', 'users.branch_id')
                 ->where('branch_id', Auth::user()->branch_id)
@@ -47,7 +47,7 @@ class DataController extends Controller
     {
         if(Auth::user()->type == 1){
             $kkbs = Kkb::where('user_id', Auth::user()->id)->get();
-        } elseif(Auth::user()->type == 2) {
+        } elseif(Auth::user()->type == 2 || Auth::user()->type == 4) {
             $kkbs = Kkb::join('users', 'users.id', '=', 'kkbs.user_id')
                 ->select('kkbs.*', 'users.branch_id')
                 ->where('branch_id', Auth::user()->branch_id)
@@ -61,7 +61,7 @@ class DataController extends Controller
     {
         if(Auth::user()->type == 1){
             $retail_credits = RetailCredit::where('user_id', Auth::user()->id)->get();
-        } elseif(Auth::user()->type == 2) {
+        } elseif(Auth::user()->type == 2 || Auth::user()->type == 4) {
             $retail_credits = RetailCredit::join('users', 'users.id', '=', 'retail_credits.user_id')
                 ->select('retail_credits.*', 'users.branch_id')
                 ->where('branch_id', Auth::user()->branch_id)
@@ -75,7 +75,7 @@ class DataController extends Controller
     {
         if(Auth::user()->type == 1){
             $transactionals = Transactional::where('user_id', Auth::user()->id)->get();
-        } elseif(Auth::user()->type == 2) {
+        } elseif(Auth::user()->type == 2 || Auth::user()->type == 4) {
             $transactionals = Transactional::join('users', 'users.id', '=', 'transactionals.user_id')
                 ->select('transactionals.*', 'users.branch_id')
                 ->where('branch_id', Auth::user()->branch_id)

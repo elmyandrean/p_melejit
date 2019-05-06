@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\RetailCredit;
+use App\User;
 use App\ProductHolding;
 use App\ProductContent;
 use Auth;
@@ -28,8 +29,9 @@ class RetailCreditController extends Controller
     public function create()
     {
         $product_holdings = ProductHolding::where(['status'=>'active', 'menu'=>'Kredit Retail'])->get();
+        $users = User::where(['branch_id'=> Auth::user()->branch_id, 'type'=> 1])->get();
 
-        return view('retail_credits.create', ['product_holdings'=>$product_holdings]);
+        return view('retail_credits.create', ['product_holdings'=>$product_holdings, 'users'=>$users]);
     }
 
     /**
@@ -48,7 +50,11 @@ class RetailCreditController extends Controller
         ]);
 
         $retail_credit = new RetailCredit;
-        $retail_credit->user_id = Auth::user()->id;
+        if (Auth::user()->type == 1) {
+            $retail_credit->user_id = Auth::user()->id;
+        } elseif (Auth::user()->type == 4) {
+            $retail_credit->user_id = $request->user_id;
+        }
         $retail_credit->product_content_id = $request->product_content_id;
         $retail_credit->customer_name = $request->customer_name;
         $retail_credit->account_number = $request->account_number;
@@ -87,8 +93,9 @@ class RetailCreditController extends Controller
         $retail_credit = RetailCredit::find($id);
         $product_holdings = ProductHolding::where(['menu'=>'Kredit Retail', 'status'=>'active'])->get();
         $product_contents = ProductContent::where(['product_holding_id'=>$retail_credit->product_content->product_holding_id, 'status'=>'active'])->get();
+        $users = User::where(['branch_id'=> Auth::user()->branch_id, 'type'=> 1])->get();
 
-        return view('retail_credits.edit', ['retail_credit'=>$retail_credit, 'product_holdings'=>$product_holdings, 'product_contents'=>$product_contents]);
+        return view('retail_credits.edit', ['retail_credit'=>$retail_credit, 'product_holdings'=>$product_holdings, 'product_contents'=>$product_contents, 'users'=>$users]);
     }
 
     /**
@@ -108,7 +115,11 @@ class RetailCreditController extends Controller
         ]);
 
         $retail_credit = RetailCredit::find($id);
-        $retail_credit->user_id = Auth::user()->id;
+        if (Auth::user()->type == 1) {
+            $retail_credit->user_id = Auth::user()->id;
+        } elseif (Auth::user()->type == 4) {
+            $retail_credit->user_id = $request->user_id;
+        }
         $retail_credit->product_content_id = $request->product_content_id;
         $retail_credit->customer_name = $request->customer_name;
         $retail_credit->account_number = $request->account_number;
