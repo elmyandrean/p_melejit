@@ -76,5 +76,35 @@
 
     return false;
   }
+
+  function resetPassword(id, elem)
+  {
+    event.preventDefault();
+    
+    swal({
+      title: "Are you sure?",
+      text: "One the password is resetted, the password is back to default!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        var data =  jQuery(elem).closest("form").serialize();
+        var url =  jQuery(elem).closest("form").attr('action')+'/reset_password';
+
+        $.ajax({
+          type: "PUT",
+          url: url,
+          data: data,
+          dataType: "JSON",
+          success: function(data){
+            swal("Success", "Password has ben resetted!")
+            loadData();
+          }
+        });
+      }
+    }); 
+  }
 </script>
 @endsection
