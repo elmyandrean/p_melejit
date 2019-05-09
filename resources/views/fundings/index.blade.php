@@ -78,5 +78,65 @@
 
     return false;
   }
+
+  function deleteButton(id, elem){
+    event.preventDefault();
+    
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this Funding!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        var data =  jQuery(elem).closest("form").serialize();
+        var url =  jQuery(elem).closest("form").attr('action');
+
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: data,
+          dataType: "JSON",
+          success: function(data){
+            swal("Success", "Funding has ben deleted!")
+            loadData();
+          }
+        });
+      }
+    });
+  };
+
+  function approvedButton(id, elem){
+    event.preventDefault();
+
+    swal({
+      title: "Are you sure?",
+      text: "to Approve this Funding!",
+      icon: "warning",
+      buttons: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        
+        var data =  jQuery(elem).closest("form").serialize();
+        var url =  baseUrl+'/fundings/'+id+'/approve';
+
+        $.ajax({
+          type: "PUT",
+          url: url,
+          data: data,
+          dataType: "JSON",
+          success: function(data){
+            swal("Success", "Funding has ben approved!")
+            loadData();
+          }
+        });
+      }
+    });
+
+    // $(this).closest("[_method]").value = 'PUT';
+  };
 </script>
 @endsection

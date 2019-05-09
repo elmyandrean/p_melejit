@@ -199,7 +199,7 @@ class DashboardController extends Controller
         $branch->point = DB::table('ranked_branch_regular')->where([['position', 'Teller'],['tahun',date('Y')],['bulan',date('m')],['branch_id', $branch->id]])->max('point');
         $branch->user = DB::table('ranked_branch_regular')->where([['position', 'Teller'],['tahun',date('Y')],['bulan',date('m')],['branch_id', $branch->id], ['point', $branch->point]])->first();
       }
-      dd($teller_rank_regulars);
+      // dd($teller_rank_regulars);
 
       // $csr_rank_mikros = DB::table('ranked_branch_mikro')->where([['position', 'CSR'],['tahun',date('Y')],['bulan',date('m')]])->limit(6)->get();
       // $officer_rank_mikros = DB::table('ranked_branch_mikro')->where([['position', 'MKA/BO/SPV/OFFICER'],['tahun',date('Y')],['bulan',date('m')]])->limit(6)->get();

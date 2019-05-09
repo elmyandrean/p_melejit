@@ -78,5 +78,65 @@
 
     return false;
   }
+
+  function deleteButton(id, elem){
+    event.preventDefault();
+    
+    swal({
+      title: "Are you sure?",
+      text: "Once deleted, you will not be able to recover this Transactional!",
+      icon: "warning",
+      buttons: true,
+      dangerMode: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        var data =  jQuery(elem).closest("form").serialize();
+        var url =  jQuery(elem).closest("form").attr('action');
+
+        $.ajax({
+          type: "POST",
+          url: url,
+          data: data,
+          dataType: "JSON",
+          success: function(data){
+            swal("Success", "Transactional has ben deleted!")
+            loadData();
+          }
+        });
+      }
+    });
+  };
+
+  function approvedButton(id, elem){
+    event.preventDefault();
+
+    swal({
+      title: "Are you sure?",
+      text: "to Approve this Transactional!",
+      icon: "warning",
+      buttons: true,
+    })
+    .then((willDelete) => {
+      if (willDelete) {
+        
+        var data =  jQuery(elem).closest("form").serialize();
+        var url =  baseUrl+'/transactionals/'+id+'/approve';
+
+        $.ajax({
+          type: "PUT",
+          url: url,
+          data: data,
+          dataType: "JSON",
+          success: function(data){
+            swal("Success", "Transactional has ben approved!")
+            loadData();
+          }
+        });
+      }
+    });
+
+    // $(this).closest("[_method]").value = 'PUT';
+  };
 </script>
 @endsection

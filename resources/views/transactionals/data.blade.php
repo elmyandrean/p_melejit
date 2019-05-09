@@ -39,14 +39,14 @@
             @if(Auth::user()->type == 1 || Auth::user()->type == 4)
               @if($transactional->status == 'Pending')
               <button type="button" class="btn btn-warning btn-xs" title="Edit Data" onclick="modalEdit('{{$transactional->id}}')"><i class="fa fa-edit"></i></button>
-              <button type="submit" class="btn btn-danger btn-xs delete-button" title="Delete User" data-userid="{{$transactional->id}}"><i class="fa fa-trash"></i></button>
+              <button type="submit" class="btn btn-danger btn-xs delete-button"  onclick="deleteButton('{{$transactional->id}}', this)" title="Delete User" data-userid="{{$transactional->id}}"><i class="fa fa-trash"></i></button>
               @else
               -
               @endif
             @elseif(Auth::user()->type == 2)
               @if($transactional->status != 'Approved')
-              <button type="button" class="btn btn-xs btn-success approve-button" title="Approve Data" data-id="{{$transactional->id}}"><i class="fa fa-check"></i></button>
-              <button type="button" class="btn btn-xs btn-danger delete-button" data-id="{{$transactional->id}}" title="Reject Data"><i class="fa fa-times"></i></button>
+              <button type="button" class="btn btn-xs btn-success approve-button" onclick="approvedButton('{{$transactional->id}}', this)" title="Approve Data" data-id="{{$transactional->id}}"><i class="fa fa-check"></i></button>
+              <button type="button" class="btn btn-xs btn-danger delete-button" data-id="{{$transactional->id}}"  onclick="deleteButton('{{$transactional->id}}', this)" title="Reject Data"><i class="fa fa-times"></i></button>
               @else
               -
               @endif
@@ -65,65 +65,65 @@
 <script>
   $("#data-transactional").dataTable();
 
-  $(".delete-button").click(function(e){
-    e.preventDefault();
+  // $(".delete-button").click(function(e){
+  //   e.preventDefault();
     
-    swal({
-      title: "Are you sure?",
-      text: "Once deleted, you will not be able to recover this Transactional!",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    })
-    .then((willDelete) => {
-      if (willDelete) {
-        var data =  $(this).closest("form").serialize();
-        var url =  $(this).closest("form").attr('action');
+  //   swal({
+  //     title: "Are you sure?",
+  //     text: "Once deleted, you will not be able to recover this Transactional!",
+  //     icon: "warning",
+  //     buttons: true,
+  //     dangerMode: true,
+  //   })
+  //   .then((willDelete) => {
+  //     if (willDelete) {
+  //       var data =  $(this).closest("form").serialize();
+  //       var url =  $(this).closest("form").attr('action');
 
-        $.ajax({
-          type: "POST",
-          url: url,
-          data: data,
-          dataType: "JSON",
-          success: function(data){
-            swal("Success", "Transactional has ben deleted!")
-            loadData();
-          }
-        });
-      }
-    });
-  });
+  //       $.ajax({
+  //         type: "POST",
+  //         url: url,
+  //         data: data,
+  //         dataType: "JSON",
+  //         success: function(data){
+  //           swal("Success", "Transactional has ben deleted!")
+  //           loadData();
+  //         }
+  //       });
+  //     }
+  //   });
+  // });
 
-  $(".approve-button").click(function(e){
-    e.preventDefault();
+  // $(".approve-button").click(function(e){
+  //   e.preventDefault();
 
-    swal({
-      title: "Are you sure?",
-      text: "to Approve this Transactional!",
-      icon: "warning",
-      buttons: true,
-    })
-    .then((willDelete) => {
-      if (willDelete) {
-        var id = $(this).data('id');
+  //   swal({
+  //     title: "Are you sure?",
+  //     text: "to Approve this Transactional!",
+  //     icon: "warning",
+  //     buttons: true,
+  //   })
+  //   .then((willDelete) => {
+  //     if (willDelete) {
+  //       var id = $(this).data('id');
         
-        var data =  $(this).closest("form").serialize();
-        var url =  baseUrl+'/transactionals/'+id+'/approve';
+  //       var data =  $(this).closest("form").serialize();
+  //       var url =  baseUrl+'/transactionals/'+id+'/approve';
 
-        $.ajax({
-          type: "PUT",
-          url: url,
-          data: data,
-          dataType: "JSON",
-          success: function(data){
-            swal("Success", "Transactional has ben approved!")
-            loadData();
-          }
-        });
-      }
-    });
+  //       $.ajax({
+  //         type: "PUT",
+  //         url: url,
+  //         data: data,
+  //         dataType: "JSON",
+  //         success: function(data){
+  //           swal("Success", "Transactional has ben approved!")
+  //           loadData();
+  //         }
+  //       });
+  //     }
+  //   });
 
-    // $(this).closest("[_method]").value = 'PUT';
+  //   // $(this).closest("[_method]").value = 'PUT';
 
-  });
+  // });
 </script>

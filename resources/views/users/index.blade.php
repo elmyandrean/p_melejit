@@ -120,8 +120,8 @@
     })
     .then((willDelete) => {
       if (willDelete) {
-        var data =  $(this).closest("form").serialize();
-        var url =  $(this).closest("form").attr('action');
+        var data =  jQuery(elem).closest("form").serialize();
+        var url =  jQuery(elem).closest("form").attr('action');
 
         $.ajax({
           type: "PUT",
