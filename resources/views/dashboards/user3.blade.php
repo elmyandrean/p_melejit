@@ -109,8 +109,8 @@
                   @if($i <= 6 && $csr->user)
                   <tr>
                     <td>{{$i++}}</td>
-                    <td>{{$csr->branch_kode}}</td>
-                    <td>{{$csr->branch_name}}</td>
+                    <td>{{$csr->kode}}</td>
+                    <td>{{$csr->name}}</td>
                     <td>{{$csr->user->user_name}}</td>
                     <td>{{$csr->point}}</td>
                   </tr>
@@ -137,8 +137,8 @@
                   @if($i <= 6 && $officer->user)
                   <tr>
                     <td>{{$i++}}</td>
-                    <td>{{$officer->branch_kode}}</td>
-                    <td>{{$officer->branch_name}}</td>
+                    <td>{{$officer->kode}}</td>
+                    <td>{{$officer->name}}</td>
                     <td>{{$officer->user->user_name}}</td>
                     <td>{{$officer->point}}</td>
                   </tr>
@@ -165,8 +165,8 @@
                   @if($i <= 6 && $security->user)
                   <tr>
                     <td>{{$i++}}</td>
-                    <td>{{$security->branch_kode}}</td>
-                    <td>{{$security->branch_name}}</td>
+                    <td>{{$security->kode}}</td>
+                    <td>{{$security->name}}</td>
                     <td>{{$security->user->user_name}}</td>
                     <td>{{$security->point}}</td>
                   </tr>
@@ -193,8 +193,8 @@
                   @if($i <= 6 && $teller->user)
                   <tr>
                     <td>{{$i++}}</td>
-                    <td>{{$teller->branch_kode}}</td>
-                    <td>{{$teller->branch_name}}</td>
+                    <td>{{$teller->kode}}</td>
+                    <td>{{$teller->name}}</td>
                     <td>{{$teller->user->user_name}}</td>
                     <td>{{$teller->point}}</td>
                   </tr>
@@ -239,8 +239,8 @@
                   @if($i <= 6 && $csr->user)
                   <tr>
                     <td>{{$i++}}</td>
-                    <td>{{$csr->branch_kode}}</td>
-                    <td>{{$csr->branch_name}}</td>
+                    <td>{{$csr->kode}}</td>
+                    <td>{{$csr->name}}</td>
                     <td>{{$csr->user->user_name}}</td>
                     <td>{{$csr->point}}</td>
                   </tr>
@@ -267,8 +267,8 @@
                   @if($i <= 6 && $officer->user)
                   <tr>
                     <td>{{$i++}}</td>
-                    <td>{{$officer->branch_kode}}</td>
-                    <td>{{$officer->branch_name}}</td>
+                    <td>{{$officer->kode}}</td>
+                    <td>{{$officer->name}}</td>
                     <td>{{$officer->user->user_name}}</td>
                     <td>{{$officer->point}}</td>
                   </tr>
@@ -295,8 +295,8 @@
                   @if($i <= 6 && $security->user)
                   <tr>
                     <td>{{$i++}}</td>
-                    <td>{{$security->branch_kode}}</td>
-                    <td>{{$security->branch_name}}</td>
+                    <td>{{$security->kode}}</td>
+                    <td>{{$security->name}}</td>
                     <td>{{$security->user->user_name}}</td>
                     <td>{{$security->point}}</td>
                   </tr>
@@ -323,8 +323,8 @@
                   @if($i <= 6 && $teller->user)
                   <tr>
                     <td>{{$i++}}</td>
-                    <td>{{$teller->branch_kode}}</td>
-                    <td>{{$teller->branch_name}}</td>
+                    <td>{{$teller->kode}}</td>
+                    <td>{{$teller->name}}</td>
                     <td>{{$teller->user->user_name}}</td>
                     <td>{{$teller->point}}</td>
                   </tr>
