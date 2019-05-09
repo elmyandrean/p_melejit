@@ -106,13 +106,15 @@
                 <tbody>
                   <?php $i = 1;?>
                   @foreach($csr_rank_regulars as $csr)
+                  @if($i <= 6 && $csr->user)
                   <tr>
                     <td>{{$i++}}</td>
                     <td>{{$csr->branch_kode}}</td>
                     <td>{{$csr->branch_name}}</td>
-                    <td>{{$csr->user_name}}</td>
+                    <td>{{$csr->user->user_name}}</td>
                     <td>{{$csr->point}}</td>
                   </tr>
+                  @endif
                   @endforeach
                 </tbody>
               </table>
@@ -132,13 +134,15 @@
                 <tbody>
                   <?php $i = 1;?>
                   @foreach($officer_rank_regulars as $officer)
+                  @if($i <= 6 && $officer->user)
                   <tr>
                     <td>{{$i++}}</td>
                     <td>{{$officer->branch_kode}}</td>
                     <td>{{$officer->branch_name}}</td>
-                    <td>{{$officer->user_name}}</td>
+                    <td>{{$officer->user->user_name}}</td>
                     <td>{{$officer->point}}</td>
                   </tr>
+                  @endif
                   @endforeach
                 </tbody>
               </table>
@@ -158,13 +162,15 @@
                 <tbody>
                   <?php $i = 1;?>
                   @foreach($security_rank_regulars as $security)
+                  @if($i <= 6 && $security->user)
                   <tr>
                     <td>{{$i++}}</td>
                     <td>{{$security->branch_kode}}</td>
                     <td>{{$security->branch_name}}</td>
-                    <td>{{$security->user_name}}</td>
+                    <td>{{$security->user->user_name}}</td>
                     <td>{{$security->point}}</td>
                   </tr>
+                  @endif
                   @endforeach
                 </tbody>
               </table>
@@ -184,13 +190,15 @@
                 <tbody>
                   <?php $i = 1;?>
                   @foreach($teller_rank_regulars as $teller)
+                  @if($i <= 6 && $teller->user)
                   <tr>
                     <td>{{$i++}}</td>
                     <td>{{$teller->branch_kode}}</td>
                     <td>{{$teller->branch_name}}</td>
-                    <td>{{$teller->user_name}}</td>
+                    <td>{{$teller->user->user_name}}</td>
                     <td>{{$teller->point}}</td>
                   </tr>
+                  @endif
                   @endforeach
                 </tbody>
               </table>
@@ -228,13 +236,15 @@
                 <tbody>
                   <?php $i = 1;?>
                   @foreach($csr_rank_mikros as $csr)
+                  @if($i <= 6 && $csr->user)
                   <tr>
                     <td>{{$i++}}</td>
                     <td>{{$csr->branch_kode}}</td>
                     <td>{{$csr->branch_name}}</td>
-                    <td>{{$csr->user_name}}</td>
+                    <td>{{$csr->user->user_name}}</td>
                     <td>{{$csr->point}}</td>
                   </tr>
+                  @endif
                   @endforeach
                 </tbody>
               </table>
@@ -254,13 +264,15 @@
                 <tbody>
                   <?php $i = 1;?>
                   @foreach($officer_rank_mikros as $officer)
+                  @if($i <= 6 && $officer->user)
                   <tr>
                     <td>{{$i++}}</td>
                     <td>{{$officer->branch_kode}}</td>
                     <td>{{$officer->branch_name}}</td>
-                    <td>{{$officer->user_name}}</td>
+                    <td>{{$officer->user->user_name}}</td>
                     <td>{{$officer->point}}</td>
                   </tr>
+                  @endif
                   @endforeach
                 </tbody>
               </table>
@@ -280,13 +292,15 @@
                 <tbody>
                   <?php $i = 1;?>
                   @foreach($security_rank_mikros as $security)
+                  @if($i <= 6 && $security->user)
                   <tr>
                     <td>{{$i++}}</td>
                     <td>{{$security->branch_kode}}</td>
                     <td>{{$security->branch_name}}</td>
-                    <td>{{$security->user_name}}</td>
+                    <td>{{$security->user->user_name}}</td>
                     <td>{{$security->point}}</td>
                   </tr>
+                  @endif
                   @endforeach
                 </tbody>
               </table>
@@ -306,13 +320,15 @@
                 <tbody>
                   <?php $i = 1;?>
                   @foreach($teller_rank_mikros as $teller)
+                  @if($i <= 6 && $teller->user)
                   <tr>
                     <td>{{$i++}}</td>
                     <td>{{$teller->branch_kode}}</td>
                     <td>{{$teller->branch_name}}</td>
-                    <td>{{$teller->user_name}}</td>
+                    <td>{{$teller->user->user_name}}</td>
                     <td>{{$teller->point}}</td>
                   </tr>
+                  @endif
                   @endforeach
                 </tbody>
               </table>

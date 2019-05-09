@@ -145,6 +145,8 @@ class UserController extends Controller
                 $user->type = '2';
             } elseif($request->position == 'Administrator') {
                 $user->type = '3';
+            } elseif($request->position == 'User Assistant') {
+                $user->type = '4';
             } else {
                 $user->type = '1';
             }

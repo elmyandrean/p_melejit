@@ -9,6 +9,7 @@ use App\RetailCredit;
 use App\Transactional;
 use App\Periode;
 use App\User;
+use App\Branch;
 use Auth;
 use DB;
 
@@ -174,15 +175,56 @@ class DashboardController extends Controller
       $retail_credits->this_month = DB::table('retail_credit_approved')->where([['bulan', date('m')],['branch_id', Auth::user()->branch_id]])->sum('jumlah_transaksi');
       $transactionals->this_month = DB::table('transactional_approved')->where([['bulan', date('m')],['branch_id', Auth::user()->branch_id]])->sum('jumlah_transaksi');
 
-      $csr_rank_regulars = DB::table('ranked_branch_regular')->where([['position', 'CSR'],['tahun',date('Y')],['bulan',date('m')]])->limit(6)->get();
-      $officer_rank_regulars = DB::table('ranked_branch_regular')->where([['position', 'MKA/BO/SPV/OFFICER'],['tahun',date('Y')],['bulan',date('m')]])->limit(6)->get(); 
-      $security_rank_regulars = DB::table('ranked_branch_regular')->where([['position', 'Security'],['tahun',date('Y')],['bulan',date('m')]])->limit(6)->get(); 
-      $teller_rank_regulars = DB::table('ranked_branch_regular')->where([['position', 'Teller'],['tahun',date('Y')],['bulan',date('m')]])->limit(6)->get(); 
+      // $csr_rank_regulars = DB::table('ranked_branch_regular')->where([['position', 'CSR'],['tahun',date('Y')],['bulan',date('m')]])->get();
+      // $officer_rank_regulars = DB::table('ranked_branch_regular')->where([['position', 'MKA/BO/SPV/OFFICER'],['tahun',date('Y')],['bulan',date('m')]])->limit(6)->get(); 
+      // $security_rank_regulars = DB::table('ranked_branch_regular')->where([['position', 'Security'],['tahun',date('Y')],['bulan',date('m')]])->limit(6)->get(); 
+      // $teller_rank_regulars = DB::table('ranked_branch_regular')->where([['position', 'Teller'],['tahun',date('Y')],['bulan',date('m')]])->limit(6)->get();
+      $csr_rank_regulars = Branch::all();
+      foreach ($csr_rank_regulars as $branch) {
+        $branch->point = DB::table('ranked_branch_regular')->where([['position', 'CSR'],['tahun',date('Y')],['bulan',date('m')],['branch_id', $branch->id]])->max('point');
+        $branch->user = DB::table('ranked_branch_regular')->where([['position', 'CSR'],['tahun',date('Y')],['bulan',date('m')],['branch_id', $branch->id], ['point', $branch->point]])->first();
+      }
+      $officer_rank_regulars = Branch::all();
+      foreach ($officer_rank_regulars as $branch) {
+        $branch->point = DB::table('ranked_branch_regular')->where([['position', 'MKA/BO/SPV/OFFICER'],['tahun',date('Y')],['bulan',date('m')],['branch_id', $branch->id]])->max('point');
+        $branch->user = DB::table('ranked_branch_regular')->where([['position', 'MKA/BO/SPV/OFFICER'],['tahun',date('Y')],['bulan',date('m')],['branch_id', $branch->id], ['point', $branch->point]])->first();
+      }
+      $security_rank_regulars = Branch::all();
+      foreach ($security_rank_regulars as $branch) {
+        $branch->point = DB::table('ranked_branch_regular')->where([['position', 'Security'],['tahun',date('Y')],['bulan',date('m')],['branch_id', $branch->id]])->max('point');
+        $branch->user = DB::table('ranked_branch_regular')->where([['position', 'Security'],['tahun',date('Y')],['bulan',date('m')],['branch_id', $branch->id], ['point', $branch->point]])->first();
+      }
+      $teller_rank_regulars = Branch::all();
+      foreach ($teller_rank_regulars as $branch) {
+        $branch->point = DB::table('ranked_branch_regular')->where([['position', 'Teller'],['tahun',date('Y')],['bulan',date('m')],['branch_id', $branch->id]])->max('point');
+        $branch->user = DB::table('ranked_branch_regular')->where([['position', 'Teller'],['tahun',date('Y')],['bulan',date('m')],['branch_id', $branch->id], ['point', $branch->point]])->first();
+      }
+      // dd($teller_rank_regulars);
 
-      $csr_rank_mikros = DB::table('ranked_branch_mikro')->where([['position', 'CSR'],['tahun',date('Y')],['bulan',date('m')]])->limit(6)->get();
-      $officer_rank_mikros = DB::table('ranked_branch_mikro')->where([['position', 'MKA/BO/SPV/OFFICER'],['tahun',date('Y')],['bulan',date('m')]])->limit(6)->get();
-      $security_rank_mikros = DB::table('ranked_branch_mikro')->where([['position', 'Security'],['tahun',date('Y')],['bulan',date('m')]])->limit(6)->get();
-      $teller_rank_mikros = DB::table('ranked_branch_mikro')->where([['position', 'Teller'],['tahun',date('Y')],['bulan',date('m')]])->limit(6)->get();
+      // $csr_rank_mikros = DB::table('ranked_branch_mikro')->where([['position', 'CSR'],['tahun',date('Y')],['bulan',date('m')]])->limit(6)->get();
+      // $officer_rank_mikros = DB::table('ranked_branch_mikro')->where([['position', 'MKA/BO/SPV/OFFICER'],['tahun',date('Y')],['bulan',date('m')]])->limit(6)->get();
+      // $security_rank_mikros = DB::table('ranked_branch_mikro')->where([['position', 'Security'],['tahun',date('Y')],['bulan',date('m')]])->limit(6)->get();
+      // $teller_rank_mikros = DB::table('ranked_branch_mikro')->where([['position', 'Teller'],['tahun',date('Y')],['bulan',date('m')]])->limit(6)->get();
+      $csr_rank_mikros = Branch::all();
+      foreach ($csr_rank_regulars as $branch) {
+        $branch->point = DB::table('ranked_branch_mikro')->where([['position', 'CSR'],['tahun',date('Y')],['bulan',date('m')],['branch_id', $branch->id]])->max('point');
+        $branch->user = DB::table('ranked_branch_mikro')->where([['position', 'CSR'],['tahun',date('Y')],['bulan',date('m')],['branch_id', $branch->id], ['point', $branch->point]])->first();
+      }
+      $officer_rank_mikros = Branch::all();
+      foreach ($officer_rank_regulars as $branch) {
+        $branch->point = DB::table('ranked_branch_mikro')->where([['position', 'MKA/BO/SPV/OFFICER'],['tahun',date('Y')],['bulan',date('m')],['branch_id', $branch->id]])->max('point');
+        $branch->user = DB::table('ranked_branch_mikro')->where([['position', 'MKA/BO/SPV/OFFICER'],['tahun',date('Y')],['bulan',date('m')],['branch_id', $branch->id], ['point', $branch->point]])->first();
+      }
+      $security_rank_mikros = Branch::all();
+      foreach ($security_rank_regulars as $branch) {
+        $branch->point = DB::table('ranked_branch_mikro')->where([['position', 'Security'],['tahun',date('Y')],['bulan',date('m')],['branch_id', $branch->id]])->max('point');
+        $branch->user = DB::table('ranked_branch_mikro')->where([['position', 'Security'],['tahun',date('Y')],['bulan',date('m')],['branch_id', $branch->id], ['point', $branch->point]])->first();
+      }
+      $teller_rank_mikros = Branch::all();
+      foreach ($teller_rank_regulars as $branch) {
+        $branch->point = DB::table('ranked_branch_mikro')->where([['position', 'Teller'],['tahun',date('Y')],['bulan',date('m')],['branch_id', $branch->id]])->max('point');
+        $branch->user = DB::table('ranked_branch_mikro')->where([['position', 'Teller'],['tahun',date('Y')],['bulan',date('m')],['branch_id', $branch->id], ['point', $branch->point]])->first();
+      }
 
 			return view('dashboards.user3', [
         'fundings'=>$fundings,
