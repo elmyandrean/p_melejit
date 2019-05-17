@@ -5,6 +5,9 @@
         <th class="text-center">Tanggal</th>
         <th class="text-center">Product Content</th>
         <th class="text-center">Nama Nasabah/Merchant</th>
+        @if(Auth::user()->type == 2)
+        <th class="text-center">Nomor Rekening</th>
+        @endif
         <th class="text-center">Nama FL</th>
         <th class="text-center">Branch</th>
         <th class="text-center">Kondisi</th>
@@ -28,6 +31,9 @@
             - 
           @endif
         </td>
+        @if(Auth::user()->type == 2)
+        <td class="text-ceenter">{{$transactional->account_number}}</td>
+        @endif
         <td>{{$transactional->user->name}}</td>
         <td>{{$transactional->user->branch->name}}</td>
         <td>{{$transactional->condition}}</td>

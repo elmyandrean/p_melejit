@@ -5,6 +5,9 @@
         <th class="text-center">Tanggal</th>
         <th class="text-center">Product Content</th>
         <th class="text-center">Nama Nasabah</th>
+        @if(Auth::user()->type == 2)
+        <th class="text-center">Nomor Rekening</th>
+        @endif
         <th class="text-center">Nama FL</th>
         <th class="text-center">Branch</th>
         <th class="text-center">Status</th>
@@ -18,6 +21,9 @@
         <td class="text-center">{{date('d-m-Y', strtotime($kkb->date_serve))}}</td>
         <td class="text-center">{{$kkb->product_content->product_holding->name}}</td>
         <td>{{$kkb->customer_name}}</td>
+        @if(Auth::user()->type == 2)
+        <td class="text-ceenter">{{$kkb->account_number}}</td>
+        @endif
         <td>{{$kkb->user->name}}</td>
         <td class="text-center">{{$kkb->user->branch->name}}</td>
         <td class="text-center">{{$kkb->condition}}</td>

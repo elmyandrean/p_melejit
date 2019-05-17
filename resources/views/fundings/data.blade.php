@@ -5,6 +5,9 @@
         <th class="text-center">Tanggal</th>
         <th class="text-center">Product Content</th>
         <th class="text-center">Nama Nasabah</th>
+        @if(Auth::user()->type == 2)
+        <th class="text-center">Nomor Rekening</th>
+        @endif
         <th class="text-center">Nama FL</th>
         <th class="text-center">Cabang</th>
         <th class="text-center">Kondisi</th>
@@ -17,6 +20,9 @@
       <tr>
         <td class="text-center">{{date('d-m-Y', strtotime($funding->date_serve))}}</td>
         <td class="text-center">{{$funding->product_content->product_holding->name}}</td>
+        @if(Auth::user()->type == 2)
+        <td class="text-ceenter">{{$funding->account_number}}</td>
+        @endif
         <td>{{$funding->customer_name}}</td>
         <td>{{$funding->user->name}}</td>
         <td class="text-center">{{$funding->user->branch->name}}</td>

@@ -40,6 +40,8 @@ class DataController extends Controller
                 ->get();
         }
 
+        // dd($fundings);
+
         return view('fundings.data', ['fundings'=>$fundings]);
     }
 

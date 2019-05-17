@@ -105,7 +105,7 @@
                 </thead>
                 <tbody>
                   <?php $i = 1;?>
-                  @foreach($csr_rank_regulars as $csr)
+                  @foreach($csr_rank_regulars->sortByDesc('point') as $csr)
                   @if($i <= 6 && $csr->user)
                   <tr>
                     <td>{{$i++}}</td>
@@ -133,7 +133,7 @@
                 </thead>
                 <tbody>
                   <?php $i = 1;?>
-                  @foreach($officer_rank_regulars as $officer)
+                  @foreach($officer_rank_regulars->sortByDesc('point') as $officer)
                   @if($i <= 6 && $officer->user)
                   <tr>
                     <td>{{$i++}}</td>
@@ -161,7 +161,7 @@
                 </thead>
                 <tbody>
                   <?php $i = 1;?>
-                  @foreach($security_rank_regulars as $security)
+                  @foreach($security_rank_regulars->sortByDesc('point') as $security)
                   @if($i <= 6 && $security->user)
                   <tr>
                     <td>{{$i++}}</td>
@@ -189,7 +189,7 @@
                 </thead>
                 <tbody>
                   <?php $i = 1;?>
-                  @foreach($teller_rank_regulars as $teller)
+                  @foreach($teller_rank_regulars->sortByDesc('point') as $teller)
                   @if($i <= 6 && $teller->user)
                   <tr>
                     <td>{{$i++}}</td>
@@ -235,7 +235,7 @@
                 </thead>
                 <tbody>
                   <?php $i = 1;?>
-                  @foreach($csr_rank_mikros as $csr)
+                  @foreach($csr_rank_mikros->sortByDesc('point') as $csr)
                   @if($i <= 6 && $csr->user)
                   <tr>
                     <td>{{$i++}}</td>
@@ -263,7 +263,7 @@
                 </thead>
                 <tbody>
                   <?php $i = 1;?>
-                  @foreach($officer_rank_mikros as $officer)
+                  @foreach($officer_rank_mikros->sortByDesc('point') as $officer)
                   @if($i <= 6 && $officer->user)
                   <tr>
                     <td>{{$i++}}</td>
@@ -291,7 +291,7 @@
                 </thead>
                 <tbody>
                   <?php $i = 1;?>
-                  @foreach($security_rank_mikros as $security)
+                  @foreach($security_rank_mikros->sortByDesc('point') as $security)
                   @if($i <= 6 && $security->user)
                   <tr>
                     <td>{{$i++}}</td>
@@ -319,7 +319,7 @@
                 </thead>
                 <tbody>
                   <?php $i = 1;?>
-                  @foreach($teller_rank_mikros as $teller)
+                  @foreach($teller_rank_mikros->sortByDesc('point') as $teller)
                   @if($i <= 6 && $teller->user)
                   <tr>
                     <td>{{$i++}}</td>
