@@ -69,7 +69,9 @@
 <script src="{{asset('js/sweetalert.min.js')}}"></script>
 
 <script>
-  $("#data-transactional").dataTable();
+  $("#data-transactional").dataTable({
+      stateSave: true
+  });
 
   // $(".delete-button").click(function(e){
   //   e.preventDefault();

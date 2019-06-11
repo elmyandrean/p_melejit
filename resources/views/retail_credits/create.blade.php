@@ -117,7 +117,8 @@
         } else if(data.status == 'success') {
           document.getElementById('formInsert').reset();
           $("#modal").modal("hide");
-          loadData();
+          // loadData();
+          location.reload()
         }
       }
     });

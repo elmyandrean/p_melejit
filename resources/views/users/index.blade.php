@@ -100,7 +100,8 @@
           dataType: "JSON",
           success: function(data){
             swal("Success", "Password has ben resetted!")
-            loadData();
+            // loadData();
+            location.reload()
           }
         });
       }
@@ -130,7 +131,8 @@
           dataType: "JSON",
           success: function(data){
             swal("Success", "User has ben deleted!")
-            loadData();
+            // loadData();
+            location.reload()
           }
         });
       }

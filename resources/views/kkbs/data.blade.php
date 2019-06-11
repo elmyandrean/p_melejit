@@ -60,67 +60,69 @@
 <script src="{{asset('js/sweetalert.min.js')}}"></script>
 
 <script>
-  $("#data-kkb").dataTable();
+  $("#data-kkb").dataTable({
+      stateSave: true
+  });
 
-  $(".delete-button").click(function(e){
-    e.preventDefault();
+  // $(".delete-button").click(function(e){
+  //   e.preventDefault();
     
-    swal({
-      title: "Are you sure?",
-      text: "Once deleted, you will not be able to recover this Alliance!",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
-    })
-    .then((willDelete) => {
-      if (willDelete) {
-        var data =  $(this).closest("form").serialize();
-        var url =  $(this).closest("form").attr('action');
+  //   swal({
+  //     title: "Are you sure?",
+  //     text: "Once deleted, you will not be able to recover this Alliance!",
+  //     icon: "warning",
+  //     buttons: true,
+  //     dangerMode: true,
+  //   })
+  //   .then((willDelete) => {
+  //     if (willDelete) {
+  //       var data =  $(this).closest("form").serialize();
+  //       var url =  $(this).closest("form").attr('action');
 
-        $.ajax({
-          type: "POST",
-          url: url,
-          data: data,
-          dataType: "JSON",
-          success: function(data){
-            swal("Success", "Alliance has ben deleted!")
-            loadData();
-          }
-        });
-      }
-    });
-  });
+  //       $.ajax({
+  //         type: "POST",
+  //         url: url,
+  //         data: data,
+  //         dataType: "JSON",
+  //         success: function(data){
+  //           swal("Success", "Alliance has ben deleted!")
+  //           loadData();
+  //         }
+  //       });
+  //     }
+  //   });
+  // });
 
-  $(".approve-button").click(function(e){
-    e.preventDefault();
+  // $(".approve-button").click(function(e){
+  //   e.preventDefault();
 
-    swal({
-      title: "Are you sure?",
-      text: "to Approve this Alliance!",
-      icon: "warning",
-      buttons: true,
-    })
-    .then((willDelete) => {
-      if (willDelete) {
-        var id = $(this).data('id');
+  //   swal({
+  //     title: "Are you sure?",
+  //     text: "to Approve this Alliance!",
+  //     icon: "warning",
+  //     buttons: true,
+  //   })
+  //   .then((willDelete) => {
+  //     if (willDelete) {
+  //       var id = $(this).data('id');
         
-        var data =  $(this).closest("form").serialize();
-        var url =  baseUrl+'/kkbs/'+id+'/approve';
+  //       var data =  $(this).closest("form").serialize();
+  //       var url =  baseUrl+'/kkbs/'+id+'/approve';
 
-        $.ajax({
-          type: "PUT",
-          url: url,
-          data: data,
-          dataType: "JSON",
-          success: function(data){
-            swal("Success", "Alliance has ben approved!")
-            loadData();
-          }
-        });
-      }
-    });
+  //       $.ajax({
+  //         type: "PUT",
+  //         url: url,
+  //         data: data,
+  //         dataType: "JSON",
+  //         success: function(data){
+  //           swal("Success", "Alliance has ben approved!")
+  //           loadData();
+  //         }
+  //       });
+  //     }
+  //   });
 
-    // $(this).closest("[_method]").value = 'PUT';
+  //   $(this).closest("[_method]").value = 'PUT';
 
-  });
+  // });
 </script>

@@ -89,7 +89,8 @@
         } else if(data.status == 'success') {
           document.getElementById('formEdit').reset();
           $("#modal").modal("hide");
-          loadData();
+          // loadData();
+          location.reload()
         }
       }
     });

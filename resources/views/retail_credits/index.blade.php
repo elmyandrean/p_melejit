@@ -101,7 +101,8 @@
           dataType: "JSON",
           success: function(data){
             swal("Success", "Retail Credit has ben deleted!")
-            loadData();
+            // loadData();
+            location.reload()
           }
         });
       }
@@ -130,7 +131,8 @@
           dataType: "JSON",
           success: function(data){
             swal("Success", "Retail Credit has ben approved!")
-            loadData();
+            // loadData();
+            location.reload()
           }
         });
       }

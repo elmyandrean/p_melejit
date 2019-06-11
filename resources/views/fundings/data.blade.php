@@ -60,7 +60,9 @@
 <script src="{{asset('js/sweetalert.min.js')}}"></script>
 
 <script>
-  $(".table").dataTable();
+  $(".table").dataTable({
+      "stateSave": true,
+  });
 
   // $(".delete-button").click(function(e){
   //   e.preventDefault();
