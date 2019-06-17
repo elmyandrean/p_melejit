@@ -19,7 +19,7 @@
     @foreach($data_fundings as $funding)
     <tr>
       <td>{{date('d-m-Y', strtotime($funding->date_serve))}}</td>
-      <td>{{$funding->user->branch->name}}</td>
+      <td>{{Auth::user()->type == 3 ? $funding->user->branch->kode.' - ' : ''}}{{$funding->user->branch->name}}</td>
       <td>{{$funding->user->nip}}</td>
       <td>{{$funding->user->name}}</td>
       <td>{{$funding->user->position}}</td>
@@ -34,7 +34,7 @@
     @foreach($data_kkbs as $kkb)
     <tr>
       <td>{{date('d-m-Y', strtotime($kkb->date_serve))}}</td>
-      <td>{{$kkb->user->branch->name}}</td>
+      <td>{{Auth::user()->type == 3 ? $kkb->user->branch->kode.' - ' : ''}}{{$kkb->user->branch->name}}</td>
       <td>{{$kkb->user->nip}}</td>
       <td>{{$kkb->user->name}}</td>
       <td>{{$kkb->user->position}}</td>
@@ -49,7 +49,7 @@
     @foreach($data_retail_credits as $retail_credit)
     <tr>
       <td>{{date('d-m-Y', strtotime($retail_credit->date_serve))}}</td>
-      <td>{{$retail_credit->user->branch->name}}</td>
+      <td>{{Auth::user()->type == 3 ? $retail_credit->user->branch->kode.' - ' : ''}}{{$retail_credit->user->branch->name}}</td>
       <td>{{$retail_credit->user->nip}}</td>
       <td>{{$retail_credit->user->name}}</td>
       <td>{{$retail_credit->user->position}}</td>
@@ -64,7 +64,7 @@
     @foreach($data_transactionals as $transactional)
     <tr>
       <td>{{date('d-m-Y', strtotime($transactional->date_serve))}}</td>
-      <td>{{$transactional->user->branch->name}}</td>
+      <td>{{Auth::user()->type == 3 ? $transactional->user->branch->kode.' - ' : ''}}{{$transactional->user->branch->name}}</td>
       <td>{{$transactional->user->nip}}</td>
       <td>{{$transactional->user->name}}</td>
       <td>{{$transactional->user->position}}</td>
