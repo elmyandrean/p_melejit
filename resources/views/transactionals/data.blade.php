@@ -70,7 +70,13 @@
 
 <script>
   $("#data-transactional").dataTable({
-      stateSave: true
+      stateSave: true,
+      stateDuration : -1,
+      @if(Auth::user()->type == 2)
+      order : [[7, "desc"]],
+      @else
+      order : [[6, "desc"]],
+      @endif
   });
 
   // $(".delete-button").click(function(e){

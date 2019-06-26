@@ -138,7 +138,7 @@
               </thead>
               <tbody>
                 <?php $i = 1;?>
-                @foreach($ranks as $rank)
+                @foreach($ranks->sortByDesc('point') as $rank)
                 <tr>
                   <td>{{$i++}}</td>
                   <td>{{$rank->user_name}}</td>
