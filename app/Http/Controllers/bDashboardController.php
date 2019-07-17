@@ -107,7 +107,58 @@ class DashboardController extends Controller
       $retail_credits->all = DB::table('retail_credit_approved')->where('branch_id', Auth::user()->branch_id)->sum('jumlah_transaksi');
       $transactionals->all = DB::table('transactional_approved')->where('branch_id', Auth::user()->branch_id)->sum('jumlah_transaksi');
 
-      // Get This Month Data for ranking
+      // Get Product Holding
+      // $fundings->product_holdings
+      $fundings->product_holdings = DB::table('funding_approved')->select('ph_name')->distinct()->get();
+      foreach ($fundings->product_holdings as $product_holding) {
+        // Get Periode Funding
+        //$fundings->product_holdings->periodes
+        $product_holding->periodes = Periode::orderBy('tahun')->orderBy('bulan')->limit(6)->get();
+
+        foreach ($product_holding->periodes as $periode) {
+          // Get Funding based on Periode
+          //$fundings->product_holdings->periodes->jumlah_transaksi
+          $periode->jumlah_transaksi = DB::table('funding_approved')->where([['bulan', $periode->bulan],['tahun', $periode->tahun], ['ph_name', $product_holding->ph_name]])->sum('jumlah_transaksi');
+        }
+      }
+      $kkbs->product_holdings = DB::table('kkb_approved')->select('ph_name')->distinct()->get();
+      foreach ($kkbs->product_holdings as $product_holding) {
+        // Get Periode KKB
+        //$kkbs->product_holdings->periodes
+        $product_holding->periodes = Periode::orderBy('tahun')->orderBy('bulan')->limit(6)->get();
+
+        foreach ($product_holding->periodes as $periode) {
+          // Get KKB based on Periode
+          //$kkbs->product_holdings->periodes->jumlah_transaksi
+          $periode->jumlah_transaksi = DB::table('kkb_approved')->where([['bulan', $periode->bulan],['tahun', $periode->tahun], ['ph_name', $product_holding->ph_name]])->sum('jumlah_transaksi');
+        }
+      }
+      $retail_credits->product_holdings = DB::table('retail_credit_approved')->select('ph_name')->distinct()->get();
+      foreach ($retail_credits->product_holdings as $product_holding) {
+        // Get Periode Retail Credit
+        //$retail_credits->product_holdings->periodes
+        $product_holding->periodes = Periode::orderBy('tahun')->orderBy('bulan')->limit(6)->get();
+
+        foreach ($product_holding->periodes as $periode) {
+          // Get Retail Credit based on Periode
+          //$retail_credits->product_holdings->periodes->jumlah_transaksi
+          $periode->jumlah_transaksi = DB::table('retail_credit_approved')->where([['bulan', $periode->bulan],['tahun', $periode->tahun], ['ph_name', $product_holding->ph_name]])->sum('jumlah_transaksi');
+        }
+      }
+      $transactionals->product_holdings = DB::table('transactional_approved')->select('ph_name')->distinct()->get();
+      foreach ($transactionals->product_holdings as $product_holding) {
+        // Get Periode Transactional
+        //$transactionals->product_holdings->periodes
+        $product_holding->periodes = Periode::orderBy('tahun')->orderBy('bulan')->limit(6)->get();
+
+        foreach ($product_holding->periodes as $periode) {
+          // Get Transactional based on Periode
+          //$transactionals->product_holdings->periodes->jumlah_transaksi
+          $periode->jumlah_transaksi = DB::table('transactional_approved')->where([['bulan', $periode->bulan],['tahun', $periode->tahun], ['ph_name', $product_holding->ph_name]])->sum('jumlah_transaksi');
+        }
+      }
+
+      // Get This Month Data
       $fundings->this_month = DB::table('funding_approved')->where([['bulan', date('m')],['branch_id', Auth::user()->branch_id]])->sum('jumlah_transaksi');
       $kkbs->this_month = DB::table('kkb_approved')->where([['bulan', date('m')],['branch_id', Auth::user()->branch_id]])->sum('jumlah_transaksi');
       $retail_credits->this_month = DB::table('retail_credit_approved')->where([['bulan', date('m')],['branch_id', Auth::user()->branch_id]])->sum('jumlah_transaksi');
@@ -123,12 +174,71 @@ class DashboardController extends Controller
       $kkbs->this_month = DB::table('kkb_approved')->where([['bulan', date('m')],['branch_id', Auth::user()->branch_id]])->sum('jumlah_transaksi');
       $retail_credits->this_month = DB::table('retail_credit_approved')->where([['bulan', date('m')],['branch_id', Auth::user()->branch_id]])->sum('jumlah_transaksi');
       $transactionals->this_month = DB::table('transactional_approved')->where([['bulan', date('m')],['branch_id', Auth::user()->branch_id]])->sum('jumlah_transaksi');
-      
+
+      // $csr_rank_regulars = DB::table('ranked_branch_regular')->where([['position', 'CSR'],['tahun',date('Y')],['bulan',date('m')]])->get();
+      // $officer_rank_regulars = DB::table('ranked_branch_regular')->where([['position', 'MKA/BO/SPV/OFFICER'],['tahun',date('Y')],['bulan',date('m')]])->limit(6)->get(); 
+      // $security_rank_regulars = DB::table('ranked_branch_regular')->where([['position', 'Security'],['tahun',date('Y')],['bulan',date('m')]])->limit(6)->get(); 
+      // $teller_rank_regulars = DB::table('ranked_branch_regular')->where([['position', 'Teller'],['tahun',date('Y')],['bulan',date('m')]])->limit(6)->get();
+      $csr_rank_regulars = Branch::all();
+      foreach ($csr_rank_regulars as $branch) {
+        $branch->point = DB::table('ranked_branch_regular')->where([['position', 'CSR'],['tahun',date('Y')],['bulan',date('m')],['branch_id', $branch->id]])->max('point');
+        $branch->user = DB::table('ranked_branch_regular')->where([['position', 'CSR'],['tahun',date('Y')],['bulan',date('m')],['branch_id', $branch->id], ['point', $branch->point]])->first();
+      }
+      $officer_rank_regulars = Branch::all();
+      foreach ($officer_rank_regulars as $branch) {
+        $branch->point = DB::table('ranked_branch_regular')->where([['position', 'MKA/BO/SPV/OFFICER'],['tahun',date('Y')],['bulan',date('m')],['branch_id', $branch->id]])->max('point');
+        $branch->user = DB::table('ranked_branch_regular')->where([['position', 'MKA/BO/SPV/OFFICER'],['tahun',date('Y')],['bulan',date('m')],['branch_id', $branch->id], ['point', $branch->point]])->first();
+      }
+      $security_rank_regulars = Branch::all();
+      foreach ($security_rank_regulars as $branch) {
+        $branch->point = DB::table('ranked_branch_regular')->where([['position', 'Security'],['tahun',date('Y')],['bulan',date('m')],['branch_id', $branch->id]])->max('point');
+        $branch->user = DB::table('ranked_branch_regular')->where([['position', 'Security'],['tahun',date('Y')],['bulan',date('m')],['branch_id', $branch->id], ['point', $branch->point]])->first();
+      }
+      $teller_rank_regulars = Branch::all();
+      foreach ($teller_rank_regulars as $branch) {
+        $branch->point = DB::table('ranked_branch_regular')->where([['position', 'Teller'],['tahun',date('Y')],['bulan',date('m')],['branch_id', $branch->id]])->max('point');
+        $branch->user = DB::table('ranked_branch_regular')->where([['position', 'Teller'],['tahun',date('Y')],['bulan',date('m')],['branch_id', $branch->id], ['point', $branch->point]])->first();
+      }
+      // dd($teller_rank_regulars);
+
+      // $csr_rank_mikros = DB::table('ranked_branch_mikro')->where([['position', 'CSR'],['tahun',date('Y')],['bulan',date('m')]])->limit(6)->get();
+      // $officer_rank_mikros = DB::table('ranked_branch_mikro')->where([['position', 'MKA/BO/SPV/OFFICER'],['tahun',date('Y')],['bulan',date('m')]])->limit(6)->get();
+      // $security_rank_mikros = DB::table('ranked_branch_mikro')->where([['position', 'Security'],['tahun',date('Y')],['bulan',date('m')]])->limit(6)->get();
+      // $teller_rank_mikros = DB::table('ranked_branch_mikro')->where([['position', 'Teller'],['tahun',date('Y')],['bulan',date('m')]])->limit(6)->get();
+      $csr_rank_mikros = Branch::all();
+      foreach ($csr_rank_regulars as $branch) {
+        $branch->point = DB::table('ranked_branch_mikro')->where([['position', 'CSR'],['tahun',date('Y')],['bulan',date('m')],['branch_id', $branch->id]])->max('point');
+        $branch->user = DB::table('ranked_branch_mikro')->where([['position', 'CSR'],['tahun',date('Y')],['bulan',date('m')],['branch_id', $branch->id], ['point', $branch->point]])->first();
+      }
+      $officer_rank_mikros = Branch::all();
+      foreach ($officer_rank_regulars as $branch) {
+        $branch->point = DB::table('ranked_branch_mikro')->where([['position', 'MKA/BO/SPV/OFFICER'],['tahun',date('Y')],['bulan',date('m')],['branch_id', $branch->id]])->max('point');
+        $branch->user = DB::table('ranked_branch_mikro')->where([['position', 'MKA/BO/SPV/OFFICER'],['tahun',date('Y')],['bulan',date('m')],['branch_id', $branch->id], ['point', $branch->point]])->first();
+      }
+      $security_rank_mikros = Branch::all();
+      foreach ($security_rank_regulars as $branch) {
+        $branch->point = DB::table('ranked_branch_mikro')->where([['position', 'Security'],['tahun',date('Y')],['bulan',date('m')],['branch_id', $branch->id]])->max('point');
+        $branch->user = DB::table('ranked_branch_mikro')->where([['position', 'Security'],['tahun',date('Y')],['bulan',date('m')],['branch_id', $branch->id], ['point', $branch->point]])->first();
+      }
+      $teller_rank_mikros = Branch::all();
+      foreach ($teller_rank_regulars as $branch) {
+        $branch->point = DB::table('ranked_branch_mikro')->where([['position', 'Teller'],['tahun',date('Y')],['bulan',date('m')],['branch_id', $branch->id]])->max('point');
+        $branch->user = DB::table('ranked_branch_mikro')->where([['position', 'Teller'],['tahun',date('Y')],['bulan',date('m')],['branch_id', $branch->id], ['point', $branch->point]])->first();
+      }
+
 			return view('dashboards.user3', [
         'fundings'=>$fundings,
         'kkbs'=>$kkbs, 
         'retail_credits'=>$retail_credits, 
-        'transactionals'=>$transactionals,
+        'transactionals'=>$transactionals, 
+        'csr_rank_regulars'=>$csr_rank_regulars, 
+        'csr_rank_mikros'=>$csr_rank_mikros, 
+        'officer_rank_regulars'=>$officer_rank_regulars,
+        'officer_rank_mikros'=>$officer_rank_mikros,
+        'security_rank_regulars'=>$security_rank_regulars,
+        'security_rank_mikros'=>$security_rank_mikros,
+        'teller_rank_regulars'=>$teller_rank_regulars,
+        'teller_rank_mikros'=>$teller_rank_mikros,
       ]);
 		} else if(Auth::user()->type == 4){
       $fundings->all = DB::table('funding_approved')->where('branch_id', Auth::user()->branch_id)->sum('jumlah_transaksi');

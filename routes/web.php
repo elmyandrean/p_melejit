@@ -40,6 +40,8 @@ Route::get('/data/retail_credits', 'DataController@retail_credits')->name('data.
 Route::get('/data/transactionals', 'DataController@transactionals')->name('data.transactionals');
 Route::get('/data/{id}/product_content', 'DataController@product_content')->name('data.product_content');
 Route::get('/data/report', 'DataController@reports')->name('data.reports');
+Route::get('/data/ranking', 'DataController@ranking')->name('data.ranking');
+Route::get('/data/history/{id}', 'DataController@history')->name('data.history');
 Route::get('/report', 'ReportController@index')->name('report.index');
 Route::put('/users/{id}/reset_password', 'UserController@reset_password')->name('users.reset_password');
 Route::get('/users/{id}/edit_profile', 'UserController@edit_profile')->name('users.edit_profile');

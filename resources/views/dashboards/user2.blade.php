@@ -94,28 +94,13 @@
         <!-- Custom Tabs -->
         <div class="nav-tabs-custom">
           <ul class="nav nav-tabs">
-            <li class="active"><a href="#funding" data-toggle="tab">Funding</a></li>
-            <li><a href="#kkb" data-toggle="tab">Alliance</a></li>
-            <li><a href="#retail_credit" data-toggle="tab">Kredit Retail</a></li>
-            <li><a href="#transactional" data-toggle="tab">Transactional</a></li>
+            <li class="active"><a href="#funding" data-toggle="tab" onclick="loadData('funding')">Funding</a></li>
+            <li><a href="#kkb" data-toggle="tab" onclick="loadData('alliance')">Alliance</a></li>
+            <li><a href="#retail_credit" data-toggle="tab" onclick="loadData('retail_credit')">Kredit Retail</a></li>
+            <li><a href="#transactional" data-toggle="tab" onclick="loadData('transactional')">Transactional</a></li>
           </ul>
-          <div class="tab-content">
-            <div class="tab-pane active" id="funding">
-
-            </div>
-            <!-- /.tab-pane -->
-            <div class="tab-pane" id="kkb">
-              
-            </div>
-            <!-- /.tab-pane -->
-            <div class="tab-pane" id="retail_credit">
-              
-            </div>
-            <!-- /.tab-pane -->
-            <div class="tab-pane" id="transactional">
-              
-            </div>
-            <!-- /.tab-pane -->
+          <div class="tab-content" id="data_history">
+            
           </div>
           <!-- /.tab-content -->
         </div>
@@ -171,240 +156,78 @@
 @endsection
 
 @section('script')
-    <script>
+  <script>
       // Pie Chart All Data
       Highcharts.chart('piechart-alldata', {
-        chart: {
-            plotBackgroundColor: null,
-            plotBorderWidth: null,
-            plotShadow: false,
-            type: 'pie'
-        },
-        title: {
-            text: 'Data Semua Transaksi'
-        },
-        subtitle: {
-            text: 'Data sampai dengan Bulan {{date('F Y')}}'
-        },
-        tooltip: {
-            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-        },
-        plotOptions: {
-            pie: {
-                allowPointSelect: true,
-                cursor: 'pointer',
-                dataLabels: {
-                    enabled: true,
-                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-                    style: {
-                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
-                    }
-                }
-            }
-        },
-        series: [{
-            name: 'Transaction',
-            colorByPoint: true,
-            data: [{
-                name: 'Funding',
-                y: {{$fundings->all}}
-            }, {
-                name: 'Alliance',
-                y: {{$kkbs->all}}
-            }, {
-                name: 'Retail Kredit',
-                y: {{$retail_credits->all}}
-            }, {
-                name: 'Transactional',
-                y: {{$transactionals->all}}
-            }]
-        }]
+          chart: {
+              plotBackgroundColor: null,
+              plotBorderWidth: null,
+              plotShadow: false,
+              type: 'pie'
+          },
+          title: {
+              text: 'Data Semua Transaksi'
+          },
+          subtitle: {
+              text: 'Data sampai dengan Bulan {{date('F Y')}}'
+          },
+          tooltip: {
+              pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+          },
+          plotOptions: {
+              pie: {
+                  allowPointSelect: true,
+                  cursor: 'pointer',
+                  dataLabels: {
+                      enabled: true,
+                      format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                      style: {
+                          color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                      }
+                  }
+              }
+          },
+          series: [{
+              name: 'Transaction',
+              colorByPoint: true,
+              data: [{
+                  name: 'Funding',
+                  y: {{$fundings->all}}
+              }, {
+                  name: 'Alliance',
+                  y: {{$kkbs->all}}
+              }, {
+                  name: 'Retail Kredit',
+                  y: {{$retail_credits->all}}
+              }, {
+                  name: 'Transactional',
+                  y: {{$transactionals->all}}
+              }]
+          }]
+        }
+    );
+
+    $(document).ready(function() {
+      loadData();
     });
 
-    // Bar Chart Funding
-    Highcharts.chart('funding', {
-        chart: {
-            type: 'line'
-        },
-        title: {
-            text: 'Data Funding 6 Bulan Terakhir'
-        },
-        subtitle: {
-            text: 'Data sampai dengan Bulan {{date('F Y')}}'
-        },
-        xAxis: {
-            categories: [
-              @foreach($periodes as $periode)
-                '{{ $periode->bulan_text }}',
-              @endforeach
-            ]
-        },
-        yAxis: {
-            title: {
-                text: 'Jumlah Transaksi'
-            }
-        },
-        plotOptions: {
-            line: {
-                dataLabels: {
-                    enabled: true
-                },
-                enableMouseTracking: false
-            }
-        },
-        series: [
-          @foreach($fundings->product_holdings as $product_holding)
-          {
-            name: '{{$product_holding->ph_name}}',
-            data: [
-              @foreach($product_holding->periodes as $periode)
-                  {{$periode->jumlah_transaksi}},
-              @endforeach
-            ]
-          },
-          @endforeach
-        ]
-    });
+    function loadData(product)
+    {
+      if (product) {
+        var url = baseUrl+'/data/history/{{Auth::user()->branch_id}}?product='+product;
+      } else {
+        var url = baseUrl+'/data/history/{{Auth::user()->branch_id}}?product=funding';
+      }
+      $('#data_history').html(loadingHTML);
+      $('#data_history').load(url);
 
-    // Bar Chart KKB
-    Highcharts.chart('kkb', {
-        chart: {
-            type: 'line'
-        },
-        title: {
-            text: 'Data Alliance 6 Bulan Terakhir'
-        },
-        subtitle: {
-            text: 'Data sampai dengan Bulan {{date('F Y')}}'
-        },
-        xAxis: {
-            categories: [
-              @foreach($periodes as $periode)
-                '{{ $periode->bulan_text }}',
-              @endforeach
-            ]
-        },
-        yAxis: {
-            title: {
-                text: 'Jumlah Transaksi'
-            }
-        },
-        plotOptions: {
-            line: {
-                dataLabels: {
-                    enabled: true
-                },
-                enableMouseTracking: false
-            }
-        },
-        series: [
-          @foreach($kkbs->product_holdings as $product_holding)
-          {
-            name: '{{$product_holding->ph_name}}',
-            data: [
-              @foreach($product_holding->periodes as $periode)
-                  {{$periode->jumlah_transaksi}},
-              @endforeach
-            ]
-          },
-          @endforeach
-        ]
-    });
-
-    // Bar Chart Retail Credit
-    Highcharts.chart('retail_credit', {
-        chart: {
-            type: 'line'
-        },
-        title: {
-            text: 'Data Retail Kredit 6 Bulan Terakhir'
-        },
-        subtitle: {
-            text: 'Data sampai dengan Bulan {{date('F Y')}}'
-        },
-        xAxis: {
-            categories: [
-              @foreach($periodes as $periode)
-                '{{ $periode->bulan_text }}',
-              @endforeach
-            ]
-        },
-        yAxis: {
-            title: {
-                text: 'Jumlah Transaksi'
-            }
-        },
-        plotOptions: {
-            line: {
-                dataLabels: {
-                    enabled: true
-                },
-                enableMouseTracking: false
-            }
-        },
-        series: [
-          @foreach($retail_credits->product_holdings as $product_holding)
-          {
-            name: '{{$product_holding->ph_name}}',
-            data: [
-              @foreach($product_holding->periodes as $periode)
-                  {{$periode->jumlah_transaksi}},
-              @endforeach
-            ]
-          },
-          @endforeach
-        ]
-    });
-
-    // Bar Chart Transactional
-    Highcharts.chart('transactional', {
-        chart: {
-            type: 'line'
-        },
-        title: {
-            text: 'Data Transactional 6 Bulan Terakhir'
-        },
-        subtitle: {
-            text: 'Data sampai dengan Bulan {{date('F Y')}}'
-        },
-        xAxis: {
-            categories: [
-              @foreach($periodes as $periode)
-                '{{ $periode->bulan_text }}',
-              @endforeach
-            ],
-        },
-        yAxis: {
-            title: {
-                text: 'Jumlah Transaksi'
-            }
-        },
-        plotOptions: {
-            line: {
-                dataLabels: {
-                    enabled: true
-                },
-                enableMouseTracking: false
-            }
-        },
-        series: [
-          @foreach($transactionals->product_holdings as $product_holding)
-          {
-            name: '{{$product_holding->ph_name}}',
-            data: [
-              @foreach($product_holding->periodes as $periode)
-                  {{$periode->jumlah_transaksi}},
-              @endforeach
-            ]
-          },
-          @endforeach
-        ]
-    });
+      return false;
+    }
 
     $('#rank_fl').DataTable({
       searching: false,
       paging: false, 
       info: false,
     });
-    </script>
+  </script>
 @endsection

@@ -10,6 +10,7 @@ use App\Funding;
 use App\Kkb;
 use App\RetailCredit;
 use App\Transactional;
+use App\Periode;
 use Auth;
 use DB;
 
@@ -37,6 +38,7 @@ class DataController extends Controller
             $fundings = Funding::join('users', 'users.id', '=', 'fundings.user_id')
                 ->select('fundings.*', 'users.branch_id')
                 ->where('branch_id', Auth::user()->branch_id)
+                ->whereMonth('date_serve', (date('m')-1))
                 ->get();
         }
 
@@ -53,6 +55,7 @@ class DataController extends Controller
             $kkbs = Kkb::join('users', 'users.id', '=', 'kkbs.user_id')
                 ->select('kkbs.*', 'users.branch_id')
                 ->where('branch_id', Auth::user()->branch_id)
+                ->whereMonth('date_serve', (date('m')-1))
                 ->get();
         }
 
@@ -67,6 +70,7 @@ class DataController extends Controller
             $retail_credits = RetailCredit::join('users', 'users.id', '=', 'retail_credits.user_id')
                 ->select('retail_credits.*', 'users.branch_id')
                 ->where('branch_id', Auth::user()->branch_id)
+                ->whereMonth('date_serve', (date('m')-1))
                 ->get();
         }
 
@@ -81,6 +85,7 @@ class DataController extends Controller
             $transactionals = Transactional::join('users', 'users.id', '=', 'transactionals.user_id')
                 ->select('transactionals.*', 'users.branch_id')
                 ->where('branch_id', Auth::user()->branch_id)
+                ->whereMonth('date_serve', (date('m')-1))
                 ->get();
         }
 
@@ -135,5 +140,63 @@ class DataController extends Controller
         // print_r(DB::getQueryLog());
 
         return view('reports.data', ['data_fundings' => $data_fundings, 'data_kkbs'=>$data_kkbs, 'data_retail_credits'=>$data_retail_credits, 'data_transactionals'=>$data_transactionals]);
+    }
+
+    public function ranking(Request $request)
+    {
+        $branch_type = $request->branch_type;
+
+        if ($request->position == 'Officer') {
+            $position = 'MKA/BO/SPV/OFFICER';
+        } else {
+            $position = $request->position;
+        }
+
+        $bulan_ini = date('m');
+        $tahun_ini = date('Y');
+
+        if ($branch_type == 'regular') {
+            $data = DB::table('ranked_branch_regular')->select('branch_id', 'bulan', 'tahun')->distinct()->where([['bulan', $bulan_ini],['tahun', $tahun_ini],['position', 'CSR']])->orderBy('point', 'desc')->limit(6)->get();
+            foreach ($data as $branch) {
+                $branch->point = DB::table('ranked_branch_regular')->where([['bulan', $bulan_ini],['tahun', $tahun_ini],['position', $position],['branch_id', $branch->branch_id]])->max('point');
+                $branch->user = DB::table('ranked_branch_regular')->where([['bulan', $bulan_ini],['tahun', $tahun_ini],['position', $position],['branch_id', $branch->branch_id]])->orderBy('point', 'desc')->first();
+            }
+        } else {
+            $data = DB::table('ranked_branch_mikro')->select('branch_id', 'bulan', 'tahun')->distinct()->where([['bulan', $bulan_ini],['tahun', $tahun_ini],['position', $position]])->orderBy('point', 'desc')->limit(6)->get();
+            foreach ($data as $branch) {
+                $branch->point = DB::table('ranked_branch_mikro')->where([['bulan', $bulan_ini],['tahun', $tahun_ini],['position', $position],['branch_id', $branch->branch_id]])->max('point');
+                $branch->user = DB::table('ranked_branch_mikro')->where([['bulan', $bulan_ini],['tahun', $tahun_ini],['position', $position],['branch_id', $branch->branch_id]])->orderBy('point', 'desc')->first();
+            }
+        }
+
+        return view('dashboards.dataUser3', ['data'=>$data]);
+    }
+
+    public function history ($id, Request $request)
+    {
+        $product = $request->product;
+
+        if ($product == 'funding') {
+            $table = 'ranked_last_funding';
+        } elseif ($product == 'alliance') {
+            $table = 'ranked_last_kkb';
+        } elseif ($product == 'retail_credit') {
+            $table = 'ranked_last_retail_credit';
+        } elseif ($product == 'transactional') {
+            $table = 'ranked_last_transactional';
+        }
+
+        $ph = DB::table($table)->select('ph_name')->distinct()->where('branch_id', $id)->get();
+        foreach ($ph as $data_ph) {
+            $data_ph->periodes = DB::table($table)->select('tanggal')->distinct()->where('branch_id', $id)->get();
+            foreach ($data_ph->periodes as $periode) {
+                $periode->jml_transaksi = DB::table($table)->where([['branch_id', $id],['tanggal', $periode->tanggal], ['ph_name', $data_ph->ph_name]])->sum('jumlah_transaksi');
+            }
+        }
+
+        $periodes = DB::table($table)->select('tanggal')->distinct()->where('branch_id', $id)->get();
+
+        return view('dashboards.dataUser2', ['ph'=>$ph, 'periodes'=>$periodes]);
+
     }
 }

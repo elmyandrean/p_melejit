@@ -86,124 +86,13 @@
         <!-- Custom Tabs -->
         <div class="nav-tabs-custom">
           <ul class="nav nav-tabs">
-            <li class="active"><a href="#csr_branch_reguler" data-toggle="tab">CSR</a></li>
-            <li><a href="#officer_branch_reguler" data-toggle="tab">MKA/BO/SPV/Officer</a></li>
-            <li><a href="#security_branch_reguler" data-toggle="tab">Security</a></li>
-            <li><a href="#teller_branch_reguler" data-toggle="tab">Teller</a></li>
+            <li class="active"><a href="#csr_branch_reguler" data-toggle="tab" onclick="loadDataRegular('CSR')">CSR</a></li>
+            <li><a href="#officer_branch_reguler" data-toggle="tab" onclick="loadDataRegular('Officer')">MKA/BO/SPV/Officer</a></li>
+            <li><a href="#security_branch_reguler" data-toggle="tab" onclick="loadDataRegular('Security')">Security</a></li>
+            <li><a href="#teller_branch_reguler" data-toggle="tab" onclick="loadDataRegular('Teller')">Teller</a></li>
           </ul>
-          <div class="tab-content">
-            <div class="tab-pane active" id="csr_branch_reguler">
-              <table class="table table-hover" id="table_csr_regular">
-                <thead>
-                  <tr>
-                    <th width="5%">Ranking</th>
-                    <th>Kode Cabang</th>
-                    <th>Nama Cabang</th>
-                    <th>Nama</th>
-                    <th>Poin</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php $i = 1;?>
-                  @foreach($csr_rank_regulars->sortByDesc('point') as $csr)
-                  @if($i <= 6 && $csr->user)
-                  <tr>
-                    <td>{{$i++}}</td>
-                    <td>{{$csr->kode}}</td>
-                    <td>{{$csr->name}}</td>
-                    <td>{{$csr->user->user_name}}</td>
-                    <td>{{$csr->point}}</td>
-                  </tr>
-                  @endif
-                  @endforeach
-                </tbody>
-              </table>
-            </div>
-            <!-- /.tab-pane -->
-            <div class="tab-pane" id="officer_branch_reguler">
-              <table class="table table-hover" id="table_officer_regular">
-                <thead>
-                  <tr>
-                    <th width="5%">Ranking</th>
-                    <th>Kode Cabang</th>
-                    <th>Nama Cabang</th>
-                    <th>Nama</th>
-                    <th>Poin</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php $i = 1;?>
-                  @foreach($officer_rank_regulars->sortByDesc('point') as $officer)
-                  @if($i <= 6 && $officer->user)
-                  <tr>
-                    <td>{{$i++}}</td>
-                    <td>{{$officer->kode}}</td>
-                    <td>{{$officer->name}}</td>
-                    <td>{{$officer->user->user_name}}</td>
-                    <td>{{$officer->point}}</td>
-                  </tr>
-                  @endif
-                  @endforeach
-                </tbody>
-              </table>
-            </div>
-            <!-- /.tab-pane -->
-            <div class="tab-pane" id="security_branch_reguler">
-              <table class="table table-hover" id="table_security_regular">
-                <thead>
-                  <tr>
-                    <th width="5%">Ranking</th>
-                    <th>Kode Cabang</th>
-                    <th>Nama Cabang</th>
-                    <th>Nama</th>
-                    <th>Poin</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php $i = 1;?>
-                  @foreach($security_rank_regulars->sortByDesc('point') as $security)
-                  @if($i <= 6 && $security->user)
-                  <tr>
-                    <td>{{$i++}}</td>
-                    <td>{{$security->kode}}</td>
-                    <td>{{$security->name}}</td>
-                    <td>{{$security->user->user_name}}</td>
-                    <td>{{$security->point}}</td>
-                  </tr>
-                  @endif
-                  @endforeach
-                </tbody>
-              </table>
-            </div>
-            <!-- /.tab-pane -->
-            <div class="tab-pane" id="teller_branch_reguler">
-              <table class="table table-hover" id="table_teller_regular">
-                <thead>
-                  <tr>
-                    <th width="5%">Ranking</th>
-                    <th>Kode Cabang</th>
-                    <th>Nama Cabang</th>
-                    <th>Nama</th>
-                    <th>Poin</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php $i = 1;?>
-                  @foreach($teller_rank_regulars->sortByDesc('point') as $teller)
-                  @if($i <= 6 && $teller->user)
-                  <tr>
-                    <td>{{$i++}}</td>
-                    <td>{{$teller->kode}}</td>
-                    <td>{{$teller->name}}</td>
-                    <td>{{$teller->user->user_name}}</td>
-                    <td>{{$teller->point}}</td>
-                  </tr>
-                  @endif
-                  @endforeach
-                </tbody>
-              </table>
-            </div>
-            <!-- /.tab-pane -->
+          <div class="tab-content" id="data_regular">
+
           </div>
           <!-- /.tab-content -->
         </div>
@@ -221,119 +110,8 @@
             <li><a href="#security_branch_mikro" data-toggle="tab">Security</a></li>
             <li><a href="#teller_branch_mikro" data-toggle="tab">Teller</a></li>
           </ul>
-          <div class="tab-content">
-            <div class="tab-pane active" id="csr_branch_mikro">
-              <table class="table table-hover" id="table_csr_mikro">
-                <thead>
-                  <tr>
-                    <th width="5%">Ranking</th>
-                    <th>Kode Cabang</th>
-                    <th>Nama Cabang</th>
-                    <th>Nama</th>
-                    <th>Poin</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php $i = 1;?>
-                  @foreach($csr_rank_mikros->sortByDesc('point') as $csr)
-                  @if($i <= 6 && $csr->user)
-                  <tr>
-                    <td>{{$i++}}</td>
-                    <td>{{$csr->kode}}</td>
-                    <td>{{$csr->name}}</td>
-                    <td>{{$csr->user->user_name}}</td>
-                    <td>{{$csr->point}}</td>
-                  </tr>
-                  @endif
-                  @endforeach
-                </tbody>
-              </table>
-            </div>
-            <!-- /.tab-pane -->
-            <div class="tab-pane" id="officer_branch_mikro">
-              <table class="table table-hover" id="table_officer_mikro">
-                <thead>
-                  <tr>
-                    <th width="5%">Ranking</th>
-                    <th>Kode Cabang</th>
-                    <th>Nama Cabang</th>
-                    <th>Nama</th>
-                    <th>Poin</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php $i = 1;?>
-                  @foreach($officer_rank_mikros->sortByDesc('point') as $officer)
-                  @if($i <= 6 && $officer->user)
-                  <tr>
-                    <td>{{$i++}}</td>
-                    <td>{{$officer->kode}}</td>
-                    <td>{{$officer->name}}</td>
-                    <td>{{$officer->user->user_name}}</td>
-                    <td>{{$officer->point}}</td>
-                  </tr>
-                  @endif
-                  @endforeach
-                </tbody>
-              </table>
-            </div>
-            <!-- /.tab-pane -->
-            <div class="tab-pane" id="security_branch_mikro">
-              <table class="table table-hover" id="table_security_mikro">
-                <thead>
-                  <tr>
-                    <th width="5%">Ranking</th>
-                    <th>Kode Cabang</th>
-                    <th>Nama Cabang</th>
-                    <th>Nama</th>
-                    <th>Poin</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php $i = 1;?>
-                  @foreach($security_rank_mikros->sortByDesc('point') as $security)
-                  @if($i <= 6 && $security->user)
-                  <tr>
-                    <td>{{$i++}}</td>
-                    <td>{{$security->kode}}</td>
-                    <td>{{$security->name}}</td>
-                    <td>{{$security->user->user_name}}</td>
-                    <td>{{$security->point}}</td>
-                  </tr>
-                  @endif
-                  @endforeach
-                </tbody>
-              </table>
-            </div>
-            <!-- /.tab-pane -->
-            <div class="tab-pane" id="teller_branch_mikro">
-              <table class="table table-hover" id="table_teller_mikro">
-                <thead>
-                  <tr>
-                    <th width="5%">Ranking</th>
-                    <th>Kode Cabang</th>
-                    <th>Nama Cabang</th>
-                    <th>Nama</th>
-                    <th>Poin</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <?php $i = 1;?>
-                  @foreach($teller_rank_mikros->sortByDesc('point') as $teller)
-                  @if($i <= 6 && $teller->user)
-                  <tr>
-                    <td>{{$i++}}</td>
-                    <td>{{$teller->kode}}</td>
-                    <td>{{$teller->name}}</td>
-                    <td>{{$teller->user->user_name}}</td>
-                    <td>{{$teller->point}}</td>
-                  </tr>
-                  @endif
-                  @endforeach
-                </tbody>
-              </table>
-            </div>
-            <!-- /.tab-pane -->
+          <div class="tab-content" id="data_mikro">
+            
           </div>
           <!-- /.tab-content -->
         </div>
@@ -355,132 +133,35 @@
 
 @section('script')
 <script>
-  $('#table_csr_regular').DataTable({
-    paging: false, 
-    info: false,
-    dom: 'Bfrtip',
-    buttons: [
-        {
-          extend: 'excel',
-          messageTop: 'Data Ranking Cabang Reguler Jabatan: CSR'
-        },
-        {
-          extend: 'pdf',
-          messageTop: 'Data Ranking Cabang Reguler Jabatan: CSR'
-        },
-    ]
+  $(document).ready(function() {
+    loadDataRegular();
+    loadDataMikro();
   });
 
-  $('#table_officer_regular').DataTable({
-    paging: false, 
-    info: false,
-    dom: 'Bfrtip',
-    buttons: [
-        {
-          extend: 'excel',
-          messageTop: 'Data Ranking Cabang Reguler Jabatan: MKA/BO/SPV/Officer'
-        },
-        {
-          extend: 'pdf',
-          messageTop: 'Data Ranking Cabang Reguler Jabatan: MKA/BO/SPV/Officer'
-        },
-    ]
-  });
+  function loadDataRegular(position)
+  {
+    if (position) {
+      var url = baseUrl+'/data/ranking?branch_type=regular&position='+position;
+    } else {
+      var url = baseUrl+'/data/ranking?branch_type=regular&position=CSR';
+    }
+    $('#data_regular').html(loadingHTML);
+    $('#data_regular').load(url);
 
-  $('#table_security_regular').DataTable({
-    paging: false, 
-    info: false,
-    dom: 'Bfrtip',
-    buttons: [
-        {
-          extend: 'excel',
-          messageTop: 'Data Ranking Cabang Reguler Jabatan: Security'
-        },
-        {
-          extend: 'pdf',
-          messageTop: 'Data Ranking Cabang Reguler Jabatan: Security'
-        },
-    ]
-  });
+    return false;
+  }
 
-  $('#table_teller_regular').DataTable({
-    paging: false, 
-    info: false,
-    dom: 'Bfrtip',
-    buttons: [
-        {
-          extend: 'excel',
-          messageTop: 'Data Ranking Cabang Reguler Jabatan: Teller'
-        },
-        {
-          extend: 'pdf',
-          messageTop: 'Data Ranking Cabang Reguler Jabatan: Teller'
-        },
-    ]
-  });
+  function loadDataMikro(position)
+  {
+    if (position) {
+      var url = baseUrl+'/data/ranking?branch_type=mikro&position='+position;
+    } else {
+      var url = baseUrl+'/data/ranking?branch_type=mikro&position=CSR';
+    }
+    $('#data_mikro').html(loadingHTML);
+    $('#data_mikro').load(url);
 
-  $('#table_csr_mikro').DataTable({
-    paging: false, 
-    info: false,
-    dom: 'Bfrtip',
-    buttons: [
-        {
-          extend: 'excel',
-          messageTop: 'Data Ranking Cabang Mikro Jabatan: CSR'
-        },
-        {
-          extend: 'pdf',
-          messageTop: 'Data Ranking Cabang Mikro Jabatan: CSR'
-        },
-    ]
-  });
-
-  $('#table_officer_mikro').DataTable({
-    paging: false, 
-    info: false,
-    dom: 'Bfrtip',
-    buttons: [
-        {
-          extend: 'excel',
-          messageTop: 'Data Ranking Cabang Mikro Jabatan: MKA/BO/SPV/Officer'
-        },
-        {
-          extend: 'pdf',
-          messageTop: 'Data Ranking Cabang Mikro Jabatan: MKA/BO/SPV/Officer'
-        },
-    ]
-  });
-
-  $('#table_security_mikro').DataTable({
-    paging: false, 
-    info: false,
-    dom: 'Bfrtip',
-    buttons: [
-        {
-          extend: 'excel',
-          messageTop: 'Data Ranking Cabang Mikro Jabatan: Security'
-        },
-        {
-          extend: 'pdf',
-          messageTop: 'Data Ranking Cabang Mikro Jabatan: Security'
-        },
-    ]
-  });
-
-  $('#table_teller_mikro').DataTable({
-    paging: false, 
-    info: false,
-    dom: 'Bfrtip',
-    buttons: [
-        {
-          extend: 'excel',
-          messageTop: 'Data Ranking Cabang Mikro Jabatan: Teller'
-        },
-        {
-          extend: 'pdf',
-          messageTop: 'Data Ranking Cabang Mikro Jabatan: Teller'
-        },
-    ]
-  });
+    return false;
+  }
 </script>
 @endsection
